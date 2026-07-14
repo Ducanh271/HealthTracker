@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Health Tracker</string>
+    <!-- Onboarding: Headers -->
+    <string name="onboarding_title">Bắt đầu hành trình của bạn</string>
+    <string name="onboarding_subtitle">Hãy cho chúng tôi biết về bạn để tạo một kế hoạch sức khỏe cá nhân hóa.</string>
+
+    <string name="label_fullname">Họ và tên</string>
+    <string name="placeholder_fullname">Nhập tên của bạn</string>
+
+    <string name="label_dob">Ngày sinh</string>
+    <string name="placeholder_dob">DD/MM/YYYY</string>
+
+    <string name="label_gender">Giới tính</string>
+    <string name="gender_male">Nam</string>
+    <string name="gender_female">Nữ</string>
+
+    <string name="label_weight">Cân nặng (kg)</string>
+    <string name="unit_kg">kg</string>
+    <string name="placeholder_weight">70</string>
+
+    <string name="label_height">Chiều cao (cm)</string>
+    <string name="unit_cm">cm</string>
+    <string name="placeholder_height">170</string>
+
+    <string name="label_activity_level">Mức độ hoạt động</string>
+    <string name="activity_level_1">Cấp độ 1: Ít vận động (Làm việc VP)</string>
+    <string name="activity_level_2">Cấp độ 2: Vận động nhẹ (1-3 ngày/tuần)</string>
+    <string name="activity_level_3">Cấp độ 3: Vận động vừa (3-5 ngày/tuần)</string>
+    <string name="activity_level_4">Cấp độ 4: Vận động nặng (6-7 ngày/tuần)</string>
+    <string name="activity_level_5">Cấp độ 5: Vận động rất nặng (VĐV)</string>
+
+    <string name="label_goal">Mục tiêu của bạn</string>
+    <string name="goal_lose_title">Giảm cân</string>
+    <string name="goal_lose_desc">Thâm hụt calo lành mạnh</string>
+    <string name="goal_maintain_title">Giữ cân</string>
+    <string name="goal_maintain_desc">Duy trì vóc dáng hiện tại</string>
+    <string name="goal_gain_title">Tăng cân</string>
+    <string name="goal_gain_desc">Xây dựng cơ bắp hiệu quả</string>
+
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="footer_info">TDEE (Tổng lượng calo tiêu thụ hàng ngày) sẽ được tính toán dựa trên thông tin này để đưa ra gợi ý dinh dưỡng chính xác nhất.</string>
+
+    <string name="error_weight_invalid">Cân nặng phải từ 5kg - 300kg</string>
+    <string name="error_height_invalid">Chiều cao phải từ 50cm - 300cm</string>
+</resources>

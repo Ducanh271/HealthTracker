@@ -20,6 +20,7 @@ import com.example.healthtracker.ui.theme.HealthTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import jakarta.inject.Inject
 import androidx.lifecycle.lifecycleScope
+import com.example.healthtracker.ui.features.onboarding.OnboardingScreen
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
