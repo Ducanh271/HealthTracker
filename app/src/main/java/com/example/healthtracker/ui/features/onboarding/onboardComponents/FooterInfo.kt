@@ -31,7 +31,7 @@ fun FooterInfo() {
             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
             modifier = Modifier.size(18.dp)
         )
-        Spacer(modifier = Modifier.width(dimens.sm))
+        Spacer(modifier = Modifier.width(dimens.iconSmall))
         Text(
             text = stringResource(id = R.string.footer_info),
             style = MaterialTheme.typography.labelMedium,

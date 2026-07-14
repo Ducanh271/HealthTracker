@@ -1,5 +1,6 @@
 package com.example.healthtracker.ui.features.onboarding
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.ui.features.onboarding.onboardComponents.*
 import com.example.healthtracker.ui.theme.LocalDimens
-
+import androidx.compose.runtime.LaunchedEffect
 @Composable
 fun OnboardingScreen(
     viewModel: OnboardingViewModel = hiltViewModel(),
@@ -22,6 +23,14 @@ fun OnboardingScreen(
     val dimens = LocalDimens.current
     val scrollState = rememberScrollState()
     val state by viewModel.state.collectAsState()
+    LaunchedEffect(state.isNavigateToDashboard) {
+        Log.d("OnboardingFlow", "TRẠM 5: LaunchedEffect check, isNavigate = ${state.isNavigateToDashboard}")
+        if (state.isNavigateToDashboard) {
+            Log.d("OnboardingFlow", "TRẠM 6: Gọi onNavigateToDashboard()")
+            onNavigateToDashboard()
+            viewModel.resetNavigationFlag()
+        }
+    }
 
     Scaffold(
         topBar = { OnboardingTopBar() }
@@ -40,8 +49,8 @@ fun OnboardingScreen(
             WelcomeSection()
 
             BasicInfoCard(
-                name = state.name, onNameChange = viewModel::updateName,
-                dob = state.dob, onDobChange = viewModel::updateDob,
+                name = state.name, onNameChange = viewModel::updateName, nameError = state.nameError,
+                dob = state.dob, onDobChange = viewModel::updateDob, dobError = state.dobError,
                 isMale = state.isMale, onGenderChange = viewModel::updateGender
             )
 
@@ -62,7 +71,7 @@ fun OnboardingScreen(
 
             ContinueButton(
                 isLoading = state.isLoading,
-                onClick = { viewModel.completeOnboarding(onSuccess = onNavigateToDashboard) }
+                onClick = { viewModel.completeOnboarding() }
             )
 
             FooterInfo()

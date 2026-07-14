@@ -17,8 +17,8 @@ import com.example.healthtracker.ui.theme.LocalDimens
 
 @Composable
 fun BasicInfoCard(
-    name: String, onNameChange: (String) -> Unit,
-    dob: String, onDobChange: (String) -> Unit,
+    name: String, onNameChange: (String) -> Unit, nameError: Int?,
+    dob: String, onDobChange: (String) -> Unit, dobError: Int?,
     isMale: Boolean, onGenderChange: (Boolean) -> Unit
 ) {
     val dimens = LocalDimens.current
@@ -27,7 +27,7 @@ fun BasicInfoCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(dimens.cornerLarge))
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(dimens.cornerLarge))
+            .border(dimens.borderWidth, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(dimens.cornerLarge))
             .padding(dimens.md),
         verticalArrangement = Arrangement.spacedBy(dimens.md)
     ) {
@@ -37,7 +37,13 @@ fun BasicInfoCard(
             label = { Text(stringResource(id = R.string.label_fullname)) },
             placeholder = { Text(stringResource(id = R.string.placeholder_fullname)) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(dimens.cornerMedium)
+            shape = RoundedCornerShape(dimens.cornerMedium),
+            isError = nameError != null,
+            supportingText = {
+                if (nameError != null) {
+                    Text(text = stringResource(id = nameError), color = MaterialTheme.colorScheme.error)
+                }
+            }
         )
 
         OutlinedTextField(
@@ -46,7 +52,13 @@ fun BasicInfoCard(
             label = { Text(stringResource(id = R.string.label_dob)) },
             placeholder = { Text(stringResource(id = R.string.placeholder_dob)) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(dimens.cornerMedium)
+            shape = RoundedCornerShape(dimens.cornerMedium),
+            isError = dobError != null,
+            supportingText = {
+                if (dobError != null) {
+                    Text(text = stringResource(id = dobError), color = MaterialTheme.colorScheme.error)
+                }
+            }
         )
 
         Column(verticalArrangement = Arrangement.spacedBy(dimens.sm)) {

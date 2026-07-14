@@ -15,14 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
+import com.example.healthtracker.ui.theme.LocalDimens
 
 @Composable
 fun GenderSelector(isMale: Boolean, onGenderChange: (Boolean) -> Unit) {
+    val dimens = LocalDimens.current
     Row(
         modifier = Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceContainer)
-            .padding(4.dp)
+            .padding(dimens.xs)
     ) {
         GenderButton(
             text = stringResource(id = R.string.gender_male),
@@ -39,12 +41,13 @@ fun GenderSelector(isMale: Boolean, onGenderChange: (Boolean) -> Unit) {
 
 @Composable
 private fun GenderButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
+    val dimens = LocalDimens.current
     Box(
         modifier = Modifier
             .clip(CircleShape)
             .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
             .clickable { onClick() }
-            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .padding(horizontal = dimens.lg , vertical = dimens.sm)
     ) {
         Text(
             text = text,

@@ -42,4 +42,12 @@
 
     <string name="error_weight_invalid">Cân nặng phải từ 5kg - 300kg</string>
     <string name="error_height_invalid">Chiều cao phải từ 50cm - 300cm</string>
+    <string name="error_name_empty">Vui lòng nhập họ tên</string>
+    <string name="error_dob_invalid">Ngày sinh không hợp lệ (VD: 25/12/2000)</string>
+
+<!--    bottom bar-->
+    <string name="nav_dashboard">Tổng quan</string>
+    <string name="nav_diary">Bữa ăn</string>
+    <string name="nav_statistics">Hoạt động</string>
+    <string name="nav_settings">Cài đặt</string>
 </resources>

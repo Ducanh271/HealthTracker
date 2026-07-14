@@ -64,7 +64,7 @@ private fun MetricInput(
                 .clip(RoundedCornerShape(dimens.cornerLarge))
                 .background(MaterialTheme.colorScheme.surfaceContainerLow)
                 .border(
-                    width = 1.dp,
+                    width = dimens.borderWidth,
                     color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
                     shape = RoundedCornerShape(dimens.cornerLarge)
                 )
@@ -100,7 +100,7 @@ private fun MetricInput(
                     text = unit,
                     style = MaterialTheme.typography.labelMedium,
                     color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = dimens.xs)
                 )
             }
         }
@@ -109,7 +109,7 @@ private fun MetricInput(
                 text = errorMessage!!,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(top = 4.dp, start = 8.dp)
+                modifier = Modifier.padding(top = dimens.xs, start = dimens.sm)
             )
         }
     }

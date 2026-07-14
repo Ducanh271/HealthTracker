@@ -1,9 +1,7 @@
 package com.example.healthtracker.ui.features.onboarding
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.newStringBuilder
 import com.example.healthtracker.R
 import com.example.healthtracker.data.local.datastore.SettingsDataStore
 import com.example.healthtracker.domain.usecase.CalculateBmiUseCase
@@ -17,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-
+import android.util.Log
 data class OnboardingState(
     val name: String = "",
     val dob: String = "",
@@ -26,9 +24,12 @@ data class OnboardingState(
     val height: String = "",
     val activityLevel: Int = 3,
     val goal: String = GOAL_MAINTAIN,
-    val weightError: String? = null,
-    val heightError: String? = null,
-    val isLoading: Boolean = false
+    val weightError: Int? = null,
+    val heightError: Int? = null,
+    val nameError: Int? = null,
+    val dobError: Int? = null,
+    val isLoading: Boolean = false,
+    val isNavigateToDashboard: Boolean = false
 ) {
     companion object {
         const val GOAL_LOSE = "lose"
@@ -48,66 +49,34 @@ class OnboardingViewModel @Inject constructor(
     private val _state = MutableStateFlow(OnboardingState())
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
 
-    fun updateName(newName: String) {
-        _state.update { it.copy(name = newName) }
-    }
+    fun updateName(newName: String) { _state.update { it.copy(name = newName) } }
+    fun updateDob(newDob: String) { _state.update { it.copy(dob = newDob) } }
+    fun updateGender(isMale: Boolean) { _state.update { it.copy(isMale = isMale) } }
+    fun updateWeight(newWeight: String) { _state.update { it.copy(weight = newWeight) } }
+    fun updateHeight(newHeight: String) { _state.update { it.copy(height = newHeight) } }
+    fun updateActivityLevel(level: Int) { _state.update { it.copy(activityLevel = level) } }
+    fun updateGoal(newGoal: String) { _state.update { it.copy(goal = newGoal) } }
 
-    fun updateDob(newDob: String) {
-        _state.update { it.copy(dob = newDob) }
-    }
-
-    fun updateGender(isMale: Boolean) {
-        _state.update { it.copy(isMale = isMale) }
-    }
-
-    fun updateWeight(newWeight: String) {
-        _state.update { it.copy(weight = newWeight) }
-    }
-
-    fun updateHeight(newHeight: String) {
-        _state.update { it.copy(height = newHeight) }
-    }
-
-    fun updateActivityLevel(level: Int) {
-        _state.update { it.copy(activityLevel = level) }
-    }
-
-    fun updateGoal(newGoal: String) {
-        _state.update { it.copy(goal = newGoal) }
-    }
-
-    fun completeOnboarding(onSuccess: () -> Unit) {
+    fun completeOnboarding() {
+        Log.d("OnboardingFlow", "TRẠM 1: Nút bấm đã kích hoạt hàm completeOnboarding")
         val currentState = _state.value
 
-        if (currentState.isLoading) return
-
-        val weightKg = currentState.weight.toFloatOrNull() ?: 0f
-        val heightCm = currentState.height.toFloatOrNull() ?: 0f
-
-        var hasError = false
-        var wError: String? = null
-        var hError: String? = null
-
-        if (weightKg !in 5f..300f) {
-            wError = R.string.error_weight_invalid.toString()
-            hasError = true
-        }
-
-        if (heightCm !in 50f..300f) {
-            hError = R.string.error_height_invalid.toString()
-            hasError = true
-        }
-
-        if (hasError) {
-            _state.update { it.copy(weightError = wError, heightError = hError) }
+        if (currentState.isLoading) {
+            Log.d("OnboardingFlow", "-> BỊ CHẶN: Đang loading, không cho bấm double")
             return
         }
 
-        _state.update { it.copy(weightError = null, heightError = null) }
+        if (!validateInputs(currentState)) {
+            Log.d("OnboardingFlow", "-> BỊ CHẶN: Validate thất bại! (Tên: '${currentState.name}', Ngày sinh: '${currentState.dob}', Nặng: ${currentState.weight}, Cao: ${currentState.height})")
+            return
+        }
+        Log.d("OnboardingFlow", "TRẠM 2: Dữ liệu hợp lệ, bắt đầu tính TDEE")
 
-        val calculatedAge = calculateAge(currentState.dob)
-        val genderStr =
-            if (currentState.isMale) OnboardingState.GENDER_MALE else OnboardingState.GENDER_FEMALE
+        _state.update { it.copy(isLoading = true) }
+        val weightKg = currentState.weight.toFloat()
+        val heightCm = currentState.height.toFloat()
+        val calculatedAge = calculateAgeOrNull(currentState.dob) ?: 20
+        val genderStr = if (currentState.isMale) OnboardingState.GENDER_MALE else OnboardingState.GENDER_FEMALE
 
         val tdee = calculateTdeeUseCase(
             gender = genderStr,
@@ -117,7 +86,7 @@ class OnboardingViewModel @Inject constructor(
             activityLevel = currentState.activityLevel,
             goal = currentState.goal
         )
-
+        Log.d("OnboardingFlow", "TRẠM 3: Tính xong TDEE = $tdee. Đang lưu DataStore...")
         viewModelScope.launch {
             try {
                 settingsDataStore.saveUserProfile(
@@ -131,15 +100,62 @@ class OnboardingViewModel @Inject constructor(
                     tdee = tdee
                 )
                 settingsDataStore.saveOnboardingStatus(true)
-                onSuccess()
+                Log.d("OnboardingFlow", "TRẠM 4: Lưu DataStore thành công! Đang gọi hàm chuyển trang...")
+                _state.update { it.copy(isNavigateToDashboard = true) }
+            }catch(e: Exception){
+                Log.e("OnboardingBug", "Lỗi khi tính toán hoặc lưu DataStore: ${e.message}", e)
             } finally {
                 _state.update { it.copy(isLoading = false) }
             }
         }
     }
 
-    // func tinh tuoi
-    private fun calculateAge(dobStr: String): Int {
+
+
+    private fun validateInputs(currentState: OnboardingState): Boolean {
+        var hasError = false
+        var nError: Int? = null
+        var dError: Int? = null
+        var wError: Int? = null
+        var hError: Int? = null
+
+        if (currentState.name.trim().isEmpty()) {
+            nError = R.string.error_name_empty
+            hasError = true
+        }
+
+        val age = calculateAgeOrNull(currentState.dob)
+        if (age == null || age < 1) {
+            dError = R.string.error_dob_invalid
+            hasError = true
+        }
+
+        val weightKg = currentState.weight.toFloatOrNull() ?: 0f
+        if (weightKg !in 5f..300f) {
+            wError = R.string.error_weight_invalid
+            hasError = true
+        }
+
+        val heightCm = currentState.height.toFloatOrNull() ?: 0f
+        if (heightCm !in 50f..300f) {
+            hError = R.string.error_height_invalid
+            hasError = true
+        }
+
+        _state.update {
+            it.copy(
+                nameError = nError,
+                dobError = dError,
+                weightError = wError,
+                heightError = hError
+            )
+        }
+
+        return !hasError
+    }
+
+
+    private fun calculateAgeOrNull(dobStr: String): Int? {
         return try {
             val formatter = if (dobStr.contains("/")) {
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -153,13 +169,12 @@ class OnboardingViewModel @Inject constructor(
             if (currentDate.dayOfYear < birthDate.dayOfYear) {
                 age--
             }
-
-            if (age > 0) age else 0
+            age
         } catch (e: Exception) {
-            // Nếu parse lỗi, trả về giá trị mặc định (Ví dụ: 20) để công thức TDEE không bị hỏng
-            20
+            null
         }
     }
+    fun resetNavigationFlag() {
+        _state.update { it.copy(isNavigateToDashboard = false) }
+    }
 }
-
-

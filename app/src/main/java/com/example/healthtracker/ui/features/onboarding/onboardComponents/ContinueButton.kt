@@ -19,15 +19,15 @@ fun ContinueButton(isLoading: Boolean, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(dimens.buttonHeight),
         shape = CircleShape,
         enabled = !isLoading
     ) {
         if (isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(dimens.iconMedium),
                 color = MaterialTheme.colorScheme.onPrimary,
-                strokeWidth = 2.dp
+                strokeWidth = dimens.strokeWidth
             )
         } else {
             Text(
