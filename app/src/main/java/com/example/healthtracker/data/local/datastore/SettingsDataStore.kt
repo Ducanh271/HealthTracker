@@ -1,8 +1,6 @@
 package com.example.healthtracker.data.local.datastore
 
-import android.R
 import android.content.Context
-import androidx.compose.ui.graphics.vector.VNode
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -15,13 +13,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
-
+import com.example.healthtracker.domain.model.UserProfile
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "health_tracker_prefs")
+
+
+
 @Singleton
 class SettingsDataStore @Inject constructor(
     private val context: Context
 ) {
-    companion object{
+    companion object {
         val IS_ONBOARDING_COMPLETED = booleanPreferencesKey("is_onboarding_completed")
         val APP_THEME = stringPreferencesKey("app_theme")
         val APP_LANGUAGE = stringPreferencesKey("app_language")
@@ -37,22 +38,33 @@ class SettingsDataStore @Inject constructor(
         val USER_TDEE = intPreferencesKey("user_tdee")
     }
 
-    val isOnboardingComplicated: Flow<Boolean> = context.dataStore.data.map{it[IS_ONBOARDING_COMPLETED] ?: false}
-    val appTheme: Flow<String> = context.dataStore.data.map{it[APP_THEME] ?: "SYSTEM"}
-    val appLanguage: Flow<String> = context.dataStore.data.map{it[APP_LANGUAGE] ?: "VI" }
+    val isOnboardingCompleted: Flow<Boolean> = context.dataStore.data.map { it[IS_ONBOARDING_COMPLETED] ?: false }
+    val appTheme: Flow<String> = context.dataStore.data.map { it[APP_THEME] ?: "SYSTEM" }
+    val appLanguage: Flow<String> = context.dataStore.data.map { it[APP_LANGUAGE] ?: "VI" }
     val fontSize: Flow<String> = context.dataStore.data.map { it[FONT_SIZE] ?: "MEDIUM" }
 
-    suspend fun saveOnboardingStatus(completed: Boolean){
-        context.dataStore.edit{it[IS_ONBOARDING_COMPLETED] = completed }
+    val userProfile: Flow<UserProfile> = context.dataStore.data.map { prefs ->
+        UserProfile(
+            name = prefs[USER_NAME] ?: "",
+            age = prefs[USER_AGE] ?: 20,
+            gender = prefs[USER_GENDER] ?: "Nam",
+            weight = prefs[USER_WEIGHT] ?: 0f,
+            height = prefs[USER_HEIGHT] ?: 0f,
+            activityLevel = prefs[USER_ACTIVITY_LEVEL] ?: 3,
+            goal = prefs[USER_GOAL] ?: "maintain",
+            tdee = prefs[USER_TDEE] ?: 2000
+        )
     }
 
-    suspend fun saveAppSettings(theme: String, lang: String, size: String){
+    suspend fun saveOnboardingStatus(completed: Boolean) {
+        context.dataStore.edit { it[IS_ONBOARDING_COMPLETED] = completed }
+    }
+
+    suspend fun saveAppSettings(theme: String, lang: String, size: String) {
         context.dataStore.edit {
-            context.dataStore.edit {
-                it[APP_THEME] = theme
-                it[APP_LANGUAGE] = lang
-                it[FONT_SIZE] = size
-            }
+            it[APP_THEME] = theme
+            it[APP_LANGUAGE] = lang
+            it[FONT_SIZE] = size
         }
     }
 
@@ -72,5 +84,4 @@ class SettingsDataStore @Inject constructor(
             it[USER_TDEE] = tdee
         }
     }
-
 }
