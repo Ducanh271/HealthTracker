@@ -20,4 +20,8 @@ class ActivityRepositoryImpl @Inject constructor(
 
     override fun getActivityLogsByDate(date: Long): Flow<List<ActivityLogEntity>> = activityDao.getActivityLogsByDate(date)
 
+    override fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLogEntity>> {
+        return activityDao.getActivityLogsByDates(dates)
+    }
+
 }

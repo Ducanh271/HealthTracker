@@ -18,11 +18,22 @@ interface MealDao {
     suspend fun insertFoodItems(items: List<FoodItemEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFoodItem(item: FoodItemEntity): Long
+
+    @Query("SELECT * FROM food_items WHERE name LIKE '%' || :searchQuery || '%'")
+    fun searchFoodItems(searchQuery: String): Flow<List<FoodItemEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMealLog(log: MealLogEntity)
 
     @Delete
     suspend fun deleteMealLog(log: MealLogEntity)
 
     @Query("select * from meal_logs where date = :date")
-    fun getMealLogsByDate(date: Long): Flow<List<MealLogEntity>>
+    fun getMealLogsByDate(date: String): Flow<List<MealLogEntity>>
+
+    @Query("SELECT * FROM meal_logs WHERE date IN (:dates)")
+    fun getMealLogsByDates(dates: List<String>): Flow<List<MealLogEntity>>
+
+
 }

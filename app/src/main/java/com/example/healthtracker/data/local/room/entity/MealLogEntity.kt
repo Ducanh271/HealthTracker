@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "meal_logs")
 data class MealLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val date: Long,
+    val date: String,
     val mealType: String,
     val foodName: String,
     val servingCount: Int,

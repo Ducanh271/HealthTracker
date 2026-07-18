@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
+
 class HealthDatabaseCallback @Inject constructor(
     private val databaseProvider: Provider<HealthDatabase>
 ) : RoomDatabase.Callback() {

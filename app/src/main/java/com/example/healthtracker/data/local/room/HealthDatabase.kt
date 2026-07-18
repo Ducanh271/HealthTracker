@@ -23,4 +23,6 @@ abstract class HealthDatabase : RoomDatabase() {
     abstract val mealDao: MealDao
     abstract val activityDao: ActivityDao
 
+
+
 }

@@ -8,5 +8,4 @@ data class FoodItemEntity(
     val name: String,
     val servingSize: String,
     val calories: Int
-
 )

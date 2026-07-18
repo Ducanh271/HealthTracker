@@ -1,4 +1,8 @@
 package com.example.healthtracker.domain.model
 
-class FoodItem {
-}
+data class FoodItem(
+    val id: Int,
+    val name: String,
+    val servingSize: String,
+    val calories: Int
+)

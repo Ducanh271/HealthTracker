@@ -27,4 +27,6 @@ interface ActivityDao {
     @Query("SELECT * FROM activity_logs WHERE date = :date")
     fun getActivityLogsByDate(date: Long): Flow<List<ActivityLogEntity>>
 
+    @Query("SELECT * FROM activity_logs WHERE date IN (:dates)")
+    fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLogEntity>>
 }

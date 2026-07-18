@@ -14,13 +14,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.healthtracker.ui.features.dashboard.DashboardScreen
+import com.example.healthtracker.ui.features.diary.meal.MealDiaryScreen
 import com.example.healthtracker.ui.features.onboarding.OnboardingScreen
 
 @Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Screen.Onboarding.route
+    startDestination: String
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -48,8 +50,7 @@ fun AppNavGraph(
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding)
-        ){
+            modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())        ){
             composable(route = Screen.Onboarding.route) {
                 OnboardingScreen(
                     onNavigateToDashboard = {
@@ -60,11 +61,11 @@ fun AppNavGraph(
                 )
             }
             composable(route = Screen.Dashboard.route) {
-                Surface(modifier = Modifier.fillMaxSize()) { Text("Dashboard Screen") }
+                Surface(modifier = Modifier.fillMaxSize()) { DashboardScreen() }
             }
 
             composable(route = Screen.MealDiary.route) {
-                Surface(modifier = Modifier.fillMaxSize()) { Text("Meal Diary Screen") }
+                Surface(modifier = Modifier.fillMaxSize()) {MealDiaryScreen() }
             }
 
             composable(route = Screen.ActivityDiary.route) {

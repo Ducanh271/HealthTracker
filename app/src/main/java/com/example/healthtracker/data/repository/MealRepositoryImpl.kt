@@ -12,7 +12,13 @@ class MealRepositoryImpl @Inject constructor(
 ): MealRepository {
     override fun getAllFoodItems(): Flow<List<FoodItemEntity>> = mealDao.getAllFoodItems()
     override suspend fun insertFoodItems(items: List<FoodItemEntity>) = mealDao.insertFoodItems(items)
+    override suspend fun insertFoodItem(item: FoodItemEntity): Long = mealDao.insertFoodItem(item)
+    override fun searchFoodItems(searchQuery: String): Flow<List<FoodItemEntity>> = mealDao.searchFoodItems(searchQuery)
     override suspend fun insertMealLog(log: MealLogEntity) = mealDao.insertMealLog(log)
     override suspend fun deleteMealLog(log: MealLogEntity) = mealDao.deleteMealLog(log)
-    override fun getMealLogsByDate(date: Long): Flow<List<MealLogEntity>> = mealDao.getMealLogsByDate(date)
+    override fun getMealLogsByDate(date: String): Flow<List<MealLogEntity>> = mealDao.getMealLogsByDate(date)
+
+    override fun getMealLogsByDates(dates: List<String>): Flow<List<MealLogEntity>> {
+        return mealDao.getMealLogsByDates(dates)
+    }
 }

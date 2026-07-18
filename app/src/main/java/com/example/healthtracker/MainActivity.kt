@@ -1,52 +1,41 @@
 package com.example.healthtracker
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.healthtracker.data.local.room.dao.MealDao
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.ui.navigation.AppNavGraph
+import com.example.healthtracker.ui.navigation.Screen
 import com.example.healthtracker.ui.theme.HealthTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import jakarta.inject.Inject
-import androidx.lifecycle.lifecycleScope
-import com.example.healthtracker.ui.features.onboarding.OnboardingScreen
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var mealDao: MealDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        Log.d("HiltTest", "Hilt đã hoạt động! MealDao instance: $mealDao")
-        lifecycleScope.launch {
-            mealDao.getAllFoodItems().collect { foods ->
-                Log.d("DatabaseTest", "Số lượng món ăn: ${foods.size}")
-            }
-        }
+
         setContent {
+            val mainViewModel: MainViewModel = hiltViewModel()
+            val isOnboardingCompleted by mainViewModel.isOnboardingCompleted.collectAsState()
+
             HealthTrackerTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    AppNavGraph()
-//                    OnboardingScreen()
+                if (isOnboardingCompleted != null) {
+                    val startRoute = if (isOnboardingCompleted == true) {
+                        Screen.Dashboard.route
+                    } else {
+                        Screen.Onboarding.route
+                    }
+                    AppNavGraph(startDestination = startRoute)
+
+                } else {
+                    // Màn hình trắng hoặc Logo loading chờ DataStore đọc (chỉ chớp nhoáng vài ms)
+                    // (Sau này bạn có thể làm màn hình Splash Screen xịn xò thay thế vào đây)
                 }
             }
         }
     }
 }
-
