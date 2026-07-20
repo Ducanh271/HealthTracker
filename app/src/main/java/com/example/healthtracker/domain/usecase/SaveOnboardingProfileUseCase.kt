@@ -1,13 +1,14 @@
 package com.example.healthtracker.domain.usecase
 
 import com.example.healthtracker.data.local.datastore.SettingsDataStore
+import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.ui.features.onboarding.OnboardingState
 import com.example.healthtracker.utils.DateUtils
 import javax.inject.Inject
 
 class SaveOnboardingProfileUseCase @Inject constructor(
     private val calculateTdeeUseCase: CalculateTdeeUseCase,
-    private val settingsDataStore: SettingsDataStore
+    private val userRepository: UserRepository
 ) {
     suspend operator fun invoke(currentState: OnboardingState) {
         val weightKg = currentState.weight.toFloat()
@@ -24,7 +25,7 @@ class SaveOnboardingProfileUseCase @Inject constructor(
             goal = currentState.goal
         )
 
-        settingsDataStore.saveUserProfile(
+        userRepository.saveUserProfile(
             name = currentState.name,
             age = calculatedAge,
             gender = genderStr,
@@ -34,6 +35,6 @@ class SaveOnboardingProfileUseCase @Inject constructor(
             goal = currentState.goal,
             tdee = tdee
         )
-        settingsDataStore.saveOnboardingStatus(true)
+        userRepository.saveOnboardingStatus(true)
     }
 }
