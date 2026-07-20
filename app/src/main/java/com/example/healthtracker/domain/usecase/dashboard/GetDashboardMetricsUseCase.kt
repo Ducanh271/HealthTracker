@@ -1,9 +1,9 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.dashboard
 
-import com.example.healthtracker.data.local.datastore.SettingsDataStore
 import com.example.healthtracker.domain.model.DashboardMetrics
 import com.example.healthtracker.domain.repository.ActivityRepository
 import com.example.healthtracker.domain.repository.MealRepository
+import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.utils.DateUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -12,14 +12,14 @@ import javax.inject.Inject
 class GetDashboardMetricsUseCase @Inject constructor(
     private val mealRepository: MealRepository,
     private val activityRepository: ActivityRepository,
-    private val settingsDataStore: SettingsDataStore
+    private val userRepository: UserRepository
 ) {
     operator fun invoke(): Flow<DashboardMetrics> {
         val last7Days = DateUtils.getLast7DaysStrings()
         val todayStr = DateUtils.getTodayString()
 
         return combine(
-            settingsDataStore.userProfile,
+            userRepository.userProfile,
             mealRepository.getMealLogsByDates(last7Days),
             activityRepository.getActivityLogsByDates(last7Days)
         ) { profile, mealLogs, activityLogs ->

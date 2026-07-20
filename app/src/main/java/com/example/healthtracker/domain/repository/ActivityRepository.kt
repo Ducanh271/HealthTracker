@@ -9,7 +9,11 @@ interface ActivityRepository {
     suspend fun insertActivityItems(items: List<ActivityItemEntity>)
     suspend fun insertActivityLog(log: ActivityLogEntity)
     suspend fun deleteActivityLog(log: ActivityLogEntity)
-    fun getActivityLogsByDate(date: Long): Flow<List<ActivityLogEntity>>
+    fun getActivityLogsByDate(date: String): Flow<List<ActivityLogEntity>>
 
     fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLogEntity>>
+
+    fun searchActivityItems(query: String): Flow<List<ActivityItemEntity>>
+    suspend fun deleteActivityLogById(id: Int)
+    suspend fun updateActivityLog(id: Int, duration: Int, calories: Int)
 }

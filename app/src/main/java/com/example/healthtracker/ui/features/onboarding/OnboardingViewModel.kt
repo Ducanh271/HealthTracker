@@ -3,19 +3,13 @@ package com.example.healthtracker.ui.features.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.R
-import com.example.healthtracker.data.local.datastore.SettingsDataStore
-import com.example.healthtracker.domain.usecase.CalculateBmiUseCase
-import com.example.healthtracker.domain.usecase.CalculateTdeeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import android.util.Log
 import com.example.healthtracker.domain.usecase.SaveOnboardingProfileUseCase
 import com.example.healthtracker.utils.DateUtils
 

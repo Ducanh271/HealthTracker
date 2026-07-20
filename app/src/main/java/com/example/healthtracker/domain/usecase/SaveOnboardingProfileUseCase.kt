@@ -1,7 +1,7 @@
 package com.example.healthtracker.domain.usecase
 
-import com.example.healthtracker.data.local.datastore.SettingsDataStore
 import com.example.healthtracker.domain.repository.UserRepository
+import com.example.healthtracker.domain.usecase.dashboard.CalculateTdeeUseCase
 import com.example.healthtracker.ui.features.onboarding.OnboardingState
 import com.example.healthtracker.utils.DateUtils
 import javax.inject.Inject

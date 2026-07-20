@@ -21,9 +21,9 @@ import com.example.healthtracker.ui.theme.LocalDimens
 import kotlin.math.abs
 
 @Composable
-fun ProgressCircle(consumed: Int, target: Int, remaining: Int) {
+fun ProgressCircle(consumed: Int, target: Int,burned: Int, remaining: Int) {
     val dimens = LocalDimens.current
-    val progress = if (target > 0) (consumed.toFloat() / target.toFloat()).coerceIn(0f, 1f) else 0f
+    val progress = if (target > 0) ((consumed.toFloat() - burned.toFloat()) / target.toFloat()).coerceIn(0f, 1f) else 0f
 
     val animatedProgress by animateFloatAsState(
         targetValue = progress,
@@ -66,7 +66,7 @@ fun ProgressCircle(consumed: Int, target: Int, remaining: Int) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = "$consumed / $target",
+                text = "${consumed-burned} / $target",
                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -90,6 +90,6 @@ fun ProgressCircle(consumed: Int, target: Int, remaining: Int) {
 @Composable
 fun ProgressCirclePreview() {
     MaterialTheme {
-        ProgressCircle(consumed = 1200, target = 2000, remaining = 800)
+        ProgressCircle(consumed = 1200, target = 2000, burned = 200, remaining = 800)
     }
 }

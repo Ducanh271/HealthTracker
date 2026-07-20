@@ -1,4 +1,4 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.meal
 
 import com.example.healthtracker.domain.model.FoodItem
 import com.example.healthtracker.domain.repository.MealRepository

@@ -112,4 +112,32 @@
     <string name="add_new_quantity">Số lượng</string>
     <string name="add_new_suggestions_title">Gợi ý nhanh</string>
     <string name="add_new_submit">Thêm món</string>
+    <!-- Activity Diary -->
+    <string name="activity_diary_title">Nhật ký hoạt động</string>
+    <string name="activity_total_burned">Tổng calo tiêu thụ</string>
+    <string name="activity_goal_progress">Đạt %1$d%% mục tiêu hằng ngày</string>
+    <string name="activity_quick_suggestions">Gợi ý nhanh</string>
+    <string name="activity_today">Hoạt động hôm nay</string>
+    <string name="activity_see_all">Xem tất cả</string>
+    <string name="activity_empty_state">Ghi lại nhiều hoạt động hơn để đạt mục tiêu!</string>
+    <string name="activity_unit_kcal">kcal</string>
+    <!-- Search Activity Bottom Sheet -->
+    <string name="activity_search_title">Thêm hoạt động</string>
+    <string name="activity_search_hint">Tìm bài tập hoặc hoạt động...</string>
+    <string name="activity_category_all">Tất cả</string>
+    <string name="activity_category_cardio">Cardio</string>
+    <string name="activity_category_strength">Sức mạnh</string>
+    <string name="activity_category_yoga">Yoga</string>
+    <string name="activity_category_sports">Thể thao</string>
+    <string name="activity_popular_title">Hoạt động phổ biến</string>
+    <string name="activity_action_cancel">Hủy</string>
+    <string name="activity_action_add_manual">Thêm thủ công</string>
+    <string name="activity_met_format">%1$.1f MET</string>
+    <!-- Log Activity Dialog -->
+    <string name="activity_log_selected">Hoạt động đang chọn</string>
+    <string name="activity_log_input_title">Nhập thời gian hoạt động</string>
+    <string name="activity_log_duration_label">Thời lượng (phút)</string>
+    <string name="activity_log_estimated_cals">Calo ước tính</string>
+    <string name="activity_log_confirm">Xác nhận</string>
+    <string name="activity_log_met_hint">* Tính toán dựa trên chỉ số MET (%1$.1f) cho cân nặng trung bình 70kg. Kết quả thực tế có thể thay đổi.</string>
 </resources>

@@ -1,8 +1,7 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.dashboard
 
 import javax.inject.Inject
 import kotlin.math.pow
-import kotlin.math.round
 import kotlin.math.roundToInt
 
 data class BmiResult(
@@ -12,7 +11,6 @@ data class BmiResult(
 
 class CalculateBmiUseCase @Inject constructor() {
     operator fun invoke(weightKg: Float, height: Float): BmiResult{
-        //WARNING: không được fix cứng, để tạm sau sửa
         if(height <= 0f) return BmiResult(0f, "Không xác định")
         val heightM = height/100
         val bmi = weightKg/(heightM.pow(2))

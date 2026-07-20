@@ -77,18 +77,6 @@ fun MealDiaryScreen(
 
             DailySummaryCard(totalKcal = state.totalCalories, targetKcal = state.targetCalories)
 
-            SearchBarComponent(
-                query = searchQuery,
-                onQueryChange = { newText ->
-                    viewModel.updateSearchQuery(newText)
-                    if (newText.isNotEmpty() && !showBottomSheet) {
-                        if (currentMealType.isEmpty()) {
-                            currentMealType = "Bữa sáng"
-                        }
-                        showBottomSheet = true
-                    }
-                }
-            )
 
             MealSection(
                 title = stringResource(id = R.string.meal_breakfast),

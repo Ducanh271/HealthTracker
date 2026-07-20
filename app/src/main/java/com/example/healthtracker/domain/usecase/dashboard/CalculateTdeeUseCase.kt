@@ -1,10 +1,10 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.dashboard
 
-import androidx.compose.ui.text.font.FontWeight
+import android.content.ContentValues.TAG
+import android.util.Log
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-//WARNING: không được fix cứng, để tạm sau sửa
 
 class CalculateTdeeUseCase @Inject constructor() {
     operator fun invoke(
@@ -37,7 +37,8 @@ class CalculateTdeeUseCase @Inject constructor() {
             "Giữ cân" -> tdeeBase
             else -> tdeeBase
         }
-
+        Log.d(TAG, "Input: gender=$gender, weight=$weightKg, height=$heightCm, age=$age, level=$activityLevel, goal=$goal")
+        Log.d(TAG, "Calculation: BMR=$bmr, Multiplier=$activityMultiplier, TDEE_Base=$tdeeBase, Final_TDEE=${finalTdee.roundToInt()}")
         return finalTdee.roundToInt()
     }
 }

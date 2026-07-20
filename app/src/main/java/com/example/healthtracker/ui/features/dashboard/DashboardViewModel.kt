@@ -2,7 +2,8 @@ package com.example.healthtracker.ui.features.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.healthtracker.domain.usecase.GetDashboardMetricsUseCase
+import com.example.healthtracker.domain.usecase.dashboard.GetDashboardAdviceUseCase
+import com.example.healthtracker.domain.usecase.dashboard.GetDashboardMetricsUseCase
 import com.example.healthtracker.utils.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,17 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val getDashboardMetricsUseCase: GetDashboardMetricsUseCase
+    private val getDashboardMetricsUseCase: GetDashboardMetricsUseCase,
+    private val getDashboardAdviceUseCase: GetDashboardAdviceUseCase // Inject UseCase advice
 ) : ViewModel() {
 
     val state: StateFlow<DashboardState> = getDashboardMetricsUseCase().map { metrics ->
 
-        val advice = when {
-            metrics.consumedCalories == 0 -> "Bắt đầu ngày mới! Hãy ghi lại bữa ăn đầu tiên của bạn."
-            metrics.remainingCalories < 0 -> "Cảnh báo: Bạn đã vượt quá lượng calo mục tiêu hôm nay!"
-            metrics.remainingCalories < 200 -> "Tuyệt vời! Bạn đã sắp đạt mục tiêu calo hôm nay."
-            else -> "Bạn đang làm rất tốt! Hãy tiếp tục duy trì nhé."
-        }
+
 
         DashboardState(
             currentDate = DateUtils.getTodayDisplayString(),
@@ -33,7 +30,7 @@ class DashboardViewModel @Inject constructor(
             burnedCalories = metrics.burnedCalories,
             remainingCalories = metrics.remainingCalories,
             balanceCalories = metrics.balanceCalories,
-            adviceText = advice,
+            adviceText = getDashboardAdviceUseCase(metrics.consumedCalories, metrics.remainingCalories),
             weeklyBarData = metrics.weeklyChartData,
             weeklyLineData = metrics.weeklyChartData,
             stats = StatsData(

@@ -1,4 +1,4 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.meal
 
 import android.util.Log
 import com.example.healthtracker.data.local.room.entity.FoodItemEntity

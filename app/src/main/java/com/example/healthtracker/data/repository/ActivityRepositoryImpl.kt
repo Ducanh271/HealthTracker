@@ -18,10 +18,19 @@ class ActivityRepositoryImpl @Inject constructor(
 
     override suspend fun deleteActivityLog(log: ActivityLogEntity) = activityDao.deleteActivityLog(log)
 
-    override fun getActivityLogsByDate(date: Long): Flow<List<ActivityLogEntity>> = activityDao.getActivityLogsByDate(date)
+    override fun getActivityLogsByDate(date: String): Flow<List<ActivityLogEntity>> = activityDao.getActivityLogsByDate(date)
 
     override fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLogEntity>> {
         return activityDao.getActivityLogsByDates(dates)
     }
 
+    override fun searchActivityItems(query: String): Flow<List<ActivityItemEntity>> = activityDao.searchActivityItems(query)
+
+    override suspend fun deleteActivityLogById(id: Int) {
+        activityDao.deleteActivityLogById(id)
+    }
+
+    override suspend fun updateActivityLog(id: Int, duration: Int, calories: Int) {
+        activityDao.updateActivityLog(id, duration, calories)
+    }
 }

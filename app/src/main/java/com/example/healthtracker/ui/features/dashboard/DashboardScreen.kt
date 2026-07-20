@@ -100,6 +100,7 @@ fun DashboardContent(
                 ProgressCircle(
                     consumed = state.consumedCalories,
                     target = state.targetCalories,
+                    burned = state.burnedCalories,
                     remaining = state.remainingCalories
                 )
 

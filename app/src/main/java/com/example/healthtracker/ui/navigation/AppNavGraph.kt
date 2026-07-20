@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.healthtracker.ui.features.dashboard.DashboardScreen
+import com.example.healthtracker.ui.features.diary.activity.ActivityDiaryScreen
 import com.example.healthtracker.ui.features.diary.meal.MealDiaryScreen
 import com.example.healthtracker.ui.features.onboarding.OnboardingScreen
 
@@ -69,7 +70,7 @@ fun AppNavGraph(
             }
 
             composable(route = Screen.ActivityDiary.route) {
-                Surface(modifier = Modifier.fillMaxSize()) { Text("Activity Diary Screen") }
+                Surface(modifier = Modifier.fillMaxSize()) { ActivityDiaryScreen() }
             }
 
             composable(route = Screen.Settings.route) {

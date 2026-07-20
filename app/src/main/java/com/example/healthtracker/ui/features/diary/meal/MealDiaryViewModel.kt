@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
 import com.example.healthtracker.domain.model.Meal
-import com.example.healthtracker.domain.usecase.AddMealLogUseCase
-import com.example.healthtracker.domain.usecase.AddNewFoodItemUseCase
-import com.example.healthtracker.domain.usecase.DeleteMealLogUseCase
-import com.example.healthtracker.domain.usecase.GetMealDiaryUseCase
-import com.example.healthtracker.domain.usecase.SearchFoodItemsUseCase
+import com.example.healthtracker.domain.usecase.meal.AddMealLogUseCase
+import com.example.healthtracker.domain.usecase.meal.AddNewFoodItemUseCase
+import com.example.healthtracker.domain.usecase.meal.DeleteMealLogUseCase
+import com.example.healthtracker.domain.usecase.meal.GetMealDiaryUseCase
+import com.example.healthtracker.domain.usecase.meal.SearchFoodItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

@@ -1,4 +1,4 @@
-package com.example.healthtracker.domain.usecase
+package com.example.healthtracker.domain.usecase.meal
 
 import com.example.healthtracker.data.mapper.toEntity
 import com.example.healthtracker.domain.model.Meal

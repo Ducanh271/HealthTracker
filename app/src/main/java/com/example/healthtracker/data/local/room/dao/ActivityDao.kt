@@ -25,8 +25,18 @@ interface ActivityDao {
     suspend fun deleteActivityLog(log: ActivityLogEntity)
 
     @Query("SELECT * FROM activity_logs WHERE date = :date")
-    fun getActivityLogsByDate(date: Long): Flow<List<ActivityLogEntity>>
+    fun getActivityLogsByDate(date: String): Flow<List<ActivityLogEntity>>
 
     @Query("SELECT * FROM activity_logs WHERE date IN (:dates)")
     fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLogEntity>>
+
+    @Query("SELECT * FROM activity_items WHERE name LIKE '%' || :query || '%'")
+    fun searchActivityItems(query: String): Flow<List<ActivityItemEntity>>
+
+    @Query("DELETE FROM activity_logs WHERE id = :id")
+    suspend fun deleteActivityLogById(id: Int)
+
+    @Query("UPDATE activity_logs SET durationMinutes = :duration, caloriesBurned = :calories WHERE id = :id")
+    suspend fun updateActivityLog(id: Int, duration: Int, calories: Int)
+
 }
