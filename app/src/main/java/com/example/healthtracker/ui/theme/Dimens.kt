@@ -25,7 +25,13 @@ data class Dimensions(
     val borderWidth: Dp = 1.dp,      // Độ dày tiêu chuẩn của viền
     val strokeWidth: Dp = 2.dp,      // Độ dày nét vẽ (dùng cho Progress Bar)
     val iconSmall: Dp = 18.dp,       // Icon cỡ nhỏ (info)
-    val iconMedium: Dp = 24.dp       // Icon cỡ vừa (icon chuẩn Material)
+    val iconMedium: Dp = 24.dp,       // Icon cỡ vừa (icon chuẩn Material)
+
+    // Bổ sung vào class Dimensions trong file Dimens.kt nếu chưa có:
+    val avatarSize: Dp = 128.dp,     // Kích thước ảnh đại diện (avatar)
+    val iconEditBadge: Dp = 20.dp,   // Icon chỉnh sửa nhỏ ở góc avatar
+    val bentoCardAspect: Float = 1.2f, // Tỉ lệ khung hình Bento Card
+    val spacingXS: Dp = 2.dp,        // Khoảng cách cực nhỏ
 )
 
 val LocalDimens = compositionLocalOf { Dimensions() }

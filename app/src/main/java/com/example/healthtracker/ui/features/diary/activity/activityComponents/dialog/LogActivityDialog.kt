@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
 @Composable
 fun LogActivityDialog(
     activityItem: ActivityCatalogItem,
-    userWeightKg: Float = 70f, // Mặc định 70kg, sau này có thể lấy từ User Profile
+    userWeightKg: Float = 70f,
     calculateCalories: (metValue: Float, duration: Int) -> Int,
     onDismiss: () -> Unit,
     onConfirm: (durationMinutes: Int, caloriesBurned: Int) -> Unit
@@ -41,26 +41,23 @@ fun LogActivityDialog(
     val dimens = LocalDimens.current
     var durationText by remember { mutableStateOf("30") }
 
-    // Parse duration an toàn, tránh lỗi khi người dùng xóa trắng ô nhập
     val durationMinutes = durationText.toIntOrNull() ?: 0
 
-    // SỬA DÒNG NÀY:
-    val estimatedCalories = remember(durationMinutes, activityItem.metValue, userWeightKg) { // Dùng durationMinutes thay vì duration
-        calculateCalories(activityItem.metValue, durationMinutes) // Dùng durationMinutes ở đây
+    val estimatedCalories = remember(durationMinutes, activityItem.metValue, userWeightKg) {
+        calculateCalories(activityItem.metValue, durationMinutes)
     }
     Dialog(
         onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false) // Cho phép custom width
+        properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.92f) // Chiếm 92% chiều rộng màn hình
-                .clip(RoundedCornerShape(28.dp))
+                .fillMaxWidth(0.92f)
+                .clip(RoundedCornerShape(dimens.cornerExtraLarge))
                 .background(MaterialTheme.colorScheme.surfaceContainer)
                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(28.dp))
                 .padding(dimens.lg)
         ) {
-            // 1. Header hiển thị thông tin hoạt động
             ActivityHeader(item = activityItem)
 
             Spacer(modifier = Modifier.height(dimens.xl))
@@ -187,12 +184,10 @@ private fun DurationInputSection(
                 Icon(Icons.Default.Remove, contentDescription = "-", tint = MaterialTheme.colorScheme.onSecondaryContainer)
             }
 
-            // Ô nhập số bằng BasicTextField để giống thiết kế
             Box(modifier = Modifier.width(80.dp), contentAlignment = Alignment.Center) {
                 BasicTextField(
                     value = durationText,
                     onValueChange = { newValue ->
-                        // Chỉ cho phép nhập số
                         if (newValue.isEmpty() || newValue.matches(Regex("^\\d+\$"))) {
                             onDurationChange(newValue)
                         }
@@ -216,7 +211,6 @@ private fun DurationInputSection(
                 )
             }
 
-            // Nút Tăng
             IconButton(
                 onClick = onIncrease,
                 modifier = Modifier

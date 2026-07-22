@@ -27,7 +27,6 @@ data class ActivitySuggestion(
     val mets: Float,
     val type: ActivityType
 )
-// Ví dụ Model dùng cho danh mục tìm kiếm
 data class ActivityCatalogItem(
     val id: Int,
     val name: String,
@@ -37,7 +36,6 @@ data class ActivityCatalogItem(
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 )
 fun ActivityItem.toCatalogItem(): ActivityCatalogItem {
-    // Lưu ý: Icon là một ImageVector, bạn cần map ActivityType sang Icon tương ứng
     val icon = when (this.type) {
         ActivityType.STRENGTH -> androidx.compose.material.icons.Icons.Default.FitnessCenter
         ActivityType.CARDIO -> androidx.compose.material.icons.Icons.Default.DirectionsRun
@@ -47,7 +45,7 @@ fun ActivityItem.toCatalogItem(): ActivityCatalogItem {
     }
 
     return ActivityCatalogItem(
-        id = this.id, // Lưu ý: Nếu id của log khác với id catalog, bạn cần lưu lại activityId trong ActivityItem
+        id = this.id,
         name = this.name,
         description = "Chỉnh sửa hoạt động", // Hoặc mô tả tùy ý
         metValue = 0f, // Tạm thời để 0, vì log đã lưu calories rồi

@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Health Tracker</string>
+    <!-- Onboarding: Headers -->
+    <string name="onboarding_title">Bắt đầu hành trình của bạn</string>
+    <string name="onboarding_subtitle">Hãy cho chúng tôi biết về bạn để tạo một kế hoạch sức khỏe cá nhân hóa.</string>
+
+    <string name="label_fullname">Họ và tên</string>
+    <string name="placeholder_fullname">Nhập tên của bạn</string>
+
+    <string name="label_dob">Ngày sinh</string>
+    <string name="placeholder_dob">DD/MM/YYYY</string>
+
+    <string name="label_gender">Giới tính</string>
+    <string name="gender_male">Nam</string>
+    <string name="gender_female">Nữ</string>
+
+    <string name="label_weight">Cân nặng (kg)</string>
+    <string name="unit_kg">kg</string>
+    <string name="placeholder_weight">70</string>
+
+    <string name="label_height">Chiều cao (cm)</string>
+    <string name="unit_cm">cm</string>
+    <string name="placeholder_height">170</string>
+
+    <string name="label_activity_level">Mức độ hoạt động</string>
+    <string name="activity_level_1">Cấp độ 1: Ít vận động (Làm việc VP)</string>
+    <string name="activity_level_2">Cấp độ 2: Vận động nhẹ (1-3 ngày/tuần)</string>
+    <string name="activity_level_3">Cấp độ 3: Vận động vừa (3-5 ngày/tuần)</string>
+    <string name="activity_level_4">Cấp độ 4: Vận động nặng (6-7 ngày/tuần)</string>
+    <string name="activity_level_5">Cấp độ 5: Vận động rất nặng (VĐV)</string>
+
+    <string name="label_goal">Mục tiêu của bạn</string>
+    <string name="goal_lose_title">Giảm cân</string>
+    <string name="goal_lose_desc">Thâm hụt calo lành mạnh</string>
+    <string name="goal_maintain_title">Giữ cân</string>
+    <string name="goal_maintain_desc">Duy trì vóc dáng hiện tại</string>
+    <string name="goal_gain_title">Tăng cân</string>
+    <string name="goal_gain_desc">Xây dựng cơ bắp hiệu quả</string>
+
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="footer_info">TDEE (Tổng lượng calo tiêu thụ hàng ngày) sẽ được tính toán dựa trên thông tin này để đưa ra gợi ý dinh dưỡng chính xác nhất.</string>
+
+    <string name="error_weight_invalid">Cân nặng phải từ 5kg - 300kg</string>
+    <string name="error_height_invalid">Chiều cao phải từ 50cm - 300cm</string>
+    <string name="error_name_empty">Vui lòng nhập họ tên</string>
+    <string name="error_dob_invalid">Ngày sinh không hợp lệ (VD: 25/12/2000)</string>
+
+    <!--    bottom bar-->
+    <string name="nav_dashboard">Tổng quan</string>
+    <string name="nav_diary">Bữa ăn</string>
+    <string name="nav_statistics">Hoạt động</string>
+    <string name="nav_settings">Cài đặt</string>
+    <!--    dash board-->
+    <string name="dash_date_today">Hôm nay, %1$s</string>
+    <string name="dash_target">Mục tiêu</string>
+    <string name="dash_remaining">Còn lại %1$d kcal</string>
+    <string name="dash_over">Vượt quá %1$d kcal</string>
+    <string name="dash_consumed">Nạp vào</string>
+    <string name="dash_burned">Tiêu thụ</string>
+    <string name="dash_balance">Cân bằng</string>
+    <string name="dash_advice_title">Lời khuyên</string>
+    <string name="dash_chart_bar_title">Calo nạp vào</string>
+    <string name="dash_chart_line_title">Xu hướng tuần</string>
+    <string name="dash_stat_avg_consumed">TB Nạp (kcal/ngày)</string>
+    <string name="dash_stat_avg_burned">TB Tiêu thụ</string>
+    <string name="dash_stat_goal_reached">Số ngày đạt mục tiêu</string>
+    <string name="dash_chart_subtitle">Đoán xem</string>
+    <string name="dash_fab_activity">Thêm hoạt động</string>
+    <string name="dash_fab_meal">Thêm bữa ăn</string>
+    <!--    meal diary-->
+    <string name="meal_diary_title">Nhật ký Bữa ăn</string>
+    <string name="meal_diary_total_today">Tổng calo hôm nay</string>
+    <string name="meal_diary_target">Mục tiêu: %1$d</string>
+    <string name="meal_diary_search">Tìm kiếm món ăn</string>
+    <string name="meal_diary_add_food">Thêm món</string>
+    <string name="meal_diary_empty">Chưa có món ăn nào</string>
+    <string name="meal_breakfast">Bữa sáng</string>
+    <string name="meal_lunch">Bữa trưa</string>
+    <string name="meal_dinner">Bữa tối</string>
+    <string name="meal_snack">Bữa phụ</string>
+    <!-- Add Food Dialog -->
+    <string name="meal_dialog_title">Thêm món ăn</string>
+    <string name="meal_dialog_food_name">Tên món ăn</string>
+    <string name="meal_dialog_food_name_hint">VD: Phở bò, Cơm tấm...</string>
+    <string name="meal_dialog_serving">Số phần / Số lượng</string>
+    <string name="meal_dialog_serving_hint">VD: 1, 2...</string>
+    <string name="meal_dialog_calories">Tổng Calo (kcal)</string>
+    <string name="meal_dialog_calories_hint">VD: 350, 500...</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_add">Thêm món</string>
+    <!-- Bottom Sheet Add Food -->
+    <string name="sheet_add_title">Thêm món vào %1$s</string>
+    <string name="sheet_search_hint">Tìm kiếm món ăn...</string>
+    <string name="sheet_selected_items">Đã chọn</string>
+    <string name="sheet_food_list">Danh sách món ăn</string>
+    <string name="sheet_meal_total">Tổng calo bữa ăn</string>
+    <string name="sheet_action_delete">Xóa</string>
+    <string name="sheet_action_add">Thêm</string>
+    <string name="sheet_action_add_new">Thêm món mới</string>
+    <string name="sheet_action_cancel">Hủy</string>
+    <string name="sheet_action_confirm">Xác nhận</string>
+    <string name="sheet_item_count">x%1$d = %2$d kcal</string>
+    <string name="sheet_item_info">%1$d %2$s • %3$d kcal</string>
+    <string name="sheet_empty_search">Không tìm thấy món ăn nào.</string>
+    <!-- Add New Food Bottom Sheet -->
+    <string name="add_new_title">Thêm món mới</string>
+    <string name="add_new_name">Tên món ăn</string>
+    <string name="add_new_name_hint">VD: Phở bò</string>
+    <string name="add_new_portion">Khẩu phần</string>
+    <string name="add_new_portion_hint">VD: 1 bát</string>
+    <string name="add_new_calories">Calo (kcal)</string>
+    <string name="add_new_quantity">Số lượng</string>
+    <string name="add_new_suggestions_title">Gợi ý nhanh</string>
+    <string name="add_new_submit">Thêm món</string>
+    <!-- Activity Diary -->
+    <string name="activity_diary_title">Nhật ký hoạt động</string>
+    <string name="activity_total_burned">Tổng calo tiêu thụ</string>
+    <string name="activity_goal_progress">Đạt %1$d%% mục tiêu hằng ngày</string>
+    <string name="activity_quick_suggestions">Gợi ý nhanh</string>
+    <string name="activity_today">Hoạt động hôm nay</string>
+    <string name="activity_see_all">Xem tất cả</string>
+    <string name="activity_empty_state">Ghi lại nhiều hoạt động hơn để đạt mục tiêu!</string>
+    <string name="activity_unit_kcal">kcal</string>
+    <!-- Search Activity Bottom Sheet -->
+    <string name="activity_search_title">Thêm hoạt động</string>
+    <string name="activity_search_hint">Tìm bài tập hoặc hoạt động...</string>
+    <string name="activity_category_all">Tất cả</string>
+    <string name="activity_category_cardio">Cardio</string>
+    <string name="activity_category_strength">Sức mạnh</string>
+    <string name="activity_category_yoga">Yoga</string>
+    <string name="activity_category_sports">Thể thao</string>
+    <string name="activity_popular_title">Hoạt động phổ biến</string>
+    <string name="activity_action_cancel">Hủy</string>
+    <string name="activity_action_add_manual">Thêm thủ công</string>
+    <string name="activity_met_format">%1$.1f MET</string>
+    <!-- Log Activity Dialog -->
+    <string name="activity_log_selected">Hoạt động đang chọn</string>
+    <string name="activity_log_input_title">Nhập thời gian hoạt động</string>
+    <string name="activity_log_duration_label">Thời lượng (phút)</string>
+    <string name="activity_log_estimated_cals">Calo ước tính</string>
+    <string name="activity_log_confirm">Xác nhận</string>
+    <string name="activity_log_met_hint">* Tính toán dựa trên chỉ số MET (%1$.1f) cho cân nặng trung bình 70kg. Kết quả thực tế có thể thay đổi.</string>
+    <!-- Các chuỗi chung -->
+    <string name="action_back">Quay lại</string>
+    <string name="action_edit">Chỉnh sửa</string>
+    <string name="action_save">Lưu</string>
+
+    <!-- Màn hình Cài đặt -->
+    <string name="settings_title">Cài đặt</string>
+
+    <!-- Cài đặt chung -->
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="lang_vietnamese">Tiếng Việt</string>
+    <string name="settings_notifications">Thông báo</string>
+
+    <!-- Cài đặt Giao diện (Theme) -->
+    <string name="settings_theme_title">Giao diện</string>
+    <string name="theme_classic_purple">Tím cổ điển</string>
+    <string name="theme_energy_orange">Cam năng lượng</string>
+    <string name="theme_deep_ocean">Đại dương sâu</string>
+    <string name="theme_soft_berry">Thiên nhiên</string>
+
+    <!-- Chế độ hiển thị (Sáng/Tối) -->
+    <string name="settings_brightness">Chế độ hiển thị</string>
+    <string name="mode_light">Sáng</string>
+    <string name="mode_dark">Tối</string>
+    <string name="mode_system">Hệ thống</string>
+
+    <!-- Cỡ chữ -->
+    <string name="settings_font_size">Cỡ chữ</string>
+    <string name="font_small">Nhỏ</string>
+    <string name="font_medium">Vừa</string>
+    <string name="font_large">Lớn</string>
+
+    <!-- Các thông tin Profile mẫu (Nếu cần) -->
+    <string name="profile_bmi_label">BMI: %1$s</string>
+    <!-- Edit Profile -->
+    <string name="edit_profile_title">Chỉnh sửa hồ sơ</string>
+    <string name="edit_profile_change_avatar">Thay đổi ảnh đại diện</string>
+    <string name="edit_profile_current_bmi">Chỉ số BMI hiện tại</string>
+    <string name="edit_profile_bmi_desc">Cân nặng lý tưởng cho sức khỏe của bạn.</string>
+    <string name="edit_profile_est_tdee">TDEE ước tính</string>
+    <string name="edit_profile_kcal_day">kcal/ngày</string>
+    <string name="edit_profile_tdee_desc">Năng lượng cần thiết để duy trì cân nặng.</string>
+    <string name="edit_profile_save_changes">Lưu thay đổi</string>
+    <string name="edit_profile_saving">Đang lưu...</string>
+    <string name="edit_profile_save_success">Đã cập nhật hồ sơ thành công!</string>
+    <!-- Goal Values for Edit Profile -->
+    <string name="goal_value_lose">Giảm cân</string>
+    <string name="goal_value_maintain">Giữ cân</string>
+    <string name="goal_value_gain">Tăng cân</string>
+</resources>

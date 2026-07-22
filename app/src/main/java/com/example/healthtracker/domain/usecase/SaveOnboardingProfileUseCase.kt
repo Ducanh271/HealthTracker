@@ -10,7 +10,7 @@ class SaveOnboardingProfileUseCase @Inject constructor(
     private val calculateTdeeUseCase: CalculateTdeeUseCase,
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(currentState: OnboardingState) {
+    suspend operator fun invoke(currentState: OnboardingState): Result<Unit> = try {
         val weightKg = currentState.weight.toFloat()
         val heightCm = currentState.height.toFloat()
         val calculatedAge = DateUtils.calculateAgeOrNull(currentState.dob) ?: 20
@@ -36,5 +36,8 @@ class SaveOnboardingProfileUseCase @Inject constructor(
             tdee = tdee
         )
         userRepository.saveOnboardingStatus(true)
+        Result.success(Unit)
+    }catch (e: Exception){
+        Result.failure(e)
     }
 }

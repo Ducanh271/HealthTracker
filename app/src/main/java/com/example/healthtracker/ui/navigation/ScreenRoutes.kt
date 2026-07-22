@@ -6,5 +6,6 @@ sealed class Screen(val route: String) {
     object MealDiary: Screen("meal_diary_screen")
     object ActivityDiary: Screen("activity_diary_screen")
     object Settings: Screen("settings_screen")
+    object EditProfile : Screen("edit_profile") // Thêm dòng này
 }
 

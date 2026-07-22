@@ -18,6 +18,8 @@ import com.example.healthtracker.ui.features.dashboard.DashboardScreen
 import com.example.healthtracker.ui.features.diary.activity.ActivityDiaryScreen
 import com.example.healthtracker.ui.features.diary.meal.MealDiaryScreen
 import com.example.healthtracker.ui.features.onboarding.OnboardingScreen
+import com.example.healthtracker.ui.features.profile.EditProfileScreen
+import com.example.healthtracker.ui.features.settings.SettingsScreen
 
 @Composable
 fun AppNavGraph(
@@ -73,8 +75,22 @@ fun AppNavGraph(
                 Surface(modifier = Modifier.fillMaxSize()) { ActivityDiaryScreen() }
             }
 
-            composable(route = Screen.Settings.route) {
-                Surface(modifier = Modifier.fillMaxSize()) { Text("Settings Screen") }
+
+            composable(Screen.Settings.route) {
+                SettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onEditProfileClick = {
+                            navController.navigate(Screen.EditProfile.route)
+                    }
+                )
+            }
+
+            composable(route = Screen.EditProfile.route) {
+                EditProfileScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }
