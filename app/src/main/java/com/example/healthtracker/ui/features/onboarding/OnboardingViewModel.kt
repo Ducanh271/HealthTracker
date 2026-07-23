@@ -55,7 +55,6 @@ class OnboardingViewModel @Inject constructor(
                     _state.update { it.copy(isNavigateToDashboard = true) }
                 }
             } catch(e: Exception) {
-                android.util.Log.e("OnboardingBug", "Lỗi: ${e.message}", e)
             } finally {
                 _state.update { it.copy(isLoading = false) }
             }

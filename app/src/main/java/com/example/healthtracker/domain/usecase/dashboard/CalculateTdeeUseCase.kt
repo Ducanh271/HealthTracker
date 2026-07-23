@@ -1,7 +1,5 @@
 package com.example.healthtracker.domain.usecase.dashboard
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.Goal
 import javax.inject.Inject
@@ -39,8 +37,6 @@ class CalculateTdeeUseCase @Inject constructor() {
             Goal.MAINTAIN_WEIGHT -> tdeeBase
             else -> tdeeBase
         }
-        Log.d(TAG, "Input: gender=$gender, weight=$weightKg, height=$heightCm, age=$age, level=$activityLevel, goal=$goal")
-        Log.d(TAG, "Calculation: BMR=$bmr, Multiplier=$activityMultiplier, TDEE_Base=$tdeeBase, Final_TDEE=${finalTdee.roundToInt()}")
         return finalTdee.roundToInt()
     }
 }

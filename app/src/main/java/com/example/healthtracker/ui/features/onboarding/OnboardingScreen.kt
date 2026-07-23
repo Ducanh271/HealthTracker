@@ -1,6 +1,5 @@
 package com.example.healthtracker.ui.features.onboarding
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -24,9 +23,7 @@ fun OnboardingScreen(
     val scrollState = rememberScrollState()
     val state by viewModel.state.collectAsState()
     LaunchedEffect(state.isNavigateToDashboard) {
-        Log.d("OnboardingFlow", "TRẠM 5: LaunchedEffect check, isNavigate = ${state.isNavigateToDashboard}")
         if (state.isNavigateToDashboard) {
-            Log.d("OnboardingFlow", "TRẠM 6: Gọi onNavigateToDashboard()")
             onNavigateToDashboard()
             viewModel.resetNavigationFlag()
         }
