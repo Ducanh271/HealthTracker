@@ -4,11 +4,11 @@ data class UserProfile(
     val name: String,
     val age: Int,
     val dob: String,
-    val gender: String,
+    val gender: Gender,
     val weight: Float,
     val height: Float,
     val activityLevel: Int,
-    val goal: String,
+    val goal: Goal,
     val tdee: Int
 ) {
     companion object {

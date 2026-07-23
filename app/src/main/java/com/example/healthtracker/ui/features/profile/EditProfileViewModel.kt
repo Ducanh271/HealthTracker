@@ -2,8 +2,6 @@ package com.example.healthtracker.ui.features.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.healthtracker.domain.model.Gender
-import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.usecase.dashboard.CalculateBmiUseCase
 import com.example.healthtracker.domain.usecase.dashboard.CalculateTdeeUseCase
 import com.example.healthtracker.domain.usecase.profile.GetUserProfileUseCase
@@ -36,17 +34,14 @@ class EditProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val profile = getUserProfileUseCase().first()
 
-            val genderEnum = runCatching { Gender.valueOf(profile.gender) }.getOrDefault(Gender.MALE)
-            val goalEnum = runCatching { Goal.valueOf(profile.goal) }.getOrDefault(Goal.MAINTAIN_WEIGHT)
-
             _state.value = _state.value.copy(
                 name = profile.name,
-                dob = profile.dob ?: "",
-                gender = genderEnum,
+                dob = profile.dob,
+                gender = profile.gender,
                 weight = profile.weight.toString(),
                 height = profile.height.toString(),
                 activityLevel = profile.activityLevel.toFloat(),
-                goal = goalEnum
+                goal = profile.goal
             )
             recalculateMetrics()
         }

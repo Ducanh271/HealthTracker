@@ -37,11 +37,11 @@ class SaveOnboardingProfileUseCase @Inject constructor(
             name = name,
             age = calculatedAge,
             dob = dob,
-            gender = gender.name,
+            gender = gender,
             weight = weightKg,
             height = heightCm,
             activityLevel = activityLevel,
-            goal = goal.name,
+            goal = goal,
             tdee = tdee
         )
         userRepository.saveOnboardingStatus(true)

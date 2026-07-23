@@ -1,6 +1,8 @@
 package com.example.healthtracker.data.repository
 
 import com.example.healthtracker.data.local.datastore.SettingsDataStore
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.model.UserProfile
 import com.example.healthtracker.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,11 +24,11 @@ class UserRepositoryImpl @Inject constructor(
     override val isOnboardingCompleted: Flow<Boolean> = settingsDataStore.isOnboardingCompleted
 
     override suspend fun saveUserProfile(
-        name: String, age: Int, dob: String, gender: String,
+        name: String, age: Int, dob: String, gender: Gender,
         weight: Float, height: Float, activityLevel: Int,
-        goal: String, tdee: Int
+        goal: Goal, tdee: Int
     ) {
-        settingsDataStore.saveUserProfile(name, age, dob, gender, weight, height, activityLevel, goal, tdee)
+        settingsDataStore.saveUserProfile(name, age, dob, gender.name, weight, height, activityLevel, goal.name, tdee)
     }
 
     override suspend fun saveOnboardingStatus(completed: Boolean) { settingsDataStore.saveOnboardingStatus(completed) }

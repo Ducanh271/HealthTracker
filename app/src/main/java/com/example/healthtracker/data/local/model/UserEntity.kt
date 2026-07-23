@@ -1,5 +1,7 @@
 package com.example.healthtracker.data.local.model
 
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.model.UserProfile
 
 data class UserEntity(
@@ -18,11 +20,11 @@ data class UserEntity(
             name = name,
             age = age,
             dob = dob,
-            gender = gender,
+            gender = Gender.entries.find { it.name == gender } ?: Gender.MALE,
             weight = weight,
             height = height,
             activityLevel = activityLevel,
-            goal = goal,
+            goal = Goal.entries.find { it.name == goal } ?: Goal.MAINTAIN_WEIGHT,
             tdee = tdee
         )
     }

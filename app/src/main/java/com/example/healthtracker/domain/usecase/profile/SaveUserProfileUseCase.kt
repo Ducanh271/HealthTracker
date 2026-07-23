@@ -23,11 +23,11 @@ class SaveUserProfileUseCase @Inject constructor(
             name = name,
             age = age,
             dob = dob,
-            gender = gender.name,
+            gender = gender,
             weight = weight,
             height = height,
             activityLevel = activityLevel,
-            goal = goal.name,
+            goal = goal,
             tdee = tdee
         )
     }

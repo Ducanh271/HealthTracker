@@ -1,5 +1,7 @@
 package com.example.healthtracker.domain.repository
 
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.model.UserProfile
 import kotlinx.coroutines.flow.Flow
 
@@ -10,9 +12,9 @@ interface UserRepository {
     val fontSize: Flow<String>
     val isOnboardingCompleted: Flow<Boolean>
     suspend fun saveUserProfile(
-        name: String, age: Int, dob: String, gender: String,
+        name: String, age: Int, dob: String, gender: Gender,
         weight: Float, height: Float, activityLevel: Int,
-        goal: String, tdee: Int
+        goal: Goal, tdee: Int
     )
     suspend fun saveOnboardingStatus(completed: Boolean)
     suspend fun saveAppTheme(theme: String)

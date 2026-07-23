@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.model.UserProfile
 import com.example.healthtracker.data.local.model.UserEntity
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "health_tracker_prefs")
@@ -51,11 +53,11 @@ class SettingsDataStore @Inject constructor(
             name = prefs[USER_NAME] ?: "",
             age = prefs[USER_AGE] ?: 20,
             dob = prefs[USER_DOB] ?: "",
-            gender = prefs[USER_GENDER] ?: "Nam",
+            gender = prefs[USER_GENDER] ?: Gender.MALE.name,
             weight = prefs[USER_WEIGHT] ?: 0f,
             height = prefs[USER_HEIGHT] ?: 0f,
             activityLevel = prefs[USER_ACTIVITY_LEVEL] ?: 3,
-            goal = prefs[USER_GOAL] ?: "maintain",
+            goal = prefs[USER_GOAL] ?: Goal.MAINTAIN_WEIGHT.name,
             tdee = prefs[USER_TDEE] ?: UserProfile.DEFAULT_TDEE
         )
     }
