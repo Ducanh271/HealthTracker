@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
 import com.example.healthtracker.domain.model.Meal
+import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.domain.usecase.meal.AddMealLogUseCase
 import com.example.healthtracker.domain.usecase.meal.AddNewFoodItemUseCase
 import com.example.healthtracker.domain.usecase.meal.DeleteMealLogUseCase
@@ -57,7 +58,7 @@ class MealDiaryViewModel @Inject constructor(
         _selectedDate.value = newDate
     }
 
-    fun addFood(mealType: String, foodName: String, servingCount: Int, calories: Int) {
+    fun addFood(mealType: MealType, foodName: String, servingCount: Int, calories: Int) {
         viewModelScope.launch {
             val dateStr = _selectedDate.value.format(DateTimeFormatter.ISO_LOCAL_DATE)
             addMealLogUseCase(

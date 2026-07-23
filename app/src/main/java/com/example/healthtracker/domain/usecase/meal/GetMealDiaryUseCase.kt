@@ -1,6 +1,7 @@
 package com.example.healthtracker.domain.usecase.meal
 
 import com.example.healthtracker.domain.model.Meal
+import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.domain.repository.MealRepository
 import com.example.healthtracker.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -28,10 +29,10 @@ class GetMealDiaryUseCase @Inject constructor(
             MealDiaryData(
                 targetCalories = profile.tdee,
                 totalCalories = mealList.sumOf { it.totalCalories },
-                breakfast = mealList.filter { it.mealType == "Bữa sáng" },
-                lunch = mealList.filter { it.mealType == "Bữa trưa" },
-                dinner = mealList.filter { it.mealType == "Bữa tối" },
-                snacks = mealList.filter { it.mealType == "Bữa phụ" }
+                breakfast = mealList.filter { it.mealType == MealType.BREAKFAST },
+                lunch = mealList.filter { it.mealType == MealType.LUNCH },
+                dinner = mealList.filter { it.mealType == MealType.DINNER },
+                snacks = mealList.filter { it.mealType == MealType.SNACK }
             )
         }
     }

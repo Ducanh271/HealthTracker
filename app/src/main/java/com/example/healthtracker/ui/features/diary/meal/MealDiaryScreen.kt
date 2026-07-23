@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
+import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.DailySummaryCard
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.DateSelectorBar
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.MealSection
@@ -47,7 +48,7 @@ fun MealDiaryScreen(
     val scrollState = rememberScrollState()
 
     var showBottomSheet by remember { mutableStateOf(false) }
-    var currentMealType by remember { mutableStateOf("") }
+    var currentMealType by remember { mutableStateOf(MealType.BREAKFAST) }
 
     var cartItems by remember { mutableStateOf(listOf<CartItem>()) }
 
@@ -83,7 +84,7 @@ fun MealDiaryScreen(
                 icon = Icons.Outlined.LightMode,
                 foods = state.breakfast,
                 onAddClick = {
-                    currentMealType = "Bữa sáng"
+                    currentMealType = MealType.BREAKFAST
                     showBottomSheet = true
                 },
                 onDeleteClick = { viewModel.deleteFood(it) }
@@ -94,7 +95,7 @@ fun MealDiaryScreen(
                 icon = Icons.Outlined.WbSunny,
                 foods = state.lunch,
                 onAddClick = {
-                    currentMealType = "Bữa trưa"
+                    currentMealType = MealType.LUNCH
                     showBottomSheet = true
                 },
                 onDeleteClick = { viewModel.deleteFood(it) }
@@ -105,7 +106,7 @@ fun MealDiaryScreen(
                 icon = Icons.Outlined.Brightness2,
                 foods = state.dinner,
                 onAddClick = {
-                    currentMealType = "Bữa tối"
+                    currentMealType = MealType.DINNER
                     showBottomSheet = true
                 },
                 onDeleteClick = { viewModel.deleteFood(it) }
@@ -116,7 +117,7 @@ fun MealDiaryScreen(
                 icon = Icons.Outlined.Fastfood,
                 foods = state.snacks,
                 onAddClick = {
-                    currentMealType = "Bữa phụ"
+                    currentMealType = MealType.SNACK
                     showBottomSheet = true
                 },
                 onDeleteClick = { viewModel.deleteFood(it) }

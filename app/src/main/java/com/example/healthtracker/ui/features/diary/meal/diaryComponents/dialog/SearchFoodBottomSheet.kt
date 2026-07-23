@@ -22,13 +22,14 @@ import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
+import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.ui.theme.LocalDimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchFoodBottomSheet(
-    mealType: String,
-    onMealTypeChange: (String) -> Unit,
+    mealType: MealType,
+    onMealTypeChange: (MealType) -> Unit,
     cartItems: List<CartItem>,
     onCartItemsChange: (List<CartItem>) -> Unit,
     onDismiss: () -> Unit,
@@ -154,10 +155,10 @@ fun SearchFoodBottomSheet(
 }
 @Composable
 fun MealTypeSelector(
-    selectedMeal: String,
-    onMealSelected: (String) -> Unit
+    selectedMeal: MealType,
+    onMealSelected: (MealType) -> Unit
 ) {
-    val meals = listOf("Bữa sáng", "Bữa trưa", "Bữa tối", "Bữa phụ")
+    val meals = MealType.entries
     val dimens = LocalDimens.current
 
     LazyRow(
@@ -179,11 +180,18 @@ fun MealTypeSelector(
                     .padding(horizontal = dimens.lg, vertical = dimens.sm)
             ) {
                 Text(
-                    text = meal,
+                    text = stringResource(id = meal.labelRes()),
                     style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
                     color = contentColor
                 )
             }
         }
     }
+}
+
+fun MealType.labelRes(): Int = when (this) {
+    MealType.BREAKFAST -> R.string.meal_breakfast
+    MealType.LUNCH -> R.string.meal_lunch
+    MealType.DINNER -> R.string.meal_dinner
+    MealType.SNACK -> R.string.meal_snack
 }
