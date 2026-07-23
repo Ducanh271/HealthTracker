@@ -72,7 +72,9 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
                 label = stringResource(id = R.string.label_fullname),
                 value = state.name,
                 onValueChange = { onEvent(EditProfileEvent.OnNameChange(it)) },
-                icon = Icons.Default.Person
+                icon = Icons.Default.Person,
+                isError = state.nameError,
+                errorText = stringResource(id = R.string.error_name_empty)
             )
 
             Row(
@@ -85,7 +87,9 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
                         label = stringResource(id = R.string.label_dob),
                         value = state.dob,
                         onValueChange = { },
-                        icon = Icons.Default.DateRange
+                        icon = Icons.Default.DateRange,
+                        isError = state.dobError,
+                        errorText = stringResource(id = R.string.error_dob_invalid)
                     )
                     Spacer(
                         modifier = Modifier

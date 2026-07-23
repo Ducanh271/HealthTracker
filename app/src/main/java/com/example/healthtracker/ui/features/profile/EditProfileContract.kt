@@ -19,13 +19,15 @@ data class EditProfileState(
 
     val isLoading: Boolean = false,
     val showSuccessToast: Boolean = false,
+    val nameError: Boolean = false,
+    val dobError: Boolean = false,
     val weightError: Boolean = false,
     val heightError: Boolean = false
 )
 
 sealed class EditProfileEvent {
     data class OnNameChange(val name: String) : EditProfileEvent()
-    data class OnDobChange(val dob: String) : EditProfileEvent() // Đã đổi từ OnAgeChange sang OnDobChange
+    data class OnDobChange(val dob: String) : EditProfileEvent()
     data class OnGenderChange(val gender: Gender) : EditProfileEvent()
     data class OnWeightChange(val weight: String) : EditProfileEvent()
     data class OnHeightChange(val height: String) : EditProfileEvent()
