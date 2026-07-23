@@ -12,17 +12,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val getDashboardMetricsUseCase: GetDashboardMetricsUseCase,
-    private val getDashboardAdviceUseCase: GetDashboardAdviceUseCase // Inject UseCase advice
+    private val getDashboardAdviceUseCase: GetDashboardAdviceUseCase
 ) : ViewModel() {
 
     val state: StateFlow<DashboardState> = getDashboardMetricsUseCase().map { metrics ->
-
-
-
         DashboardState(
             currentDate = DateUtils.getTodayDisplayString(),
             targetCalories = metrics.targetCalories,
@@ -30,7 +26,7 @@ class DashboardViewModel @Inject constructor(
             burnedCalories = metrics.burnedCalories,
             remainingCalories = metrics.remainingCalories,
             balanceCalories = metrics.balanceCalories,
-            adviceText = getDashboardAdviceUseCase(metrics.consumedCalories, metrics.remainingCalories),
+            adviceType = getDashboardAdviceUseCase(metrics.consumedCalories, metrics.remainingCalories), // Map trực tiếp AdviceType
             weeklyBarData = metrics.weeklyChartData,
             weeklyLineData = metrics.weeklyChartData,
             stats = StatsData(

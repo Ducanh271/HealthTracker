@@ -78,6 +78,13 @@
     <string name="meal_lunch">Bữa trưa</string>
     <string name="meal_dinner">Bữa tối</string>
     <string name="meal_snack">Bữa phụ</string>
+
+        <!-- Các chuỗi lời khuyên Dashboard -->
+        <string name="advice_start_day">Bắt đầu ngày mới! Hãy ghi lại bữa ăn đầu tiên.</string>
+        <string name="advice_exceeded">Cảnh báo: Bạn đã vượt quá lượng calo mục tiêu!</string>
+        <string name="advice_almost_there">Tuyệt vời! Bạn đã sắp đạt mục tiêu.</string>
+        <string name="advice_keep_going">Bạn đang làm rất tốt! Hãy tiếp tục nhé.</string>
+
     <!-- Add Food Dialog -->
     <string name="meal_dialog_title">Thêm món ăn</string>
     <string name="meal_dialog_food_name">Tên món ăn</string>

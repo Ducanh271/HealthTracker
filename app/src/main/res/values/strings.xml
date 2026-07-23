@@ -69,7 +69,11 @@
     <string name="dash_chart_subtitle">Insights</string>
     <string name="dash_fab_activity">Add activity</string>
     <string name="dash_fab_meal">Add meal</string>
-
+    <!-- Dashboard Advice Strings -->
+    <string name="advice_start_day">Start a new day! Log your first meal.</string>
+    <string name="advice_exceeded">Warning: You have exceeded your target calories!</string>
+    <string name="advice_almost_there">Great job! You are almost reaching your goal.</string>
+    <string name="advice_keep_going">You are doing great! Keep it up.</string>
     <!-- Meal Diary -->
     <string name="meal_diary_title">Meal Diary</string>
     <string name="meal_diary_total_today">Today\'s total calories</string>

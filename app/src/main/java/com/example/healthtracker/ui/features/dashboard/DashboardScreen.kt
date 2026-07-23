@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.AdviceType
 import com.example.healthtracker.ui.features.dashboard.dashboardComponents.*
 import com.example.healthtracker.ui.theme.LocalDimens
 
@@ -44,6 +45,12 @@ fun DashboardContent(
 ) {
     val dimens = LocalDimens.current
     val scrollState = rememberScrollState()
+    val adviceStringRes = when (state.adviceType) {
+        AdviceType.START_DAY -> R.string.advice_start_day
+        AdviceType.EXCEEDED -> R.string.advice_exceeded
+        AdviceType.ALMOST_THERE -> R.string.advice_almost_there
+        AdviceType.KEEP_GOING -> R.string.advice_keep_going
+    }
 
     Scaffold(
         topBar = {
@@ -110,7 +117,7 @@ fun DashboardContent(
                     balance = state.balanceCalories
                 )
 
-                AdviceBanner(adviceText = state.adviceText)
+                AdviceBanner(adviceText = stringResource(id = adviceStringRes))
 
                 WeeklyBarChart(weeklyData = state.weeklyBarData)
                 WeeklyLineChart(weeklyData = state.weeklyLineData)
