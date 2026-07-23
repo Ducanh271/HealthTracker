@@ -40,7 +40,6 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
                         val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        // ĐÃ SỬA: Dùng OnDobChange thay vì OnAgeChange
                         onEvent(EditProfileEvent.OnDobChange(formatter.format(Date(millis))))
                     }
                     showDatePicker = false

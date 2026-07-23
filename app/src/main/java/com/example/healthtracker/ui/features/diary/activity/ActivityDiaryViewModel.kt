@@ -28,7 +28,7 @@ class ActivityDiaryViewModel @Inject constructor(
     private val addActivityLogUseCase: AddActivityLogUseCase,
     private val searchActivityItemsUseCase: SearchActivityItemsUseCase,
     private val calculateCaloriesUseCase: CalculateActivityCaloriesUseCase,
-    private val deleteActivityLogUseCase: DeleteActivityLogUseCase, // Bổ sung
+    private val deleteActivityLogUseCase: DeleteActivityLogUseCase,
     private val updateActivityLogUseCase: UpdateActivityLogUseCase,
     private val userRepository: UserRepository
     ) : ViewModel() {

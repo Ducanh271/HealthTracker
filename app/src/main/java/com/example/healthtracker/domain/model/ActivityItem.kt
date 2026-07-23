@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.PedalBike
 import androidx.compose.material.icons.filled.Pool
 
-// Bạn có thể đặt file này ở domain/model/ActivityItem.kt
 data class ActivityItem(
     val id: Int,
     val name: String,
@@ -47,8 +46,8 @@ fun ActivityItem.toCatalogItem(): ActivityCatalogItem {
     return ActivityCatalogItem(
         id = this.id,
         name = this.name,
-        description = "Chỉnh sửa hoạt động", // Hoặc mô tả tùy ý
-        metValue = 0f, // Tạm thời để 0, vì log đã lưu calories rồi
+        description = "Chỉnh sửa hoạt động",
+        metValue = 0f,
         category = this.type.name,
         icon = icon
     )

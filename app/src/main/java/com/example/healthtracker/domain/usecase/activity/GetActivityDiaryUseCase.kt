@@ -24,9 +24,9 @@ class GetActivityDiaryUseCase @Inject constructor(
                     id = log.id,
                     name = log.activityName,
                     duration = log.durationMinutes,
-                    time = "", // Tạm thời để trống nếu Entity chưa có trường time
+                    time = "",
                     caloriesBurned = log.caloriesBurned,
-                    type = ActivityType.CARDIO // Default type
+                    type = ActivityType.CARDIO
                 )
             }
             ActivityDiarySummary(totalCal, mappedLogs)

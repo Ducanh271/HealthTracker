@@ -18,7 +18,6 @@ class SearchActivityItemsUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<List<ActivityCatalogItem>> {
         return activityRepository.searchActivityItems(query).map { entities ->
             entities.map { entity ->
-                // Phân loại và gán icon tạm thời dựa vào tên (Có thể mở rộng entity sau)
                 val (category, icon) = when {
                     entity.name.contains("Chạy") || entity.name.contains("Đi bộ") -> "Cardio" to Icons.Default.DirectionsRun
                     entity.name.contains("Đạp xe") -> "Cardio" to Icons.Default.PedalBike

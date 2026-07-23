@@ -17,12 +17,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// Data class đại diện cho toàn bộ trạng thái của màn hình Settings
 data class SettingsState(
     val currentTheme: AppThemeType = AppThemeType.DEFAULT,
     val currentMode: ThemeMode = ThemeMode.SYSTEM,
     val currentFontSize: AppFontSize = AppFontSize.MEDIUM,
-    val appLanguage: String = "vi", // Thêm dòng này
+    val appLanguage: String = "vi",
     val userName: String = "",
     val bmiValue: Float = 0f,
     val bmiCategory: BmiCategory = BmiCategory.UNDEFINED
@@ -34,7 +33,7 @@ class SettingsViewModel @Inject constructor(
     private val updateAppThemeUseCase: UpdateAppThemeUseCase,
     private val updateAppModeUseCase: UpdateAppModeUseCase,
     private val calculateBmiUseCase: CalculateBmiUseCase,
-    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase, // Inject Use Case ngôn ngữ
+    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
     private val userRepository: UserRepository
 ) : ViewModel() {
 

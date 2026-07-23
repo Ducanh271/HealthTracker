@@ -161,7 +161,6 @@ fun MealSection(
                         .padding(bottom = dimens.sm)
                         .clip(RoundedCornerShape(dimens.cornerMedium))
                         .background(backgroundColor)
-                        // Bắt sự kiện bấm vào cả cái khung món ăn
                         .clickable {
                             selectedFoodId = if (isSelected) null else food.id
                         }

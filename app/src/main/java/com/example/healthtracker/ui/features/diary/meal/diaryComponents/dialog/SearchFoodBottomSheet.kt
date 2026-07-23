@@ -54,13 +54,7 @@ fun SearchFoodBottomSheet(
         Column(
             modifier = Modifier.fillMaxHeight(0.9f)
         ) {
-//            Column(modifier = Modifier.padding(horizontal = dimens.marginMobile, vertical = dimens.sm)) {
-//                SheetHeader(mealType = mealType, onClose = onDismiss)
-//                Spacer(modifier = Modifier.height(dimens.md))
-//                SearchBar(query = searchQuery, onQueryChange = onSearchQueryChange)
-//            }
             Column(modifier = Modifier.padding(horizontal = dimens.marginMobile, vertical = dimens.sm)) {
-                // Header mới có nút Close
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
