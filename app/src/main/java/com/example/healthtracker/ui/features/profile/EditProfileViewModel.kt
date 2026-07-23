@@ -48,11 +48,11 @@ class EditProfileViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 name = profile.name,
                 age = profile.age.toString(),
-                gender = genderEnum, // Đã map sang Enum
+                gender = genderEnum,
                 weight = profile.weight.toString(),
                 height = profile.height.toString(),
                 activityLevel = profile.activityLevel.toFloat(),
-                goal = goalEnum // Đã map sang Enum
+                goal = goalEnum
             )
             recalculateMetrics()
         }
