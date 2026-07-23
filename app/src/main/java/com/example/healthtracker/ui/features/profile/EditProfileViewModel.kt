@@ -8,6 +8,7 @@ import com.example.healthtracker.domain.usecase.dashboard.CalculateBmiUseCase
 import com.example.healthtracker.domain.usecase.dashboard.CalculateTdeeUseCase
 import com.example.healthtracker.domain.usecase.profile.GetUserProfileUseCase
 import com.example.healthtracker.domain.usecase.profile.SaveUserProfileUseCase
+import com.example.healthtracker.utils.DateUtils // Đừng quên import DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +42,7 @@ class EditProfileViewModel @Inject constructor(
 
             _state.value = _state.value.copy(
                 name = profile.name,
-                age = profile.age.toString(),
+                dob = profile.dob ?: "", // Gán ngày sinh chuỗi để UI hiển thị chuẩn
                 gender = genderEnum,
                 weight = profile.weight.toString(),
                 height = profile.height.toString(),
@@ -55,7 +56,10 @@ class EditProfileViewModel @Inject constructor(
     fun onEvent(event: EditProfileEvent) {
         when (event) {
             is EditProfileEvent.OnNameChange -> { _state.value = _state.value.copy(name = event.name) }
-            is EditProfileEvent.OnAgeChange -> { _state.value = _state.value.copy(age = event.age) }
+            is EditProfileEvent.OnDobChange -> { // Xử lý cập nhật chuỗi Ngày sinh
+                _state.value = _state.value.copy(dob = event.dob)
+                recalculateMetrics()
+            }
             is EditProfileEvent.OnGenderChange -> {
                 _state.value = _state.value.copy(gender = event.gender)
                 recalculateMetrics()
@@ -86,7 +90,8 @@ class EditProfileViewModel @Inject constructor(
     private fun recalculateMetrics() {
         val w = _state.value.weight.toFloatOrNull() ?: 0f
         val h = _state.value.height.toFloatOrNull() ?: 0f
-        val a = _state.value.age.toIntOrNull() ?: 20
+
+        val calculatedAge = DateUtils.calculateAgeOrNull(_state.value.dob) ?: 20
 
         val bmiResult = calculateBmiUseCase(w, h)
 
@@ -94,7 +99,7 @@ class EditProfileViewModel @Inject constructor(
             gender = _state.value.gender,
             weightKg = w,
             heightCm = h,
-            age = a,
+            age = calculatedAge, // Truyền tuổi đã tính
             activityLevel = _state.value.activityLevel.toInt(),
             goal = _state.value.goal
         )
@@ -114,9 +119,13 @@ class EditProfileViewModel @Inject constructor(
 
             delay(1000)
 
+            // Dịch ngược chuỗi Ngày sinh ra số tuổi để lưu trữ
+            val calculatedAge = DateUtils.calculateAgeOrNull(_state.value.dob) ?: 20
+
             saveUserProfileUseCase(
                 name = _state.value.name,
-                age = _state.value.age.toIntOrNull() ?: 20,
+                age = calculatedAge, // Lưu số tuổi
+                dob = _state.value.dob, // Lưu chuỗi ngày sinh
                 gender = _state.value.gender,
                 weight = _state.value.weight.toFloatOrNull() ?: 0f,
                 height = _state.value.height.toFloatOrNull() ?: 0f,

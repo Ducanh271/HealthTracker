@@ -11,6 +11,7 @@ class SaveUserProfileUseCase @Inject constructor(
     suspend operator fun invoke(
         name: String,
         age: Int,
+        dob: String,
         gender: Gender,
         weight: Float,
         height: Float,
@@ -21,6 +22,7 @@ class SaveUserProfileUseCase @Inject constructor(
         userRepository.saveUserProfile(
             name = name,
             age = age,
+            dob = dob,
             gender = gender.name,
             weight = weight,
             height = height,

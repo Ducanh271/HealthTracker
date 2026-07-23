@@ -1,9 +1,9 @@
 package com.example.healthtracker.domain.usecase.meal
 
-import com.example.healthtracker.data.local.datastore.SettingsDataStore
 import com.example.healthtracker.data.mapper.toDomain
 import com.example.healthtracker.domain.model.Meal
 import com.example.healthtracker.domain.repository.MealRepository
+import com.example.healthtracker.domain.repository.UserRepository // Sử dụng UserRepository thay cho DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
@@ -19,11 +19,11 @@ data class MealDiaryData(
 
 class GetMealDiaryUseCase @Inject constructor(
     private val mealRepository: MealRepository,
-    private val settingsDataStore: SettingsDataStore
+    private val userRepository: UserRepository
 ) {
     operator fun invoke(dateStr: String): Flow<MealDiaryData> {
         return combine(
-            settingsDataStore.userProfile,
+            userRepository.userProfile,
             mealRepository.getMealLogsByDate(dateStr)
         ) { profile, entityList ->
 

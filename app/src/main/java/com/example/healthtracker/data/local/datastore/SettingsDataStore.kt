@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.healthtracker.domain.model.UserProfile
-
+import com.example.healthtracker.data.local.model.UserEntity
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "health_tracker_prefs")
 
 
@@ -30,6 +30,7 @@ class SettingsDataStore @Inject constructor(
         val APP_MODE = stringPreferencesKey("app_mode")
         val USER_NAME = stringPreferencesKey("user_name")
         val USER_AGE = intPreferencesKey("user_age")
+        val USER_DOB = stringPreferencesKey("user_dob")
         val USER_GENDER = stringPreferencesKey("user_gender")
         val USER_WEIGHT = floatPreferencesKey("user_weight")
         val USER_HEIGHT = floatPreferencesKey("user_height")
@@ -45,10 +46,11 @@ class SettingsDataStore @Inject constructor(
     val appLanguage: Flow<String> = context.dataStore.data.map { it[APP_LANGUAGE] ?: "VI" }
     val fontSize: Flow<String> = context.dataStore.data.map { it[FONT_SIZE] ?: "MEDIUM" }
     val appMode: Flow<String> = context.dataStore.data.map { it[APP_MODE] ?: "SYSTEM" }
-    val userProfile: Flow<UserProfile> = context.dataStore.data.map { prefs ->
-        UserProfile(
+    val userEntity: Flow<UserEntity> = context.dataStore.data.map { prefs ->
+        UserEntity(
             name = prefs[USER_NAME] ?: "",
             age = prefs[USER_AGE] ?: 20,
+            dob = prefs[USER_DOB] ?: "",
             gender = prefs[USER_GENDER] ?: "Nam",
             weight = prefs[USER_WEIGHT] ?: 0f,
             height = prefs[USER_HEIGHT] ?: 0f,
@@ -78,13 +80,14 @@ class SettingsDataStore @Inject constructor(
     }
 
     suspend fun saveUserProfile(
-        name: String, age: Int, gender: String,
+        name: String, age: Int, dob: String, gender: String,
         weight: Float, height: Float, activityLevel: Int,
         goal: String, tdee: Int
     ) {
         context.dataStore.edit {
             it[USER_NAME] = name
             it[USER_AGE] = age
+            it[USER_DOB] = dob
             it[USER_GENDER] = gender
             it[USER_WEIGHT] = weight
             it[USER_HEIGHT] = height

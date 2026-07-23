@@ -6,7 +6,7 @@ import com.example.healthtracker.domain.model.Goal
 
 data class EditProfileState(
     val name: String = "",
-    val age: String = "25",
+    val dob: String = "",
     val gender: Gender = Gender.MALE,
     val weight: String = "",
     val height: String = "",
@@ -25,7 +25,7 @@ data class EditProfileState(
 
 sealed class EditProfileEvent {
     data class OnNameChange(val name: String) : EditProfileEvent()
-    data class OnAgeChange(val age: String) : EditProfileEvent()
+    data class OnDobChange(val dob: String) : EditProfileEvent() // Đã đổi từ OnAgeChange sang OnDobChange
     data class OnGenderChange(val gender: Gender) : EditProfileEvent()
     data class OnWeightChange(val weight: String) : EditProfileEvent()
     data class OnHeightChange(val height: String) : EditProfileEvent()

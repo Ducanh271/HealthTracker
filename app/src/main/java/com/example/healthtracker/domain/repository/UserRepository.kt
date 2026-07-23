@@ -9,7 +9,7 @@ interface UserRepository {
     val appLanguage: Flow<String>
     val fontSize: Flow<String>
     suspend fun saveUserProfile(
-        name: String, age: Int, gender: String,
+        name: String, age: Int, dob: String, gender: String,
         weight: Float, height: Float, activityLevel: Int,
         goal: String, tdee: Int
     )

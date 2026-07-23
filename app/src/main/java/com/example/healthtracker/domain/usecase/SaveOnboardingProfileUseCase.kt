@@ -36,6 +36,7 @@ class SaveOnboardingProfileUseCase @Inject constructor(
         userRepository.saveUserProfile(
             name = name,
             age = calculatedAge,
+            dob = dob,
             gender = gender.name,
             weight = weightKg,
             height = heightCm,

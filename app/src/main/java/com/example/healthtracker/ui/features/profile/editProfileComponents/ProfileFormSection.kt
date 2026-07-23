@@ -40,7 +40,8 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
                         val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        onEvent(EditProfileEvent.OnAgeChange(formatter.format(Date(millis))))
+                        // ĐÃ SỬA: Dùng OnDobChange thay vì OnAgeChange
+                        onEvent(EditProfileEvent.OnDobChange(formatter.format(Date(millis))))
                     }
                     showDatePicker = false
                 }) {
@@ -77,12 +78,12 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(dimens.md),
-                verticalAlignment = Alignment.Top // Căn theo đỉnh chữ (Top)
+                verticalAlignment = Alignment.Top
             ) {
                 Box(modifier = Modifier.weight(1f)) {
                     UnderlinedTextField(
                         label = stringResource(id = R.string.label_dob),
-                        value = state.age,
+                        value = state.dob,
                         onValueChange = { },
                         icon = Icons.Default.DateRange
                     )
