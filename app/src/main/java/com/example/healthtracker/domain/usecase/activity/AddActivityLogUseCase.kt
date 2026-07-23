@@ -1,6 +1,6 @@
 package com.example.healthtracker.domain.usecase.activity
 
-import com.example.healthtracker.data.local.room.entity.ActivityLogEntity
+import com.example.healthtracker.domain.model.ActivityLog
 import com.example.healthtracker.domain.repository.ActivityRepository
 import javax.inject.Inject
 
@@ -13,12 +13,12 @@ class AddActivityLogUseCase @Inject constructor(
         duration: Int,
         calories: Int
     ) {
-        val entity = ActivityLogEntity(
+        val log = ActivityLog(
             date = date,
             activityName = name,
             durationMinutes = duration,
             caloriesBurned = calories
         )
-        activityRepository.insertActivityLog(entity)
+        activityRepository.insertActivityLog(log)
     }
 }
