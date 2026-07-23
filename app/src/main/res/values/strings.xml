@@ -223,6 +223,7 @@
 
     <string name="settings_default_username">User</string>
     <string name="meal_serving_portion">%1$d serving(s)</string>
+    <string name="error_add_food_failed">Failed to add food item. Please try again.</string>
     <string name="activity_level_progress">Level %1$d/5</string>
 
 </resources>

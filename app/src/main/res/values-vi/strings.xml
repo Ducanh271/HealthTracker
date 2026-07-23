@@ -215,5 +215,6 @@
 
     <string name="settings_default_username">Người dùng</string>
     <string name="meal_serving_portion">%1$d phần</string>
+    <string name="error_add_food_failed">Không thể thêm món ăn, vui lòng thử lại.</string>
     <string name="activity_level_progress">Cấp độ %1$d/5</string>
 </resources>

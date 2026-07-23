@@ -10,4 +10,8 @@ data class UserProfile(
     val activityLevel: Int,
     val goal: String,
     val tdee: Int
-)
+) {
+    companion object {
+        const val DEFAULT_TDEE = 2000
+    }
+}

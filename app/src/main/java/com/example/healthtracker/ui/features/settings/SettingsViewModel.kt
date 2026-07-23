@@ -9,7 +9,9 @@ import com.example.healthtracker.domain.usecase.settings.GetAppSettingsUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppModeUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppThemeUseCase
+import com.example.healthtracker.ui.theme.AppFontSize
 import com.example.healthtracker.ui.theme.AppThemeType
+import com.example.healthtracker.ui.theme.ThemeMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

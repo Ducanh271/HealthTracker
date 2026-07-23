@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.example.healthtracker.ui.features.settings.AppFontSize
 import com.example.healthtracker.R
 enum class AppThemeType(
     val color: Color,            // Màu sắc hiển thị trực quan (màu thật)

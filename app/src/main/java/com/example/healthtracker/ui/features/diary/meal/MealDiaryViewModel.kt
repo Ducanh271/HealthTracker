@@ -2,6 +2,7 @@ package com.example.healthtracker.ui.features.diary.meal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
 import com.example.healthtracker.domain.model.Meal
@@ -32,6 +33,9 @@ class MealDiaryViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _selectedDate = MutableStateFlow(LocalDate.now())
+
+    private val _errorEvent = MutableSharedFlow<Int>()
+    val errorEvent = _errorEvent.asSharedFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<MealDiaryState> = _selectedDate.flatMapLatest { date ->
@@ -96,6 +100,7 @@ class MealDiaryViewModel @Inject constructor(
                 onSuccess(newCartItem)
 
             } catch (e: Exception) {
+                _errorEvent.emit(R.string.error_add_food_failed)
             }
         }
     }

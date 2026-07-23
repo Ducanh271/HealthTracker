@@ -56,7 +56,7 @@ class SettingsDataStore @Inject constructor(
             height = prefs[USER_HEIGHT] ?: 0f,
             activityLevel = prefs[USER_ACTIVITY_LEVEL] ?: 3,
             goal = prefs[USER_GOAL] ?: "maintain",
-            tdee = prefs[USER_TDEE] ?: 2000
+            tdee = prefs[USER_TDEE] ?: UserProfile.DEFAULT_TDEE
         )
     }
     suspend fun saveAppMode(mode: String) {

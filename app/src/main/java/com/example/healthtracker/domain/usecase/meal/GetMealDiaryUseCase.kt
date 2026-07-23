@@ -2,6 +2,7 @@ package com.example.healthtracker.domain.usecase.meal
 
 import com.example.healthtracker.domain.model.Meal
 import com.example.healthtracker.domain.model.MealType
+import com.example.healthtracker.domain.model.UserProfile
 import com.example.healthtracker.domain.repository.MealRepository
 import com.example.healthtracker.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 data class MealDiaryData(
-    val targetCalories: Int = 2000,
+    val targetCalories: Int = UserProfile.DEFAULT_TDEE,
     val totalCalories: Int = 0,
     val breakfast: List<Meal> = emptyList(),
     val lunch: List<Meal> = emptyList(),

@@ -24,12 +24,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.BmiCategory
 import com.example.healthtracker.ui.components.labelRes
+import com.example.healthtracker.ui.theme.AppFontSize
 import com.example.healthtracker.ui.theme.AppThemeType
 import com.example.healthtracker.ui.theme.LocalDimens
-
-
-enum class ThemeMode { LIGHT, DARK, SYSTEM }
-enum class AppFontSize { SMALL, MEDIUM, LARGE }
+import com.example.healthtracker.ui.theme.ThemeMode
 
 // MAIN SCREEN
 

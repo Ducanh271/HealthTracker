@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.domain.repository.UserRepository
-import com.example.healthtracker.ui.features.settings.AppFontSize
+import com.example.healthtracker.ui.theme.AppFontSize
 import com.example.healthtracker.ui.navigation.AppNavGraph
 import com.example.healthtracker.ui.navigation.Screen
 import com.example.healthtracker.ui.theme.AppThemeType
