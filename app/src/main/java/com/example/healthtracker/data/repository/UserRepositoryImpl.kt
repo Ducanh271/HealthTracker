@@ -19,6 +19,7 @@ class UserRepositoryImpl @Inject constructor(
     override val appLanguage: Flow<String> = settingsDataStore.appLanguage
     override val fontSize: Flow<String> = settingsDataStore.fontSize
     override val appMode: Flow<String> = settingsDataStore.appMode
+    override val isOnboardingCompleted: Flow<Boolean> = settingsDataStore.isOnboardingCompleted
 
     override suspend fun saveUserProfile(
         name: String, age: Int, dob: String, gender: String,

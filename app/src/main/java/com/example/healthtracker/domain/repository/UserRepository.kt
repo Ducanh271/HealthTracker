@@ -8,6 +8,7 @@ interface UserRepository {
     val appTheme: Flow<String>
     val appLanguage: Flow<String>
     val fontSize: Flow<String>
+    val isOnboardingCompleted: Flow<Boolean>
     suspend fun saveUserProfile(
         name: String, age: Int, dob: String, gender: String,
         weight: Float, height: Float, activityLevel: Int,
