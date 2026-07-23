@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.Goal
-import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.domain.usecase.dashboard.CalculateBmiUseCase
 import com.example.healthtracker.domain.usecase.dashboard.CalculateTdeeUseCase
+import com.example.healthtracker.domain.usecase.profile.GetUserProfileUseCase
+import com.example.healthtracker.domain.usecase.profile.SaveUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val saveUserProfileUseCase: SaveUserProfileUseCase,
     private val calculateBmiUseCase: CalculateBmiUseCase,
     private val calculateTdeeUseCase: CalculateTdeeUseCase
 ) : ViewModel() {
@@ -32,18 +34,10 @@ class EditProfileViewModel @Inject constructor(
 
     private fun loadInitialData() {
         viewModelScope.launch {
-            val profile = userRepository.userProfile.first()
+            val profile = getUserProfileUseCase().first()
 
-            val genderEnum = when (profile.gender) {
-                "Nữ", Gender.FEMALE.name -> Gender.FEMALE
-                else -> Gender.MALE
-            }
-
-            val goalEnum = when (profile.goal) {
-                "Giảm cân", "Lose Weight", Goal.LOSE_WEIGHT.name -> Goal.LOSE_WEIGHT
-                "Tăng cân", "Gain Weight", Goal.GAIN_WEIGHT.name -> Goal.GAIN_WEIGHT
-                else -> Goal.MAINTAIN_WEIGHT
-            }
+            val genderEnum = runCatching { Gender.valueOf(profile.gender) }.getOrDefault(Gender.MALE)
+            val goalEnum = runCatching { Goal.valueOf(profile.goal) }.getOrDefault(Goal.MAINTAIN_WEIGHT)
 
             _state.value = _state.value.copy(
                 name = profile.name,
@@ -120,14 +114,14 @@ class EditProfileViewModel @Inject constructor(
 
             delay(1000)
 
-            userRepository.saveUserProfile(
+            saveUserProfileUseCase(
                 name = _state.value.name,
                 age = _state.value.age.toIntOrNull() ?: 20,
-                gender = _state.value.gender.name,
+                gender = _state.value.gender,
                 weight = _state.value.weight.toFloatOrNull() ?: 0f,
                 height = _state.value.height.toFloatOrNull() ?: 0f,
                 activityLevel = _state.value.activityLevel.toInt(),
-                goal = _state.value.goal.name,
+                goal = _state.value.goal,
                 tdee = _state.value.tdeeValue
             )
 

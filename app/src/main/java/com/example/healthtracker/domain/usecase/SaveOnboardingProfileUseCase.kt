@@ -36,11 +36,11 @@ class SaveOnboardingProfileUseCase @Inject constructor(
         userRepository.saveUserProfile(
             name = name,
             age = calculatedAge,
-            gender = gender.name, // Lưu dạng "MALE" hoặc "FEMALE" xuống DataStore
+            gender = gender.name,
             weight = weightKg,
             height = heightCm,
             activityLevel = activityLevel,
-            goal = goal.name,     // Lưu dạng "LOSE_WEIGHT" xuống DataStore
+            goal = goal.name,
             tdee = tdee
         )
         userRepository.saveOnboardingStatus(true)
