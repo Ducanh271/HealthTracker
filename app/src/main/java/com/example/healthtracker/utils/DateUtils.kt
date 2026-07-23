@@ -12,11 +12,24 @@ object DateUtils {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     }
 
-    fun getLast7DaysStrings(): List<String> {
-        val today = LocalDate.now()
-        return (6 downTo 0).map { daysToSubtract ->
-            today.minusDays(daysToSubtract.toLong()).format(DateTimeFormatter.ISO_LOCAL_DATE)
+    fun getLastNDaysStrings(n: Int, weeksBack: Int = 0): List<String> {
+        val endDate = LocalDate.now().minusWeeks(weeksBack.toLong())
+        return (n - 1 downTo 0).map { daysToSubtract ->
+            endDate.minusDays(daysToSubtract.toLong()).format(DateTimeFormatter.ISO_LOCAL_DATE)
         }
+    }
+
+    fun getLast7DaysStrings(): List<String> = getLastNDaysStrings(7)
+
+    fun addDays(dateString: String, days: Long): String {
+        return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
+            .plusDays(days)
+            .format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
+
+    fun formatShortDayMonth(dateString: String): String {
+        return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
+            .format(DateTimeFormatter.ofPattern("dd/MM"))
     }
 
     fun getDayOfWeekNumber(dateString: String): Int {

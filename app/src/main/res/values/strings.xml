@@ -66,7 +66,10 @@
     <string name="dash_stat_avg_consumed">Avg Consumed (kcal/day)</string>
     <string name="dash_stat_avg_burned">Avg Burned</string>
     <string name="dash_stat_goal_reached">Days goal reached</string>
-    <string name="dash_chart_subtitle">Insights</string>
+    <string name="dash_chart_subtitle">Last 7 days</string>
+    <string name="dash_chart_line_subtitle">Last 4 weeks</string>
+    <string name="dash_chart_prev_cd">Previous week</string>
+    <string name="dash_chart_next_cd">Next week</string>
     <string name="dash_fab_activity">Add activity</string>
     <string name="dash_fab_meal">Add meal</string>
     <string name="dash_profile_cd">Profile</string>

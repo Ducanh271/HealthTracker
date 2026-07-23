@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.DailyIntakePoint
 import com.example.healthtracker.ui.theme.LocalDimens
 import com.example.healthtracker.utils.DateUtils
 
@@ -32,9 +33,20 @@ fun dayOfWeekLabel(dateString: String): String {
 }
 
 @Composable
-fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
+fun WeeklyBarChart(
+    weeklyData: List<DailyIntakePoint>,
+    weekOffset: Int,
+    onPreviousWeek: () -> Unit,
+    onNextWeek: () -> Unit
+) {
     val dimens = LocalDimens.current
     val todayStr = remember { DateUtils.getTodayString() }
+    val subtitle = if (weekOffset == 0 || weeklyData.isEmpty()) {
+        stringResource(id = R.string.dash_chart_subtitle)
+    } else {
+        "${DateUtils.formatShortDayMonth(weeklyData.first().date)} – ${DateUtils.formatShortDayMonth(weeklyData.last().date)}"
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,22 +54,13 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(dimens.lg)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            Text(
-                text = stringResource(id = R.string.dash_chart_bar_title),
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = stringResource(id = R.string.dash_chart_subtitle),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        ChartWeekHeader(
+            title = stringResource(id = R.string.dash_chart_bar_title),
+            subtitle = subtitle,
+            canGoForward = weekOffset > 0,
+            onPrevious = onPreviousWeek,
+            onNext = onNextWeek
+        )
 
         Spacer(modifier = Modifier.height(dimens.lg))
 
@@ -68,25 +71,51 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            weeklyData.forEach { (date, progress) ->
-                val isToday = date == todayStr
+            weeklyData.forEach { point ->
+                val isToday = point.date == todayStr
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
                 ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(dimens.chartBarWidthFraction)
-                            .fillMaxHeight(progress.coerceIn(dimens.chartBarMinHeightFraction, 1f))
-                            .clip(RoundedCornerShape(topStart = dimens.chartBarCorner, topEnd = dimens.chartBarCorner))
-                            .background(
-                                if (isToday) MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Bottom,
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            if (point.calories > 0) {
+                                Text(
+                                    text = point.calories.toString(),
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal
+                                    ),
+                                    color = if (isToday) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 1
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth(dimens.chartBarWidthFraction)
+                                    .fillMaxHeight(point.progress.coerceIn(dimens.chartBarMinHeightFraction, 1f))
+                                    .clip(RoundedCornerShape(topStart = dimens.chartBarCorner, topEnd = dimens.chartBarCorner))
+                                    .background(
+                                        if (isToday) MaterialTheme.colorScheme.primary
+                                        else MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                                    )
                             )
-                    )
+                        }
+                    }
                     Spacer(modifier = Modifier.height(dimens.xs))
                     Text(
-                        text = dayOfWeekLabel(dateString = date),
+                        text = dayOfWeekLabel(dateString = point.date),
                         style = MaterialTheme.typography.labelMedium.copy(fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal),
                         color = if (isToday) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -101,9 +130,14 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
 fun WeeklyBarChartPreview() {
     MaterialTheme {
         val mockData = listOf(
-            "2026-07-20" to 0.6f, "2026-07-21" to 0.85f, "2026-07-22" to 0.45f,
-            "2026-07-23" to 0.7f, "2026-07-24" to 0.9f, "2026-07-25" to 0.1f, "2026-07-26" to 0.1f
+            DailyIntakePoint("2026-07-17", 1450, 0.6f),
+            DailyIntakePoint("2026-07-18", 2050, 0.85f),
+            DailyIntakePoint("2026-07-19", 1090, 0.45f),
+            DailyIntakePoint("2026-07-20", 1690, 0.7f),
+            DailyIntakePoint("2026-07-21", 2170, 0.9f),
+            DailyIntakePoint("2026-07-22", 0, 0.1f),
+            DailyIntakePoint("2026-07-23", 2410, 1f)
         )
-        WeeklyBarChart(weeklyData = mockData)
+        WeeklyBarChart(weeklyData = mockData, weekOffset = 0, onPreviousWeek = {}, onNextWeek = {})
     }
 }

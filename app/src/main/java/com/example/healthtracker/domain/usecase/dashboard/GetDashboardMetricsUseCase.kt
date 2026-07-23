@@ -24,22 +24,20 @@ class GetDashboardMetricsUseCase @Inject constructor(
             activityRepository.getActivityLogsByDates(last7Days)
         ) { profile, mealLogs, activityLogs ->
 
-            val todayConsumed = mealLogs.filter { it.date == todayStr }.sumOf { it.totalCalories }
+            val consumedByDate = mealLogs
+                .groupBy { it.date }
+                .mapValues { entry -> entry.value.sumOf { it.totalCalories } }
+
+            val todayConsumed = consumedByDate[todayStr] ?: 0
             val todayBurned = activityLogs.filter { it.date == todayStr }.sumOf { it.caloriesBurned }
             val targetKcal = profile.tdee
 
-            val maxCalorieInWeek = mealLogs
-                .groupBy { it.date }
-                .mapValues { entry -> entry.value.sumOf { it.totalCalories } }
-                .values.maxOrNull()?.coerceAtLeast(targetKcal) ?: targetKcal
-
-            val chartData = mutableListOf<Pair<String, Float>>()
             var totalConsumedWeek = 0
             var totalBurnedWeek = 0
             var goalReachedCount = 0
 
             for (date in last7Days) {
-                val dailyConsumed = mealLogs.filter { it.date == date }.sumOf { it.totalCalories }
+                val dailyConsumed = consumedByDate[date] ?: 0
                 val dailyBurned = activityLogs.filter { it.date == date }.sumOf { it.caloriesBurned }
 
                 totalConsumedWeek += dailyConsumed
@@ -48,19 +46,12 @@ class GetDashboardMetricsUseCase @Inject constructor(
                 if (dailyConsumed > 0 && dailyConsumed <= (targetKcal + dailyBurned)) {
                     goalReachedCount++
                 }
-
-                val progress = if (maxCalorieInWeek > 0) {
-                    (dailyConsumed.toFloat() / maxCalorieInWeek.toFloat()).coerceIn(0f, 1f)
-                } else 0f
-
-                chartData.add(date to progress)
             }
 
             DashboardMetrics(
                 targetCalories = targetKcal,
                 consumedCalories = todayConsumed,
                 burnedCalories = todayBurned,
-                weeklyChartData = chartData,
                 avgConsumed = totalConsumedWeek / 7,
                 avgBurned = totalBurnedWeek / 7,
                 goalReachedDays = goalReachedCount

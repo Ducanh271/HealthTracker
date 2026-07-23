@@ -38,6 +38,7 @@ data class Dimensions(
     val chartBarHeight: Dp = 160.dp,
     val chartLineHeight: Dp = 120.dp,
     val chartLineStroke: Dp = 3.dp,
+    val chartLineDotRadius: Dp = 4.dp,
     val chartBarCorner: Dp = 8.dp,
     val chartBarWidthFraction: Float = 0.6f,
     val chartBarMinHeightFraction: Float = 0.05f,

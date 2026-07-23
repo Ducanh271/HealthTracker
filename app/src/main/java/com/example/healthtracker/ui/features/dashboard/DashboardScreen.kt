@@ -33,7 +33,8 @@ fun DashboardScreen(
         state = state,
         onProfileClick = onProfileClick,
         onAddActivityClick = onAddActivityClick,
-        onAddMealClick = onAddMealClick
+        onAddMealClick = onAddMealClick,
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -43,7 +44,8 @@ fun DashboardContent(
     state: DashboardState,
     onProfileClick: () -> Unit,
     onAddActivityClick: () -> Unit,
-    onAddMealClick: () -> Unit
+    onAddMealClick: () -> Unit,
+    onEvent: (DashboardEvent) -> Unit = {}
 ) {
     val dimens = LocalDimens.current
     val scrollState = rememberScrollState()
@@ -121,8 +123,18 @@ fun DashboardContent(
 
                 AdviceBanner(adviceText = stringResource(id = adviceStringRes))
 
-                WeeklyBarChart(weeklyData = state.weeklyBarData)
-                WeeklyLineChart(weeklyData = state.weeklyLineData)
+                WeeklyBarChart(
+                    weeklyData = state.weeklyBarData,
+                    weekOffset = state.barWeekOffset,
+                    onPreviousWeek = { onEvent(DashboardEvent.PreviousBarWeek) },
+                    onNextWeek = { onEvent(DashboardEvent.NextBarWeek) }
+                )
+                WeeklyLineChart(
+                    weeklyData = state.weeklyLineData,
+                    weekOffset = state.trendWeekOffset,
+                    onPreviousWeek = { onEvent(DashboardEvent.PreviousTrendWeek) },
+                    onNextWeek = { onEvent(DashboardEvent.NextTrendWeek) }
+                )
                 WeeklyStatsRow(stats = state.stats)
                 Spacer(modifier = Modifier.height(dimens.fabClearance))
             }

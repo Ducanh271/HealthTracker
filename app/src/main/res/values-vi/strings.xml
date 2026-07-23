@@ -64,7 +64,10 @@
     <string name="dash_stat_avg_consumed">TB Nạp (kcal/ngày)</string>
     <string name="dash_stat_avg_burned">TB Tiêu thụ</string>
     <string name="dash_stat_goal_reached">Số ngày đạt mục tiêu</string>
-    <string name="dash_chart_subtitle">Đoán xem</string>
+    <string name="dash_chart_subtitle">7 ngày qua</string>
+    <string name="dash_chart_line_subtitle">4 tuần qua</string>
+    <string name="dash_chart_prev_cd">Xem tuần trước</string>
+    <string name="dash_chart_next_cd">Xem tuần sau</string>
     <string name="dash_fab_activity">Thêm hoạt động</string>
     <string name="dash_fab_meal">Thêm bữa ăn</string>
     <string name="dash_profile_cd">Hồ sơ</string>
