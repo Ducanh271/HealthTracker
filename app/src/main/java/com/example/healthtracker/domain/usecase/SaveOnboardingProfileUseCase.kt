@@ -1,8 +1,9 @@
 package com.example.healthtracker.domain.usecase
 
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.domain.usecase.dashboard.CalculateTdeeUseCase
-import com.example.healthtracker.ui.features.onboarding.OnboardingState
 import com.example.healthtracker.utils.DateUtils
 import javax.inject.Inject
 
@@ -10,34 +11,41 @@ class SaveOnboardingProfileUseCase @Inject constructor(
     private val calculateTdeeUseCase: CalculateTdeeUseCase,
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(currentState: OnboardingState): Result<Unit> = try {
-        val weightKg = currentState.weight.toFloat()
-        val heightCm = currentState.height.toFloat()
-        val calculatedAge = DateUtils.calculateAgeOrNull(currentState.dob) ?: 20
-        val genderStr = if (currentState.isMale) OnboardingState.GENDER_MALE else OnboardingState.GENDER_FEMALE
+    suspend operator fun invoke(
+        name: String,
+        dob: String,
+        gender: Gender,
+        weight: String,
+        height: String,
+        activityLevel: Int,
+        goal: Goal
+    ): Result<Unit> = try {
+        val weightKg = weight.toFloatOrNull() ?: 0f
+        val heightCm = height.toFloatOrNull() ?: 0f
+        val calculatedAge = DateUtils.calculateAgeOrNull(dob) ?: 20
 
         val tdee = calculateTdeeUseCase(
-            gender = genderStr,
+            gender = gender,
             weightKg = weightKg,
             heightCm = heightCm,
             age = calculatedAge,
-            activityLevel = currentState.activityLevel,
-            goal = currentState.goal
+            activityLevel = activityLevel,
+            goal = goal
         )
 
         userRepository.saveUserProfile(
-            name = currentState.name,
+            name = name,
             age = calculatedAge,
-            gender = genderStr,
+            gender = gender.name, // Lưu dạng "MALE" hoặc "FEMALE" xuống DataStore
             weight = weightKg,
             height = heightCm,
-            activityLevel = currentState.activityLevel,
-            goal = currentState.goal,
+            activityLevel = activityLevel,
+            goal = goal.name,     // Lưu dạng "LOSE_WEIGHT" xuống DataStore
             tdee = tdee
         )
         userRepository.saveOnboardingStatus(true)
         Result.success(Unit)
-    }catch (e: Exception){
+    } catch (e: Exception) {
         Result.failure(e)
     }
 }

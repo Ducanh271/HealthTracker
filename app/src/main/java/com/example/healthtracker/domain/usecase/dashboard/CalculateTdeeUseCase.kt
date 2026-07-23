@@ -2,20 +2,22 @@ package com.example.healthtracker.domain.usecase.dashboard
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
 class CalculateTdeeUseCase @Inject constructor() {
     operator fun invoke(
-        gender: String,
+        gender: Gender,
         weightKg: Float,
         heightCm: Float,
         age: Int,
         activityLevel: Int,
-        goal: String
+        goal: Goal
     ): Int{
-        val bmr = if (gender.equals("Nam", ignoreCase = true)) {
+        val bmr = if (gender == Gender.MALE) {
             (10 * weightKg) + (6.25f * heightCm) - (5 * age) + 5
         } else {
             (10 * weightKg) + (6.25f * heightCm) - (5 * age) - 161
@@ -32,9 +34,9 @@ class CalculateTdeeUseCase @Inject constructor() {
         val tdeeBase = bmr * activityMultiplier
 
         val finalTdee = when (goal) {
-            "Giảm cân" -> tdeeBase - 500
-            "Tăng cân" -> tdeeBase + 500
-            "Giữ cân" -> tdeeBase
+            Goal.LOSE_WEIGHT -> tdeeBase - 500
+            Goal.GAIN_WEIGHT -> tdeeBase + 500
+            Goal.MAINTAIN_WEIGHT -> tdeeBase
             else -> tdeeBase
         }
         Log.d(TAG, "Input: gender=$gender, weight=$weightKg, height=$heightCm, age=$age, level=$activityLevel, goal=$goal")

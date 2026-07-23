@@ -44,14 +44,13 @@ fun OnboardingScreen(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(dimens.lg)
         ) {
-            Spacer(modifier = Modifier.height(dimens.md))
 
             WelcomeSection()
 
             BasicInfoCard(
                 name = state.name, onNameChange = viewModel::updateName, nameError = state.nameError,
                 dob = state.dob, onDobChange = viewModel::updateDob, dobError = state.dobError,
-                isMale = state.isMale, onGenderChange = viewModel::updateGender
+                gender = state.gender, onGenderChange = viewModel::updateGender
             )
 
             MetricsSection(

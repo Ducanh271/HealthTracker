@@ -1,15 +1,17 @@
 package com.example.healthtracker.ui.features.profile
 
 import com.example.healthtracker.domain.model.BmiCategory
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 
 data class EditProfileState(
     val name: String = "",
     val age: String = "25",
-    val isMale: Boolean = true,
+    val gender: Gender = Gender.MALE,
     val weight: String = "",
     val height: String = "",
     val activityLevel: Float = 3f,
-    val goal: String = "Giữ cân",
+    val goal: Goal = Goal.MAINTAIN_WEIGHT,
 
     val bmiValue: Float = 0f,
     val bmiCategory: BmiCategory = BmiCategory.UNDEFINED,
@@ -24,11 +26,11 @@ data class EditProfileState(
 sealed class EditProfileEvent {
     data class OnNameChange(val name: String) : EditProfileEvent()
     data class OnAgeChange(val age: String) : EditProfileEvent()
-    data class OnGenderChange(val isMale: Boolean) : EditProfileEvent()
+    data class OnGenderChange(val gender: Gender) : EditProfileEvent()
     data class OnWeightChange(val weight: String) : EditProfileEvent()
     data class OnHeightChange(val height: String) : EditProfileEvent()
     data class OnActivityLevelChange(val level: Float) : EditProfileEvent()
-    data class OnGoalChange(val goal: String) : EditProfileEvent()
+    data class OnGoalChange(val goal: Goal) : EditProfileEvent()
     object OnSaveClick : EditProfileEvent()
     object OnToastDismiss : EditProfileEvent()
 }

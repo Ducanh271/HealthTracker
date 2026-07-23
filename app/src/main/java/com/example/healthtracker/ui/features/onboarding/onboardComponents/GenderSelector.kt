@@ -13,12 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.ui.theme.LocalDimens
 
 @Composable
-fun GenderSelector(isMale: Boolean, onGenderChange: (Boolean) -> Unit) {
+fun GenderSelector(
+    currentGender: Gender,
+    onGenderChange: (Gender) -> Unit
+) {
     val dimens = LocalDimens.current
     Row(
         modifier = Modifier
@@ -28,13 +31,13 @@ fun GenderSelector(isMale: Boolean, onGenderChange: (Boolean) -> Unit) {
     ) {
         GenderButton(
             text = stringResource(id = R.string.gender_male),
-            isSelected = isMale,
-            onClick = { onGenderChange(true) }
+            isSelected = currentGender == Gender.MALE,
+            onClick = { onGenderChange(Gender.MALE) }
         )
         GenderButton(
             text = stringResource(id = R.string.gender_female),
-            isSelected = !isMale,
-            onClick = { onGenderChange(false) }
+            isSelected = currentGender == Gender.FEMALE,
+            onClick = { onGenderChange(Gender.FEMALE) }
         )
     }
 }

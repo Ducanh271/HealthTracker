@@ -189,4 +189,5 @@
     <string name="goal_value_lose">Giảm cân</string>
     <string name="goal_value_maintain">Giữ cân</string>
     <string name="goal_value_gain">Tăng cân</string>
+    <string name="action_confirm">Xác nhận</string>
 </resources>

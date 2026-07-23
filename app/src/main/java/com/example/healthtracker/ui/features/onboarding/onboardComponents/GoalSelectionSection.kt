@@ -9,9 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -20,18 +17,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
-import com.example.healthtracker.ui.features.onboarding.OnboardingState
+import com.example.healthtracker.domain.model.Goal // Import Enum Goal từ tầng Domain
 import com.example.healthtracker.ui.theme.LocalDimens
-
 
 @Composable
 fun GoalSelectionSection(
-    currentGoal: String,
-    onGoalChange: (String) -> Unit
+    currentGoal: Goal,
+    onGoalChange: (Goal) -> Unit
 ) {
     val dimens = LocalDimens.current
     Column(verticalArrangement = Arrangement.spacedBy(dimens.sm)) {
@@ -39,27 +34,26 @@ fun GoalSelectionSection(
             text = stringResource(id = R.string.label_goal),
             style = MaterialTheme.typography.labelLarge
         )
-        // Do data fix cứng nên em không để động, nếu là lấy dữ liệu từ backend thì em sẽ dùng for để duyệt list
         GoalCard(
             title = stringResource(id = R.string.goal_lose_title),
             desc = stringResource(id = R.string.goal_lose_desc),
             icon = Icons.Default.LocalFireDepartment,
-            isSelected = currentGoal == OnboardingState.GOAL_LOSE,
-            onClick = { onGoalChange(OnboardingState.GOAL_LOSE) }
+            isSelected = currentGoal == Goal.LOSE_WEIGHT,
+            onClick = { onGoalChange(Goal.LOSE_WEIGHT) }
         )
         GoalCard(
             title = stringResource(id = R.string.goal_maintain_title),
             desc = stringResource(id = R.string.goal_maintain_desc),
             icon = Icons.Default.Favorite,
-            isSelected = currentGoal == OnboardingState.GOAL_MAINTAIN,
-            onClick = { onGoalChange(OnboardingState.GOAL_MAINTAIN) }
+            isSelected = currentGoal == Goal.MAINTAIN_WEIGHT,
+            onClick = { onGoalChange(Goal.MAINTAIN_WEIGHT) }
         )
         GoalCard(
             title = stringResource(id = R.string.goal_gain_title),
             desc = stringResource(id = R.string.goal_gain_desc),
             icon = Icons.Default.FitnessCenter,
-            isSelected = currentGoal == OnboardingState.GOAL_GAIN,
-            onClick = { onGoalChange(OnboardingState.GOAL_GAIN) }
+            isSelected = currentGoal == Goal.GAIN_WEIGHT,
+            onClick = { onGoalChange(Goal.GAIN_WEIGHT) }
         )
     }
 }

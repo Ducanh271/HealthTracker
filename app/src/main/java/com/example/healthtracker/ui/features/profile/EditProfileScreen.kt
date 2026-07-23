@@ -31,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.BmiCategory
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import com.example.healthtracker.ui.theme.LocalDimens
 import kotlinx.coroutines.delay
 
@@ -277,10 +279,10 @@ private fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEve
                     )
                     SegmentedButton(
                         items = listOf(
-                            stringResource(id = R.string.gender_male) to true,
-                            stringResource(id = R.string.gender_female) to false
+                            stringResource(id = R.string.gender_male) to Gender.MALE,
+                            stringResource(id = R.string.gender_female) to Gender.FEMALE
                         ),
-                        selectedItem = state.isMale,
+                        selectedItem = state.gender,
                         onItemSelected = { onEvent(EditProfileEvent.OnGenderChange(it)) }
                     )
                 }
@@ -337,13 +339,13 @@ private fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEve
                     text = stringResource(id = R.string.label_goal),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = dimens.xs)
                 )
                 SegmentedButton(
                     items = listOf(
-                        stringResource(id = R.string.goal_value_lose) to stringResource(id = R.string.goal_value_lose),
-                        stringResource(id = R.string.goal_value_maintain) to stringResource(id = R.string.goal_value_maintain),
-                        stringResource(id = R.string.goal_value_gain) to stringResource(id = R.string.goal_value_gain)
+                        stringResource(id = R.string.goal_value_lose) to Goal.LOSE_WEIGHT,
+                        stringResource(id = R.string.goal_value_maintain) to Goal.MAINTAIN_WEIGHT,
+                        stringResource(id = R.string.goal_value_gain) to Goal.GAIN_WEIGHT
                     ),
                     selectedItem = state.goal,
                     onItemSelected = { onEvent(EditProfileEvent.OnGoalChange(it)) }

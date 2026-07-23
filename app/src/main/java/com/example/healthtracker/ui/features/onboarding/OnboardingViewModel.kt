@@ -3,6 +3,8 @@ package com.example.healthtracker.ui.features.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.Gender
+import com.example.healthtracker.domain.model.Goal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,25 +24,36 @@ class OnboardingViewModel @Inject constructor(
 
     fun updateName(newName: String) { _state.update { it.copy(name = newName) } }
     fun updateDob(newDob: String) { _state.update { it.copy(dob = newDob) } }
-    fun updateGender(isMale: Boolean) { _state.update { it.copy(isMale = isMale) } }
+    fun updateGender(newGender: Gender) { _state.update { it.copy(gender = newGender) } }
     fun updateWeight(newWeight: String) { _state.update { it.copy(weight = newWeight) } }
     fun updateHeight(newHeight: String) { _state.update { it.copy(height = newHeight) } }
     fun updateActivityLevel(level: Int) { _state.update { it.copy(activityLevel = level) } }
-    fun updateGoal(newGoal: String) { _state.update { it.copy(goal = newGoal) } }
+
+    fun updateGoal(newGoal: Goal) { _state.update { it.copy(goal = newGoal) } }
 
     fun completeOnboarding() {
         val currentState = _state.value
 
         if (currentState.isLoading) return
-
         if (!validateInputs(currentState)) return
 
         _state.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
             try {
-                saveOnboardingProfileUseCase(currentState)
-                _state.update { it.copy(isNavigateToDashboard = true) }
+                val result = saveOnboardingProfileUseCase(
+                    name = currentState.name,
+                    dob = currentState.dob,
+                    gender = currentState.gender,
+                    weight = currentState.weight,
+                    height = currentState.height,
+                    activityLevel = currentState.activityLevel,
+                    goal = currentState.goal
+                )
+
+                if (result.isSuccess) {
+                    _state.update { it.copy(isNavigateToDashboard = true) }
+                }
             } catch(e: Exception) {
                 android.util.Log.e("OnboardingBug", "Lỗi: ${e.message}", e)
             } finally {
@@ -48,8 +61,6 @@ class OnboardingViewModel @Inject constructor(
             }
         }
     }
-
-
 
     private fun validateInputs(currentState: OnboardingState): Boolean {
         var hasError = false
