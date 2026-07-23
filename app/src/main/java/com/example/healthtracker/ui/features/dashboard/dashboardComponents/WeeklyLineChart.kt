@@ -9,12 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.ui.theme.LocalDimens
 
@@ -37,7 +35,8 @@ fun WeeklyLineChart(weeklyData: List<Pair<String, Float>>) {
         )
         Spacer(modifier = Modifier.height(dimens.lg))
 
-        Canvas(modifier = Modifier.fillMaxWidth().height(120.dp)) {
+        Canvas(modifier = Modifier.fillMaxWidth().height(dimens.chartLineHeight)) {
+            if (weeklyData.size < 2) return@Canvas
             val path = Path()
             val spaceBetweenPoints = size.width / (weeklyData.size - 1)
 
@@ -50,7 +49,7 @@ fun WeeklyLineChart(weeklyData: List<Pair<String, Float>>) {
             drawPath(
                 path = path,
                 color = primaryColor,
-                style = Stroke(width = 3.dp.toPx())
+                style = Stroke(width = dimens.chartLineStroke.toPx())
             )
         }
     }

@@ -38,8 +38,7 @@ class GetDashboardMetricsUseCase @Inject constructor(
             var totalBurnedWeek = 0
             var goalReachedCount = 0
 
-            for (date in last7Days.reversed()) {
-                val dayLabel = DateUtils.getDayOfWeekVN(date)
+            for (date in last7Days) {
                 val dailyConsumed = mealLogs.filter { it.date == date }.sumOf { it.totalCalories }
                 val dailyBurned = activityLogs.filter { it.date == date }.sumOf { it.caloriesBurned }
 
@@ -54,7 +53,7 @@ class GetDashboardMetricsUseCase @Inject constructor(
                     (dailyConsumed.toFloat() / maxCalorieInWeek.toFloat()).coerceIn(0f, 1f)
                 } else 0f
 
-                chartData.add(dayLabel to progress)
+                chartData.add(date to progress)
             }
 
             DashboardMetrics(

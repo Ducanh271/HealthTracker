@@ -69,6 +69,14 @@
     <string name="dash_chart_subtitle">Insights</string>
     <string name="dash_fab_activity">Add activity</string>
     <string name="dash_fab_meal">Add meal</string>
+    <string name="dash_profile_cd">Profile</string>
+    <string name="day_mon">Mon</string>
+    <string name="day_tue">Tue</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thu">Thu</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+    <string name="day_sun">Sun</string>
     <!-- Dashboard Advice Strings -->
     <string name="advice_start_day">Start a new day! Log your first meal.</string>
     <string name="advice_exceeded">Warning: You have exceeded your target calories!</string>

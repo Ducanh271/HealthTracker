@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -64,7 +65,13 @@ fun AppNavGraph(
                 )
             }
             composable(route = Screen.Dashboard.route) {
-                Surface(modifier = Modifier.fillMaxSize()) { DashboardScreen() }
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    DashboardScreen(
+                        onProfileClick = { navController.navigate(Screen.EditProfile.route) },
+                        onAddMealClick = { navController.navigateToTab(Screen.MealDiary.route) },
+                        onAddActivityClick = { navController.navigateToTab(Screen.ActivityDiary.route) }
+                    )
+                }
             }
 
             composable(route = Screen.MealDiary.route) {
@@ -95,4 +102,12 @@ fun AppNavGraph(
         }
     }
 
+}
+
+private fun NavHostController.navigateToTab(route: String) {
+    navigate(route) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
 }

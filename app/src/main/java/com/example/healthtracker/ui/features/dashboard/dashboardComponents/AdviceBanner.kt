@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +17,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.ui.theme.LocalDimens
 
@@ -25,7 +24,7 @@ import com.example.healthtracker.ui.theme.LocalDimens
 fun AdviceBanner(adviceText: String) {
     val dimens = LocalDimens.current
     val primaryColor = MaterialTheme.colorScheme.primary
-    val strokeWidthPx = dimens.xs
+    val accentWidth = dimens.xs
 
     Row(
         modifier = Modifier
@@ -37,17 +36,17 @@ fun AdviceBanner(adviceText: String) {
                     color = primaryColor,
                     start = Offset(0f, 0f),
                     end = Offset(0f, size.height),
-                    strokeWidth = strokeWidthPx.toPx()
+                    strokeWidth = accentWidth.toPx()
                 )
             }
             .padding(dimens.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Default.Info, // Tạm dùng Info thay cho icon bóng đèn
+            imageVector = Icons.Default.Lightbulb,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(dimens.iconLarge)
         )
         Spacer(modifier = Modifier.width(dimens.md))
         Column {

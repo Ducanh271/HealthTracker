@@ -6,19 +6,35 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.ui.theme.LocalDimens
+import com.example.healthtracker.utils.DateUtils
+
+@Composable
+fun dayOfWeekLabel(dateString: String): String {
+    val resId = when (DateUtils.getDayOfWeekNumber(dateString)) {
+        1 -> R.string.day_mon
+        2 -> R.string.day_tue
+        3 -> R.string.day_wed
+        4 -> R.string.day_thu
+        5 -> R.string.day_fri
+        6 -> R.string.day_sat
+        else -> R.string.day_sun
+    }
+    return stringResource(id = resId)
+}
 
 @Composable
 fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
     val dimens = LocalDimens.current
+    val todayStr = remember { DateUtils.getTodayString() }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,22 +64,21 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp),
+                .height(dimens.chartBarHeight),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            weeklyData.forEach { (label, progress) ->
-                val isToday = label == "T6"
+            weeklyData.forEach { (date, progress) ->
+                val isToday = date == todayStr
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(1f)
                 ) {
-                    // Vẽ cột
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.6f)
-                            .fillMaxHeight(progress.coerceIn(0.05f, 1f)) // Ít nhất là 5% để thấy vệt màu
-                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                            .fillMaxWidth(dimens.chartBarWidthFraction)
+                            .fillMaxHeight(progress.coerceIn(dimens.chartBarMinHeightFraction, 1f))
+                            .clip(RoundedCornerShape(topStart = dimens.chartBarCorner, topEnd = dimens.chartBarCorner))
                             .background(
                                 if (isToday) MaterialTheme.colorScheme.primary
                                 else MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
@@ -71,7 +86,7 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
                     )
                     Spacer(modifier = Modifier.height(dimens.xs))
                     Text(
-                        text = label,
+                        text = dayOfWeekLabel(dateString = date),
                         style = MaterialTheme.typography.labelMedium.copy(fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal),
                         color = if (isToday) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -86,8 +101,8 @@ fun WeeklyBarChart(weeklyData: List<Pair<String, Float>>) {
 fun WeeklyBarChartPreview() {
     MaterialTheme {
         val mockData = listOf(
-            "T2" to 0.6f, "T3" to 0.85f, "T4" to 0.45f,
-            "T5" to 0.7f, "T6" to 0.9f, "T7" to 0.1f, "CN" to 0.1f
+            "2026-07-20" to 0.6f, "2026-07-21" to 0.85f, "2026-07-22" to 0.45f,
+            "2026-07-23" to 0.7f, "2026-07-24" to 0.9f, "2026-07-25" to 0.1f, "2026-07-26" to 0.1f
         )
         WeeklyBarChart(weeklyData = mockData)
     }

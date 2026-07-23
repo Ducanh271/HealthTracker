@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.AdviceType
@@ -23,15 +22,18 @@ import com.example.healthtracker.ui.theme.LocalDimens
 
 @Composable
 fun DashboardScreen(
+    onProfileClick: () -> Unit,
+    onAddActivityClick: () -> Unit,
+    onAddMealClick: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
     DashboardContent(
         state = state,
-        onProfileClick = { /* TODO */ },
-        onAddActivityClick = { /* TODO */ },
-        onAddMealClick = { /* TODO */ }
+        onProfileClick = onProfileClick,
+        onAddActivityClick = onAddActivityClick,
+        onAddMealClick = onAddMealClick
     )
 }
 
@@ -121,11 +123,8 @@ fun DashboardContent(
 
                 WeeklyBarChart(weeklyData = state.weeklyBarData)
                 WeeklyLineChart(weeklyData = state.weeklyLineData)
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-                    Text("TB Nạp: ${state.stats.avgConsumed}")
-                    Text("Đạt mục tiêu: ${state.stats.goalReachedDays} ngày")
-                }
-                Spacer(modifier = Modifier.height(100.dp))
+                WeeklyStatsRow(stats = state.stats)
+                Spacer(modifier = Modifier.height(dimens.fabClearance))
             }
         }
     }

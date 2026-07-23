@@ -19,18 +19,8 @@ object DateUtils {
         }
     }
 
-    fun getDayOfWeekVN(dateString: String): String {
-        val date = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
-        return when (date.dayOfWeek.value) {
-            1 -> "T2"
-            2 -> "T3"
-            3 -> "T4"
-            4 -> "T5"
-            5 -> "T6"
-            6 -> "T7"
-            7 -> "CN"
-            else -> ""
-        }
+    fun getDayOfWeekNumber(dateString: String): Int {
+        return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE).dayOfWeek.value
     }
 
     fun calculateAgeOrNull(dobStr: String): Int? {

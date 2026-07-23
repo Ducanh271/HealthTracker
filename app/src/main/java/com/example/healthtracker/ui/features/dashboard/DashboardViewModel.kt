@@ -26,7 +26,7 @@ class DashboardViewModel @Inject constructor(
             burnedCalories = metrics.burnedCalories,
             remainingCalories = metrics.remainingCalories,
             balanceCalories = metrics.balanceCalories,
-            adviceType = getDashboardAdviceUseCase(metrics.consumedCalories, metrics.remainingCalories), // Map trực tiếp AdviceType
+            adviceType = getDashboardAdviceUseCase(metrics.consumedCalories, metrics.remainingCalories),
             weeklyBarData = metrics.weeklyChartData,
             weeklyLineData = metrics.weeklyChartData,
             stats = StatsData(
