@@ -7,7 +7,4 @@ data class Meal(
     val foodName: String,
     val servingCount: Int,
     val totalCalories: Int
-) {
-    val amountInfo: String
-        get() = "$servingCount phần"
-}
+)

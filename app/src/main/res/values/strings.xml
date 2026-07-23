@@ -214,4 +214,15 @@
     <string name="goal_value_gain">Gain Weight</string>
     <string name="action_confirm">Accept</string>
 
+    <!-- BMI Categories -->
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_normal">Normal</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obese">Obese</string>
+    <string name="bmi_undefined">Unknown</string>
+
+    <string name="settings_default_username">User</string>
+    <string name="meal_serving_portion">%1$d serving(s)</string>
+    <string name="activity_level_progress">Level %1$d/5</string>
+
 </resources>

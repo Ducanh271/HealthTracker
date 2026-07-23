@@ -2,6 +2,7 @@ package com.example.healthtracker.ui.features.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.healthtracker.domain.model.BmiCategory
 import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.domain.usecase.dashboard.CalculateBmiUseCase
 import com.example.healthtracker.domain.usecase.settings.GetAppSettingsUseCase
@@ -24,7 +25,7 @@ data class SettingsState(
     val appLanguage: String = "vi", // Thêm dòng này
     val userName: String = "",
     val bmiValue: Float = 0f,
-    val bmiCategory: String = ""
+    val bmiCategory: BmiCategory = BmiCategory.UNDEFINED
 )
 
 @HiltViewModel
@@ -70,9 +71,9 @@ class SettingsViewModel @Inject constructor(
                 }
 
                 _state.value = _state.value.copy(
-                    userName = profile.name.ifEmpty { "Người dùng" },
+                    userName = profile.name,
                     bmiValue = bmiResult.bmi,
-                    bmiCategory = bmiResult.category.toString(),
+                    bmiCategory = bmiResult.category,
                     currentTheme = theme,
                     currentMode = mode,
                     currentFontSize = fontSize,

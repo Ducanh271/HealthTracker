@@ -170,8 +170,8 @@ fun MealSection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = food.foodName, style = MaterialTheme.typography.bodyLarge) // SỬA: name -> foodName
-                        Text(text = "${food.amountInfo} - ${food.totalCalories} kcal", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) // SỬA: calories -> totalCalories
+                        Text(text = food.foodName, style = MaterialTheme.typography.bodyLarge)
+                        Text(text = "${stringResource(id = R.string.meal_serving_portion, food.servingCount)} - ${food.totalCalories} kcal", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     if (isSelected) {

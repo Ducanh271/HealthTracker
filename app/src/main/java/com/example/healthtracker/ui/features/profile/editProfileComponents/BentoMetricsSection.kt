@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.BmiCategory
+import com.example.healthtracker.ui.components.labelRes
 import com.example.healthtracker.ui.theme.LocalDimens
 
 @Composable
@@ -45,7 +46,7 @@ fun BentoMetricsSection(bmiValue: Float, bmiCategory: BmiCategory, tdee: Int) {
                     Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(dimens.sm)) {
                         Text(text = bmiValue.toString(), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                         Surface(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), shape = RoundedCornerShape(dimens.cornerFull)) {
-                            Text(text = bmiCategory.name, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(horizontal = dimens.sm, vertical = dimens.spacingXS))
+                            Text(text = stringResource(id = bmiCategory.labelRes()), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(horizontal = dimens.sm, vertical = dimens.spacingXS))
                         }
                     }
                     Text(text = stringResource(id = R.string.edit_profile_bmi_desc), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)

@@ -205,4 +205,15 @@
     <string name="goal_value_maintain">Giữ cân</string>
     <string name="goal_value_gain">Tăng cân</string>
     <string name="action_confirm">Xác nhận</string>
+
+    <!-- BMI Categories -->
+    <string name="bmi_underweight">Thiếu cân</string>
+    <string name="bmi_normal">Bình thường</string>
+    <string name="bmi_overweight">Thừa cân</string>
+    <string name="bmi_obese">Béo phì</string>
+    <string name="bmi_undefined">Chưa xác định</string>
+
+    <string name="settings_default_username">Người dùng</string>
+    <string name="meal_serving_portion">%1$d phần</string>
+    <string name="activity_level_progress">Cấp độ %1$d/5</string>
 </resources>

@@ -67,7 +67,7 @@ fun SearchFoodBottomSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Thêm món ăn",
+                        text = stringResource(id = R.string.sheet_add_title, stringResource(id = mealType.labelRes())),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                         color = MaterialTheme.colorScheme.onSurface
                     )

@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.BmiCategory
+import com.example.healthtracker.ui.components.labelRes
 import com.example.healthtracker.ui.theme.AppThemeType
 import com.example.healthtracker.ui.theme.LocalDimens
 
@@ -132,7 +134,7 @@ fun SettingsScreen(
 private fun ProfileSection(
     userName: String,
     bmiValue: Float,
-    bmiCategory: String,
+    bmiCategory: BmiCategory,
     onEditClick: () -> Unit
 ) {
     val dimens = LocalDimens.current
@@ -172,7 +174,7 @@ private fun ProfileSection(
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = userName,
+                    text = userName.ifEmpty { stringResource(id = R.string.settings_default_username) },
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -193,7 +195,7 @@ private fun ProfileSection(
                         )
                     }
                     Text(
-                        text = bmiCategory,
+                        text = stringResource(id = bmiCategory.labelRes()),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

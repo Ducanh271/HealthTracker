@@ -150,7 +150,7 @@ fun ProfileFormSection(state: EditProfileState, onEvent: (EditProfileEvent) -> U
             Column(verticalArrangement = Arrangement.spacedBy(dimens.xs)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(text = stringResource(id = R.string.label_activity_level), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    Text(text = "Cấp độ ${state.activityLevel.toInt()}/5", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(id = R.string.activity_level_progress, state.activityLevel.toInt()), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
                 Slider(
                     value = state.activityLevel,
