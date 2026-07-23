@@ -4,7 +4,7 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 class CalculateActivityCaloriesUseCase @Inject constructor() {
-    operator fun invoke(metValue: Float, weightKg: Int, durationMinutes: Int): Int {
+    operator fun invoke(metValue: Float, weightKg: Float, durationMinutes: Int): Int {
         return (metValue * weightKg * (durationMinutes / 60f)).roundToInt()
     }
 }

@@ -47,8 +47,7 @@ class ActivityDiaryViewModel @Inject constructor(
             ActivityDiaryState(
                 selectedDate = date,
                 totalBurnedCalories = summary.totalCalories,
-                // Dùng TDEE từ profile để tính mục tiêu calo
-                targetBurnCalories = (profile.tdee * 0.3f).toInt(),
+                targetBurnCalories = (profile.tdee * BURN_TARGET_RATIO).toInt(),
                 activities = summary.logs,
                 userWeight = profile.weight
             )
@@ -75,7 +74,7 @@ class ActivityDiaryViewModel @Inject constructor(
 
     fun calculateCalories(metValue: Float, durationMinutes: Int): Int {
         val weight = state.value.userWeight
-        return calculateCaloriesUseCase(metValue, weight.toInt(), durationMinutes)
+        return calculateCaloriesUseCase(metValue, weight, durationMinutes)
     }
     fun addActivityLog(name: String, durationMinutes: Int, caloriesBurned: Int) {
         viewModelScope.launch {
@@ -98,5 +97,9 @@ class ActivityDiaryViewModel @Inject constructor(
         viewModelScope.launch {
             updateActivityLogUseCase(id, durationMinutes, caloriesBurned)
         }
+    }
+
+    companion object {
+        private const val BURN_TARGET_RATIO = 0.3f
     }
 }
