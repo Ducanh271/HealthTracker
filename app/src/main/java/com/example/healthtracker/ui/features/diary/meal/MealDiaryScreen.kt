@@ -7,8 +7,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Brightness2
 import androidx.compose.material.icons.outlined.Fastfood
-import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material.icons.outlined.WbSunny
+import androidx.compose.material.icons.outlined.WbTwilight
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -93,7 +93,7 @@ fun MealDiaryScreen(
 
             MealSection(
                 title = stringResource(id = R.string.meal_breakfast),
-                icon = Icons.Outlined.LightMode,
+                icon = Icons.Outlined.WbTwilight,
                 foods = state.breakfast,
                 onAddClick = {
                     currentMealType = MealType.BREAKFAST

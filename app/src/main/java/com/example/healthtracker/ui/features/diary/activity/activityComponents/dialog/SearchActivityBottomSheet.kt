@@ -35,7 +35,6 @@ import com.example.healthtracker.ui.theme.LocalDimens
 @Composable
 fun SearchActivityBottomSheet(
     onDismiss: () -> Unit,
-    onAddManualClick: () -> Unit,
     onActivitySelect: (ActivityCatalogItem) -> Unit,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
@@ -110,10 +109,7 @@ fun SearchActivityBottomSheet(
                     }
                 }
 
-                ActivitySearchFooter(
-                    onCancel = onDismiss,
-                    onAddManual = onAddManualClick
-                )
+                ActivitySearchFooter(onCancel = onDismiss)
             }
         }
     }
@@ -232,43 +228,25 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
 }
 
 @Composable
-private fun ActivitySearchFooter(
-    onCancel: () -> Unit,
-    onAddManual: () -> Unit
-) {
+private fun ActivitySearchFooter(onCancel: () -> Unit) {
     val dimens = LocalDimens.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
-            .padding(dimens.marginMobile),
-        horizontalArrangement = Arrangement.spacedBy(dimens.md)
+            .padding(dimens.marginMobile)
     ) {
-        TextButton(
+        Button(
             onClick = onCancel,
             modifier = Modifier
-                .weight(1f)
-                .height(48.dp),
-            shape = RoundedCornerShape(dimens.cornerLarge)
-        ) {
-            Text(
-                text = stringResource(id = R.string.activity_action_cancel),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-
-        Button(
-            onClick = onAddManual,
-            modifier = Modifier
-                .weight(2f)
+                .fillMaxWidth()
                 .height(48.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             shape = RoundedCornerShape(dimens.cornerLarge)
         ) {
             Text(
-                text = stringResource(id = R.string.activity_action_add_manual),
+                text = stringResource(id = R.string.activity_action_close),
                 style = MaterialTheme.typography.labelLarge
             )
         }

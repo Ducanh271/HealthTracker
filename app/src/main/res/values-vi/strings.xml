@@ -152,7 +152,7 @@
     <string name="activity_category_sports">Thể thao</string>
     <string name="activity_popular_title">Hoạt động phổ biến</string>
     <string name="activity_action_cancel">Hủy</string>
-    <string name="activity_action_add_manual">Thêm thủ công</string>
+    <string name="activity_action_close">Đóng</string>
     <string name="activity_met_format">%1$.1f MET</string>
     <!-- Log Activity Dialog -->
     <string name="activity_log_selected">Hoạt động đang chọn</string>
@@ -221,6 +221,7 @@
 
     <string name="settings_default_username">Người dùng</string>
     <string name="meal_serving_portion">%1$d phần</string>
+    <string name="meal_kcal_value">%1$d kcal</string>
     <string name="error_add_food_failed">Không thể thêm món ăn, vui lòng thử lại.</string>
     <string name="activity_level_progress">Cấp độ %1$d/5</string>
 

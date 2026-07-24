@@ -157,7 +157,7 @@
     <string name="activity_category_sports">Sports</string>
     <string name="activity_popular_title">Popular activities</string>
     <string name="activity_action_cancel">Cancel</string>
-    <string name="activity_action_add_manual">Add manually</string>
+    <string name="activity_action_close">Close</string>
     <string name="activity_met_format">%1$.1f MET</string>
 
     <!-- Log Activity Dialog -->
@@ -229,6 +229,7 @@
 
     <string name="settings_default_username">User</string>
     <string name="meal_serving_portion">%1$d serving(s)</string>
+    <string name="meal_kcal_value">%1$d kcal</string>
     <string name="error_add_food_failed">Failed to add food item. Please try again.</string>
     <string name="activity_level_progress">Level %1$d/5</string>
 

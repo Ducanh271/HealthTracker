@@ -114,9 +114,6 @@ fun ActivityDiaryScreen(
                 showSearchSheet = false
                 viewModel.updateSearchQuery("")
             },
-            onAddManualClick = {
-                showSearchSheet = false
-            },
             onActivitySelect = { selectedActivity ->
                 showSearchSheet = false
                 viewModel.updateSearchQuery("")

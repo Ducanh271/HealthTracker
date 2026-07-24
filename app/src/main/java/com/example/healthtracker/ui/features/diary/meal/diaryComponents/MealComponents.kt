@@ -10,7 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.WbSunny
+import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -124,7 +124,6 @@ fun MealSection(
             .border(dimens.borderWidth, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(dimens.cornerLarge))
             .padding(dimens.md)
     ) {
-        // Header
         Row(
             modifier = Modifier.fillMaxWidth().padding(bottom = dimens.md),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -138,7 +137,6 @@ fun MealSection(
             Text(text = "$sectionTotalKcal kcal", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.outline)
         }
 
-        // List of Foods
         if (foods.isEmpty()) {
             Text(
                 text = stringResource(id = R.string.meal_diary_empty),
@@ -150,40 +148,18 @@ fun MealSection(
             var selectedFoodId by remember { mutableStateOf<Int?>(null) }
 
             foods.forEach { food ->
-                val isSelected = selectedFoodId == food.id
-
-                val backgroundColor = if (isSelected) MaterialTheme.colorScheme.surfaceContainerHigh
-                else MaterialTheme.colorScheme.surfaceContainerLowest
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = dimens.sm)
-                        .clip(RoundedCornerShape(dimens.cornerMedium))
-                        .background(backgroundColor)
-                        .clickable {
-                            selectedFoodId = if (isSelected) null else food.id
-                        }
-                        .padding(dimens.sm),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(text = food.foodName, style = MaterialTheme.typography.bodyLarge)
-                        Text(text = "${stringResource(id = R.string.meal_serving_portion, food.servingCount)} - ${food.totalCalories} kcal", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                FoodLogItem(
+                    food = food,
+                    isSelected = selectedFoodId == food.id,
+                    onClick = {
+                        selectedFoodId = if (selectedFoodId == food.id) null else food.id
+                    },
+                    onDelete = {
+                        onDeleteClick(food)
+                        selectedFoodId = null
                     }
-
-                    if (isSelected) {
-                        IconButton(
-                            onClick = {
-                                onDeleteClick(food)
-                                selectedFoodId = null
-                            }
-                        ) {
-                            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
-                        }
-                    }
-                }
+                )
+                Spacer(modifier = Modifier.height(dimens.sm))
             }
         }
 
@@ -200,6 +176,88 @@ fun MealSection(
                 Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(dimens.xs))
                 Text(text = stringResource(id = R.string.meal_diary_add_food), color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+@Composable
+private fun FoodLogItem(
+    food: Meal,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val dimens = LocalDimens.current
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(dimens.cornerMedium))
+            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .border(
+                dimens.borderWidth,
+                if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.25f),
+                RoundedCornerShape(dimens.cornerMedium)
+            )
+            .clickable { onClick() }
+            .padding(horizontal = dimens.md, vertical = dimens.sm),
+        horizontalArrangement = Arrangement.spacedBy(dimens.md),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(RoundedCornerShape(dimens.cornerMedium))
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Restaurant,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(dimens.iconSmall)
+            )
+        }
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = food.foodName,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = stringResource(id = R.string.meal_serving_portion, food.servingCount),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (isSelected) {
+            IconButton(
+                onClick = onDelete,
+                modifier = Modifier.size(dimens.iconLarge)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = stringResource(id = R.string.sheet_action_delete),
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(dimens.iconSmall)
+                )
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(dimens.cornerFull))
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(horizontal = dimens.sm, vertical = dimens.xs)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.meal_kcal_value, food.totalCalories),
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
             }
         }
     }
