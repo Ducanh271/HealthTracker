@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
+import com.example.healthtracker.ui.components.LocalizedContent
 import com.example.healthtracker.ui.theme.LocalDimens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,53 +55,53 @@ fun AddNewFoodBottomSheet(
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
         dragHandle = { BottomSheetDefaults.DragHandle(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)) }
     ) {
-        Column(
-            modifier = Modifier.fillMaxHeight(0.9f)
-        ) {
-            AddNewFoodHeader(onClose = onDismiss)
-
+        LocalizedContent {
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(scrollState)
-                    .padding(horizontal = dimens.lg, vertical = dimens.md),
-                verticalArrangement = Arrangement.spacedBy(dimens.lg)
+                modifier = Modifier.fillMaxHeight(0.9f)
             ) {
-                FoodBannerImage()
+                AddNewFoodHeader(onClose = onDismiss)
 
-                FoodInputForm(
-                    foodName = foodName, onNameChange = { foodName = it },
-                    portion = portion, onPortionChange = { portion = it },
-                    calories = caloriesStr, onCaloriesChange = {
-                        if (it.isEmpty() || it.matches(Regex("^\\d+\$"))) caloriesStr = it
-                    },
-                    quantity = quantity,
-                    onDecrease = { if (quantity > 1) quantity-- },
-                    onIncrease = { quantity++ }
-                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(scrollState)
+                        .padding(horizontal = dimens.lg, vertical = dimens.md),
+                    verticalArrangement = Arrangement.spacedBy(dimens.lg)
+                ) {
+                    FoodBannerImage()
 
-                QuickSuggestions(
-                    onSuggestionClick = { name, port, cal ->
-                        foodName = name
-                        portion = port
-                        caloriesStr = cal.toString()
+                    FoodInputForm(
+                        foodName = foodName, onNameChange = { foodName = it },
+                        portion = portion, onPortionChange = { portion = it },
+                        calories = caloriesStr, onCaloriesChange = {
+                            if (it.isEmpty() || it.matches(Regex("^\\d+\$"))) caloriesStr = it
+                        },
+                        quantity = quantity,
+                        onDecrease = { if (quantity > 1) quantity-- },
+                        onIncrease = { quantity++ }
+                    )
+
+                    QuickSuggestions(
+                        onSuggestionClick = { name, port, cal ->
+                            foodName = name
+                            portion = port
+                            caloriesStr = cal.toString()
+                        }
+                    )
+                }
+
+                AddNewFoodFooter(
+                    isValid = isValid,
+                    onCancel = onDismiss,
+                    onSubmit = {
+                        val cal = caloriesStr.toIntOrNull() ?: 0
+                        onSubmit(foodName.trim(), portion.trim(), cal, quantity)
                     }
                 )
             }
-
-            // Footer
-            AddNewFoodFooter(
-                isValid = isValid,
-                onCancel = onDismiss,
-                onSubmit = {
-                    val cal = caloriesStr.toIntOrNull() ?: 0
-                    onSubmit(foodName.trim(), portion.trim(), cal, quantity)
-                }
-            )
         }
     }
 }
-
 
 @Composable
 private fun AddNewFoodHeader(onClose: () -> Unit) {
@@ -142,7 +143,6 @@ private fun FoodBannerImage() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
         )
-        // Icon thay thế cho ảnh URL (bạn có thể thay bằng AsyncImage của Coil sau này)
         Icon(
             imageVector = Icons.Default.Restaurant,
             contentDescription = null,
@@ -170,7 +170,6 @@ private fun FoodInputForm(
             onValueChange = onNameChange,
             placeholder = stringResource(id = R.string.add_new_name_hint)
         )
-
 
         Row(horizontalArrangement = Arrangement.spacedBy(dimens.md)) {
             Box(modifier = Modifier.weight(1f)) {
@@ -264,7 +263,6 @@ private fun CustomInputField(
     }
 }
 
-// TODO
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun QuickSuggestions(onSuggestionClick: (String, String, Int) -> Unit) {

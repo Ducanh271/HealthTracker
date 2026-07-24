@@ -23,6 +23,7 @@ import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.CartItem
 import com.example.healthtracker.domain.model.FoodItem
 import com.example.healthtracker.domain.model.MealType
+import com.example.healthtracker.ui.components.LocalizedContent
 import com.example.healthtracker.ui.theme.LocalDimens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,99 +52,101 @@ fun SearchFoodBottomSheet(
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
         dragHandle = { BottomSheetDefaults.DragHandle(color = MaterialTheme.colorScheme.outlineVariant) }
     ) {
-        Column(
-            modifier = Modifier.fillMaxHeight(0.9f)
-        ) {
-            Column(modifier = Modifier.padding(horizontal = dimens.marginMobile, vertical = dimens.sm)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.sheet_add_title, stringResource(id = mealType.labelRes())),
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = "Close")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(dimens.xs))
-
-                MealTypeSelector(
-                    selectedMeal = mealType,
-                    onMealSelected = onMealTypeChange
-                )
-
-                Spacer(modifier = Modifier.height(dimens.md))
-                SearchBar(query = searchQuery, onQueryChange = onSearchQueryChange)
-            }
-
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = dimens.marginMobile),
-                contentPadding = PaddingValues(vertical = dimens.md)
+        LocalizedContent {
+            Column(
+                modifier = Modifier.fillMaxHeight(0.9f)
             ) {
-                if (cartItems.isNotEmpty()) {
-                    item {
-                        SelectedFoodsSection(
-                            cartItems = cartItems,
-                            totalCalories = totalCartCalories,
-                            onRemove = { itemToRemove ->
-                                val newCart = cartItems.filter { it != itemToRemove }
-                                onCartItemsChange(newCart)
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(dimens.xl))
-                    }
-                }
-
-                item {
-                    SectionTitle(
-                        icon = Icons.Default.RestaurantMenu,
-                        title = stringResource(id = R.string.sheet_food_list),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(dimens.md))
-                }
-
-                if (searchResults.isEmpty()) {
-                    item {
+                Column(modifier = Modifier.padding(horizontal = dimens.marginMobile, vertical = dimens.sm)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
-                            text = stringResource(id = R.string.sheet_empty_search),
-                            modifier = Modifier.fillMaxWidth().padding(dimens.lg),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = stringResource(id = R.string.sheet_add_title, stringResource(id = mealType.labelRes())),
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                            color = MaterialTheme.colorScheme.onSurface
                         )
+                        IconButton(onClick = onDismiss) {
+                            Icon(Icons.Default.Close, contentDescription = "Close")
+                        }
                     }
-                } else {
-                    items(searchResults) { food ->
-                        FoodItemCard(
-                            food = food,
-                            onAdd = { quantity ->
-                                val existing = cartItems.find { it.food.id == food.id }
-                                val newCart = if (existing != null) {
-                                    cartItems.map { if (it.food.id == food.id) it.copy(quantity = it.quantity + quantity) else it }
-                                } else {
-                                    cartItems + CartItem(food, quantity)
+
+                    Spacer(modifier = Modifier.height(dimens.xs))
+
+                    MealTypeSelector(
+                        selectedMeal = mealType,
+                        onMealSelected = onMealTypeChange
+                    )
+
+                    Spacer(modifier = Modifier.height(dimens.md))
+                    SearchBar(query = searchQuery, onQueryChange = onSearchQueryChange)
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = dimens.marginMobile),
+                    contentPadding = PaddingValues(vertical = dimens.md)
+                ) {
+                    if (cartItems.isNotEmpty()) {
+                        item {
+                            SelectedFoodsSection(
+                                cartItems = cartItems,
+                                totalCalories = totalCartCalories,
+                                onRemove = { itemToRemove ->
+                                    val newCart = cartItems.filter { it != itemToRemove }
+                                    onCartItemsChange(newCart)
                                 }
-                                onCartItemsChange(newCart)
-                            }
+                            )
+                            Spacer(modifier = Modifier.height(dimens.xl))
+                        }
+                    }
+
+                    item {
+                        SectionTitle(
+                            icon = Icons.Default.RestaurantMenu,
+                            title = stringResource(id = R.string.sheet_food_list),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(dimens.md))
                     }
-                }
-            }
 
-            SheetFooter(
-                hasItems = cartItems.isNotEmpty(),
-                onAddNewFood = onAddNewFoodClick,
-                onCancel = onDismiss,
-                onConfirm = { onConfirm(cartItems) }
-            )
+                    if (searchResults.isEmpty()) {
+                        item {
+                            Text(
+                                text = stringResource(id = R.string.sheet_empty_search),
+                                modifier = Modifier.fillMaxWidth().padding(dimens.lg),
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    } else {
+                        items(searchResults) { food ->
+                            FoodItemCard(
+                                food = food,
+                                onAdd = { quantity ->
+                                    val existing = cartItems.find { it.food.id == food.id }
+                                    val newCart = if (existing != null) {
+                                        cartItems.map { if (it.food.id == food.id) it.copy(quantity = it.quantity + quantity) else it }
+                                    } else {
+                                        cartItems + CartItem(food, quantity)
+                                    }
+                                    onCartItemsChange(newCart)
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(dimens.md))
+                        }
+                    }
+                }
+
+                SheetFooter(
+                    hasItems = cartItems.isNotEmpty(),
+                    onAddNewFood = onAddNewFoodClick,
+                    onCancel = onDismiss,
+                    onConfirm = { onConfirm(cartItems) }
+                )
+            }
         }
     }
 }

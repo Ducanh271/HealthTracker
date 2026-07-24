@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.notification.ReminderScheduler
+import com.example.healthtracker.ui.components.LocalAppContext
 import com.example.healthtracker.ui.theme.AppFontSize
 import com.example.healthtracker.ui.navigation.AppNavGraph
 import com.example.healthtracker.ui.navigation.Screen
@@ -63,7 +64,6 @@ class MainActivity : ComponentActivity() {
             val mainViewModel: MainViewModel = hiltViewModel()
             val isOnboardingCompleted by mainViewModel.isOnboardingCompleted.collectAsState()
 
-
             val context = LocalContext.current
             val currentConfig = LocalConfiguration.current
 
@@ -72,7 +72,6 @@ class MainActivity : ComponentActivity() {
 
             val configuration = Configuration(currentConfig)
             configuration.setLocale(locale)
-
 
             val localizedContext = remember(context, locale) {
                 val configContext = context.createConfigurationContext(configuration)
@@ -102,7 +101,8 @@ class MainActivity : ComponentActivity() {
 
             CompositionLocalProvider(
                 LocalContext provides localizedContext,
-                LocalConfiguration provides configuration
+                LocalConfiguration provides configuration,
+                LocalAppContext provides localizedContext
             ) {
                 HealthTrackerTheme(
                     darkTheme = darkTheme,
