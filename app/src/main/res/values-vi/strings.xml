@@ -82,7 +82,6 @@
     <string name="meal_diary_title">Nhật ký Bữa ăn</string>
     <string name="meal_diary_total_today">Tổng calo hôm nay</string>
     <string name="meal_diary_target">Mục tiêu: %1$d</string>
-    <string name="meal_diary_search">Tìm kiếm món ăn</string>
     <string name="meal_diary_add_food">Thêm món</string>
     <string name="meal_diary_empty">Chưa có món ăn nào</string>
     <string name="meal_breakfast">Bữa sáng</string>
@@ -97,15 +96,7 @@
         <string name="advice_keep_going">Bạn đang làm rất tốt! Hãy tiếp tục nhé.</string>
 
     <!-- Add Food Dialog -->
-    <string name="meal_dialog_title">Thêm món ăn</string>
-    <string name="meal_dialog_food_name">Tên món ăn</string>
-    <string name="meal_dialog_food_name_hint">VD: Phở bò, Cơm tấm...</string>
-    <string name="meal_dialog_serving">Số phần / Số lượng</string>
-    <string name="meal_dialog_serving_hint">VD: 1, 2...</string>
-    <string name="meal_dialog_calories">Tổng Calo (kcal)</string>
-    <string name="meal_dialog_calories_hint">VD: 350, 500...</string>
     <string name="action_cancel">Hủy</string>
-    <string name="action_add">Thêm món</string>
     <!-- Bottom Sheet Add Food -->
     <string name="sheet_add_title">Thêm món vào %1$s</string>
     <string name="sheet_search_hint">Tìm kiếm món ăn...</string>
@@ -150,6 +141,7 @@
     <string name="activity_category_strength">Sức mạnh</string>
     <string name="activity_category_yoga">Yoga</string>
     <string name="activity_category_sports">Thể thao</string>
+    <string name="activity_category_other">Khác</string>
     <string name="activity_popular_title">Hoạt động phổ biến</string>
     <string name="activity_action_cancel">Hủy</string>
     <string name="activity_action_close">Đóng</string>
@@ -163,14 +155,11 @@
     <string name="activity_log_met_hint">* Tính theo chỉ số MET (%1$.1f) và cân nặng %2$.0f kg của bạn. Kết quả thực tế có thể thay đổi.</string>
     <!-- Các chuỗi chung -->
     <string name="action_back">Quay lại</string>
-    <string name="action_edit">Chỉnh sửa</string>
-    <string name="action_save">Lưu</string>
 
     <!-- Màn hình Cài đặt -->
     <string name="settings_title">Cài đặt</string>
 
     <!-- Cài đặt chung -->
-    <string name="settings_language">Ngôn ngữ</string>
     <string name="lang_vietnamese">Tiếng Việt</string>
     <string name="settings_notifications">Thông báo</string>
 
@@ -194,10 +183,8 @@
     <string name="font_large">Lớn</string>
 
     <!-- Các thông tin Profile mẫu (Nếu cần) -->
-    <string name="profile_bmi_label">BMI: %1$s</string>
     <!-- Edit Profile -->
     <string name="edit_profile_title">Chỉnh sửa hồ sơ</string>
-    <string name="edit_profile_change_avatar">Thay đổi ảnh đại diện</string>
     <string name="edit_profile_current_bmi">Chỉ số BMI hiện tại</string>
     <string name="edit_profile_bmi_desc">Cân nặng lý tưởng cho sức khỏe của bạn.</string>
     <string name="edit_profile_est_tdee">TDEE ước tính</string>
@@ -246,12 +233,10 @@
     <!-- Calorie widget -->
     <string name="widget_name">Tiến độ calo</string>
     <string name="widget_description">Hiển thị tiến độ calo hôm nay</string>
-    <string name="widget_consumed">Đã nạp</string>
     <string name="widget_burned">Đã đốt</string>
     <string name="widget_remaining">Còn lại</string>
     <string name="widget_over">Vượt</string>
     <string name="widget_kcal">%1$d kcal</string>
-    <string name="widget_progress">%1$d / %2$d kcal</string>
     <string name="widget_target">Mục tiêu</string>
     <string name="widget_percent">%1$d%%</string>
 </resources>

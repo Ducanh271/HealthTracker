@@ -32,7 +32,6 @@ import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.DailySummaryCard
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.DateSelectorBar
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.MealSection
-import com.example.healthtracker.ui.features.diary.meal.diaryComponents.SearchBarComponent
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.dialog.AddNewFoodBottomSheet
 import com.example.healthtracker.ui.features.diary.meal.diaryComponents.dialog.SearchFoodBottomSheet
 import com.example.healthtracker.ui.theme.LocalDimens

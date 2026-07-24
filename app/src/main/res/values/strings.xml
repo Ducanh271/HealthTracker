@@ -89,7 +89,6 @@
     <string name="meal_diary_title">Meal Diary</string>
     <string name="meal_diary_total_today">Today\'s total calories</string>
     <string name="meal_diary_target">Goal: %1$d</string>
-    <string name="meal_diary_search">Search food</string>
     <string name="meal_diary_add_food">Add food</string>
     <string name="meal_diary_empty">No food logged yet</string>
     <string name="meal_breakfast">Breakfast</string>
@@ -98,15 +97,7 @@
     <string name="meal_snack">Snack</string>
 
     <!-- Add Food Dialog -->
-    <string name="meal_dialog_title">Add Food</string>
-    <string name="meal_dialog_food_name">Food name</string>
-    <string name="meal_dialog_food_name_hint">e.g., Beef Pho, Broken Rice...</string>
-    <string name="meal_dialog_serving">Serving / Quantity</string>
-    <string name="meal_dialog_serving_hint">e.g., 1, 2...</string>
-    <string name="meal_dialog_calories">Total Calories (kcal)</string>
-    <string name="meal_dialog_calories_hint">e.g., 350, 500...</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_add">Add</string>
 
     <!-- Bottom Sheet Add Food -->
     <string name="sheet_add_title">Add to %1$s</string>
@@ -155,6 +146,7 @@
     <string name="activity_category_strength">Strength</string>
     <string name="activity_category_yoga">Yoga</string>
     <string name="activity_category_sports">Sports</string>
+    <string name="activity_category_other">Other</string>
     <string name="activity_popular_title">Popular activities</string>
     <string name="activity_action_cancel">Cancel</string>
     <string name="activity_action_close">Close</string>
@@ -170,14 +162,11 @@
 
     <!-- General Actions -->
     <string name="action_back">Back</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_save">Save</string>
 
     <!-- Settings Screen -->
     <string name="settings_title">Settings</string>
 
     <!-- General Settings -->
-    <string name="settings_language">Language</string>
     <string name="lang_vietnamese">Vietnamese</string>
     <string name="settings_notifications">Notifications</string>
 
@@ -201,11 +190,9 @@
     <string name="font_large">Large</string>
 
     <!-- Sample Profile Info -->
-    <string name="profile_bmi_label">BMI: %1$s</string>
 
     <!-- Edit Profile -->
     <string name="edit_profile_title">Edit Profile</string>
-    <string name="edit_profile_change_avatar">Change profile picture</string>
     <string name="edit_profile_current_bmi">Current BMI</string>
     <string name="edit_profile_bmi_desc">Ideal weight for your health.</string>
     <string name="edit_profile_est_tdee">Estimated TDEE</string>
@@ -254,12 +241,10 @@
     <!-- Calorie widget -->
     <string name="widget_name">Calorie progress</string>
     <string name="widget_description">Shows today\'s calorie progress</string>
-    <string name="widget_consumed">Eaten</string>
     <string name="widget_burned">Burned</string>
     <string name="widget_remaining">Remaining</string>
     <string name="widget_over">Over</string>
     <string name="widget_kcal">%1$d kcal</string>
-    <string name="widget_progress">%1$d / %2$d kcal</string>
     <string name="widget_target">Target</string>
     <string name="widget_percent">%1$d%%</string>
 

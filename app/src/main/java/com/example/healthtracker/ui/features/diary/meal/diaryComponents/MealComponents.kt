@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -84,27 +83,6 @@ fun DailySummaryCard(totalKcal: Int, targetKcal: Int) {
     }
 }
 
-@Composable
-fun SearchBarComponent(
-    query: String,
-    onQueryChange: (String) -> Unit
-) {
-    val dimens = LocalDimens.current
-    OutlinedTextField(
-        value = query,
-        onValueChange = onQueryChange,
-        placeholder = { Text(stringResource(id = R.string.meal_diary_search)) },
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(dimens.cornerMedium),
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-            focusedBorderColor = MaterialTheme.colorScheme.primary
-        )
-    )
-}
 @Composable
 fun MealSection(
     title: String,
