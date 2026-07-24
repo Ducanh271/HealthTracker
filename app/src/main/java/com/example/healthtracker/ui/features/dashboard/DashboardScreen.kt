@@ -1,5 +1,6 @@
 package com.example.healthtracker.ui.features.dashboard
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,10 +9,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,6 +56,23 @@ fun DashboardContent(
 ) {
     val dimens = LocalDimens.current
     val scrollState = rememberScrollState()
+
+    var isScrollingDown by remember { mutableStateOf(false) }
+    LaunchedEffect(scrollState) {
+        var previous = scrollState.value
+        snapshotFlow { scrollState.value }.collect { current ->
+            isScrollingDown = current > previous && current > 0
+            previous = current
+        }
+    }
+    LaunchedEffect(scrollState.isScrollInProgress) {
+        if (!scrollState.isScrollInProgress) isScrollingDown = false
+    }
+    val fabAlpha by animateFloatAsState(
+        targetValue = if (isScrollingDown) FAB_DIMMED_ALPHA else 1f,
+        label = "fabAlpha"
+    )
+
     val adviceStringRes = when (state.adviceType) {
         AdviceType.START_DAY -> R.string.advice_start_day
         AdviceType.EXCEEDED -> R.string.advice_exceeded
@@ -65,6 +89,7 @@ fun DashboardContent(
         },
         floatingActionButton = {
             Column(
+                modifier = Modifier.alpha(fabAlpha),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(dimens.sm)
             ) {
@@ -141,6 +166,8 @@ fun DashboardContent(
         }
     }
 }
+
+private const val FAB_DIMMED_ALPHA = 0.25f
 
 @Preview(showBackground = true, device = "id:pixel_7")
 @Composable
