@@ -139,6 +139,9 @@
     <string name="activity_see_all">Xem tất cả</string>
     <string name="activity_empty_state">Ghi lại nhiều hoạt động hơn để đạt mục tiêu!</string>
     <string name="activity_unit_kcal">kcal</string>
+    <string name="activity_met_value">%1$.1f METs</string>
+    <string name="activity_delete_title">Xóa hoạt động</string>
+    <string name="activity_delete_message">Bạn có chắc muốn xóa hoạt động này không?</string>
     <!-- Search Activity Bottom Sheet -->
     <string name="activity_search_title">Thêm hoạt động</string>
     <string name="activity_search_hint">Tìm bài tập hoặc hoạt động...</string>
@@ -157,7 +160,7 @@
     <string name="activity_log_duration_label">Thời lượng (phút)</string>
     <string name="activity_log_estimated_cals">Calo ước tính</string>
     <string name="activity_log_confirm">Xác nhận</string>
-    <string name="activity_log_met_hint">* Tính toán dựa trên chỉ số MET (%1$.1f) cho cân nặng trung bình 70kg. Kết quả thực tế có thể thay đổi.</string>
+    <string name="activity_log_met_hint">* Tính theo chỉ số MET (%1$.1f) và cân nặng %2$.0f kg của bạn. Kết quả thực tế có thể thay đổi.</string>
     <!-- Các chuỗi chung -->
     <string name="action_back">Quay lại</string>
     <string name="action_edit">Chỉnh sửa</string>

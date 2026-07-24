@@ -28,9 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.ActivityCatalogItem
+import com.example.healthtracker.ui.components.LocalizedContent
 import com.example.healthtracker.ui.theme.LocalDimens
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,67 +61,63 @@ fun SearchActivityBottomSheet(
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
         dragHandle = { BottomSheetDefaults.DragHandle(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)) }
     ) {
-        Column(modifier = Modifier.fillMaxHeight(0.9f)) {
+        LocalizedContent {
+            Column(modifier = Modifier.fillMaxHeight(0.9f)) {
 
-            // 1. Header
-            Box(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = dimens.marginMobile, vertical = dimens.sm),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(id = R.string.activity_search_title),
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-
-            // 2. Search & Categories
-            Column(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(horizontal = dimens.marginMobile, vertical = dimens.sm)
-            ) {
-                ActivitySearchBar(query = searchQuery, onQueryChange = { onSearchQueryChange(it)})
-                Spacer(modifier = Modifier.height(dimens.md))
-                ActivityCategoryChips(
-                    categories = categories,
-                    selectedCategory = selectedCategory,
-                    onCategorySelect = { selectedCategory = it }
-                )
-            }
-
-            // 3. Activity List
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = dimens.marginMobile),
-                contentPadding = PaddingValues(vertical = dimens.sm)
-            ) {
-                item {
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = dimens.marginMobile, vertical = dimens.sm),
+                    contentAlignment = Alignment.Center
+                ) {
                     Text(
-                        text = stringResource(id = R.string.activity_popular_title).uppercase(),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = dimens.xs, vertical = dimens.md)
+                        text = stringResource(id = R.string.activity_search_title),
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
-                items(searchResults) { activity ->
-                    ActivityCatalogItemCard(item = activity, onClick = { onActivitySelect(activity) })
-                    Spacer(modifier = Modifier.height(dimens.xs))
+                Column(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(horizontal = dimens.marginMobile, vertical = dimens.sm)
+                ) {
+                    ActivitySearchBar(query = searchQuery, onQueryChange = { onSearchQueryChange(it)})
+                    Spacer(modifier = Modifier.height(dimens.md))
+                    ActivityCategoryChips(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelect = { selectedCategory = it }
+                    )
                 }
-            }
 
-            // 4. Footer
-            ActivitySearchFooter(
-                onCancel = onDismiss,
-                onAddManual = onAddManualClick
-            )
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = dimens.marginMobile),
+                    contentPadding = PaddingValues(vertical = dimens.sm)
+                ) {
+                    item {
+                        Text(
+                            text = stringResource(id = R.string.activity_popular_title).uppercase(),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = dimens.xs, vertical = dimens.md)
+                        )
+                    }
+
+                    items(searchResults) { activity ->
+                        ActivityCatalogItemCard(item = activity, onClick = { onActivitySelect(activity) })
+                        Spacer(modifier = Modifier.height(dimens.xs))
+                    }
+                }
+
+                ActivitySearchFooter(
+                    onCancel = onDismiss,
+                    onAddManual = onAddManualClick
+                )
+            }
         }
     }
 }
-
-// ================= COMPONENT CON =================
 
 @Composable
 private fun ActivitySearchBar(query: String, onQueryChange: (String) -> Unit) {
@@ -192,7 +187,6 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
             .padding(dimens.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Icon
         Box(
             modifier = Modifier
                 .size(48.dp)
@@ -209,7 +203,6 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
 
         Spacer(modifier = Modifier.width(dimens.md))
 
-        // Info
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = item.name,
@@ -223,7 +216,6 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
             )
         }
 
-        // MET Value Pill
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(dimens.cornerFull))

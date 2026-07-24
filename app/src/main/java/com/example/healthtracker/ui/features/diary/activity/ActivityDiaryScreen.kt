@@ -16,11 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
-import com.example.healthtracker.domain.model.ActivityCatalogItem
-import com.example.healthtracker.domain.model.ActivityItem
-import com.example.healthtracker.domain.model.ActivitySuggestion
-import com.example.healthtracker.domain.model.ActivityType
-import com.example.healthtracker.domain.model.toCatalogItem
 import com.example.healthtracker.ui.features.diary.activity.activityComponents.ActivityListSection
 import com.example.healthtracker.ui.features.diary.activity.activityComponents.ActivitySummaryCard
 import com.example.healthtracker.ui.features.diary.activity.activityComponents.QuickSuggestionsSection
@@ -42,18 +37,15 @@ fun ActivityDiaryScreen(
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
     var selectedActivityId by remember { mutableStateOf<Int?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var showEditDialog by remember { mutableStateOf(false) }
-    var activityToEdit by remember { mutableStateOf<ActivityItem?>(null) }
     var showSearchSheet by remember { mutableStateOf(false) }
-    var selectedActivityToLog by remember { mutableStateOf<ActivityCatalogItem?>(null) }
 
-    val suggestions = remember {
-        listOf(
-            ActivitySuggestion("Đi bộ", 3.5f, ActivityType.WALKING),
-            ActivitySuggestion("Chạy bộ", 8.0f, ActivityType.CARDIO),
-            ActivitySuggestion("Bơi lội", 7.0f, ActivityType.SWIMMING)
-        )
-    }
+    val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
+    val logTarget by viewModel.logTarget.collectAsStateWithLifecycle()
+
+    val deleteTitle = stringResource(id = R.string.activity_delete_title)
+    val deleteMessage = stringResource(id = R.string.activity_delete_message)
+    val deleteConfirmLabel = stringResource(id = R.string.sheet_action_delete)
+    val deleteCancelLabel = stringResource(id = R.string.action_cancel)
 
     Scaffold(
         topBar = {
@@ -98,7 +90,7 @@ fun ActivityDiaryScreen(
 
             QuickSuggestionsSection(
                 suggestions = suggestions,
-                onClick = { /* TODO: Xử lý click gợi ý nhanh */ }
+                onClick = { suggestion -> viewModel.startLogging(suggestion) }
             )
 
             ActivityListSection(
@@ -106,17 +98,12 @@ fun ActivityDiaryScreen(
                 onItemClick = { item -> selectedActivityId = if(selectedActivityId == item.id) null else item.id },
                 selectedId = selectedActivityId,
                 onDelete = { showDeleteDialog = true },
-                onEdit = {
-                    activityToEdit = it
-                    selectedActivityToLog = it.toCatalogItem()
-                    showEditDialog = true
-                }
+                onEdit = { activity -> viewModel.startEditing(activity) }
             )
 
             Spacer(modifier = Modifier.height(100.dp))
         }
     }
-
 
     if (showSearchSheet) {
         SearchActivityBottomSheet(
@@ -129,39 +116,34 @@ fun ActivityDiaryScreen(
             },
             onAddManualClick = {
                 showSearchSheet = false
-                // TODO: Bật một state khác để mở form thêm thủ công
             },
             onActivitySelect = { selectedActivity ->
                 showSearchSheet = false
                 viewModel.updateSearchQuery("")
-                selectedActivityToLog = selectedActivity
+                viewModel.startLogging(selectedActivity)
             }
         )
     }
 
-    selectedActivityToLog?.let { activity ->
+    logTarget?.let { target ->
         LogActivityDialog(
-            activityItem = activity,
+            activityItem = target.catalogItem,
+            userWeightKg = state.userWeight,
+            initialDuration = target.initialDuration,
             calculateCalories = { met, duration ->
                 viewModel.calculateCalories(metValue = met, durationMinutes = duration)
             },
-            onDismiss = { selectedActivityToLog = null },
+            onDismiss = { viewModel.dismissLogging() },
             onConfirm = { duration, calories ->
-                viewModel.addActivityLog(
-                    name = activity.name,
-                    durationMinutes = duration,
-                    caloriesBurned = calories
-                )
-
-                selectedActivityToLog = null
+                viewModel.confirmLogging(durationMinutes = duration, caloriesBurned = calories)
             }
         )
     }
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Xóa hoạt động") },
-            text = { Text("Bạn có chắc muốn xóa hoạt động này không?") },
+            title = { Text(deleteTitle) },
+            text = { Text(deleteMessage) },
             confirmButton = {
                 TextButton(onClick = {
                     selectedActivityId?.let { id ->
@@ -169,24 +151,9 @@ fun ActivityDiaryScreen(
                     }
                     showDeleteDialog = false
                     selectedActivityId = null
-                }) { Text("Xóa", color = MaterialTheme.colorScheme.error) }
+                }) { Text(deleteConfirmLabel, color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { showDeleteDialog = false }) { Text("Hủy") } }
-        )
-    }
-
-    if (showEditDialog && activityToEdit != null) {
-        LogActivityDialog(
-            activityItem = selectedActivityToLog!!,
-            calculateCalories = { met, duration ->
-                viewModel.calculateCalories(metValue = met, durationMinutes = duration)
-            },
-            onDismiss = { showEditDialog = false },
-            onConfirm = { duration, calories ->
-                viewModel.updateActivityLog(activityToEdit!!.id, duration, calories)
-                showEditDialog = false
-                activityToEdit = null
-            }
+            dismissButton = { TextButton(onClick = { showDeleteDialog = false }) { Text(deleteCancelLabel) } }
         )
     }
 }

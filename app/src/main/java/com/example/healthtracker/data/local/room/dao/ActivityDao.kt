@@ -33,6 +33,26 @@ interface ActivityDao {
     @Query("SELECT * FROM activity_items WHERE name LIKE '%' || :query || '%'")
     fun searchActivityItems(query: String): Flow<List<ActivityItemEntity>>
 
+    @Query(
+        """
+        SELECT items.* FROM activity_items AS items
+        INNER JOIN (
+            SELECT activityName, MAX(id) AS lastLogId
+            FROM activity_logs
+            GROUP BY activityName
+        ) AS recent ON recent.activityName = items.name
+        ORDER BY recent.lastLogId DESC
+        LIMIT :limit
+        """
+    )
+    fun getRecentActivityItems(limit: Int): Flow<List<ActivityItemEntity>>
+
+    @Query("SELECT * FROM activity_items LIMIT :limit")
+    fun getDefaultActivityItems(limit: Int): Flow<List<ActivityItemEntity>>
+
+    @Query("SELECT * FROM activity_items WHERE name = :name LIMIT 1")
+    suspend fun getActivityItemByName(name: String): ActivityItemEntity?
+
     @Query("DELETE FROM activity_logs WHERE id = :id")
     suspend fun deleteActivityLogById(id: Int)
 

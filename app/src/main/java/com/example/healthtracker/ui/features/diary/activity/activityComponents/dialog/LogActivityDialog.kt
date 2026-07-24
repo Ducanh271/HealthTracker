@@ -27,19 +27,23 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.ActivityCatalogItem
+import com.example.healthtracker.ui.components.LocalizedContent
 import com.example.healthtracker.ui.theme.LocalDimens
 import kotlin.math.roundToInt
 
 @Composable
 fun LogActivityDialog(
     activityItem: ActivityCatalogItem,
-    userWeightKg: Float = 70f,
+    userWeightKg: Float,
+    initialDuration: Int,
     calculateCalories: (metValue: Float, duration: Int) -> Int,
     onDismiss: () -> Unit,
     onConfirm: (durationMinutes: Int, caloriesBurned: Int) -> Unit
 ) {
     val dimens = LocalDimens.current
-    var durationText by remember { mutableStateOf("30") }
+    var durationText by remember(activityItem, initialDuration) {
+        mutableStateOf(initialDuration.toString())
+    }
 
     val durationMinutes = durationText.toIntOrNull() ?: 0
 
@@ -50,67 +54,67 @@ fun LogActivityDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.92f)
-                .clip(RoundedCornerShape(dimens.cornerExtraLarge))
-                .background(MaterialTheme.colorScheme.surfaceContainer)
-                .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(28.dp))
-                .padding(dimens.lg)
-        ) {
-            ActivityHeader(item = activityItem)
-
-            Spacer(modifier = Modifier.height(dimens.xl))
-
-            Text(
-                text = stringResource(id = R.string.activity_log_input_title),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = dimens.lg)
-            )
-
-            // 2. Khu vực nhập thời gian
-            DurationInputSection(
-                durationText = durationText,
-                onDurationChange = { durationText = it },
-                onDecrease = {
-                    val current = durationText.toIntOrNull() ?: 0
-                    durationText = maxOf(0, current - 5).toString()
-                },
-                onIncrease = {
-                    val current = durationText.toIntOrNull() ?: 0
-                    durationText = (current + 5).toString()
-                }
-            )
-
-            Spacer(modifier = Modifier.height(dimens.lg))
-
-            // 3. Hiển thị Calo tính toán
-            CaloriesSummarySection(calories = estimatedCalories)
-
-            Spacer(modifier = Modifier.height(dimens.xl))
-
-            // 4. Các nút thao tác
-            DialogActionButtons(
-                onCancel = onDismiss,
-                onConfirm = { onConfirm(durationMinutes, estimatedCalories) }
-            )
-
-            // 5. Chú thích MET
-            Text(
-                text = stringResource(id = R.string.activity_log_met_hint, activityItem.metValue),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
+        LocalizedContent {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = dimens.lg, start = dimens.sm, end = dimens.sm)
-            )
+                    .fillMaxWidth(0.92f)
+                    .clip(RoundedCornerShape(dimens.cornerExtraLarge))
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f), RoundedCornerShape(28.dp))
+                    .padding(dimens.lg)
+            ) {
+                ActivityHeader(item = activityItem)
+
+                Spacer(modifier = Modifier.height(dimens.xl))
+
+                Text(
+                    text = stringResource(id = R.string.activity_log_input_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = dimens.lg)
+                )
+
+                DurationInputSection(
+                    durationText = durationText,
+                    onDurationChange = { durationText = it },
+                    onDecrease = {
+                        val current = durationText.toIntOrNull() ?: 0
+                        durationText = maxOf(0, current - 5).toString()
+                    },
+                    onIncrease = {
+                        val current = durationText.toIntOrNull() ?: 0
+                        durationText = (current + 5).toString()
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(dimens.lg))
+
+                CaloriesSummarySection(calories = estimatedCalories)
+
+                Spacer(modifier = Modifier.height(dimens.xl))
+
+                DialogActionButtons(
+                    onCancel = onDismiss,
+                    onConfirm = { onConfirm(durationMinutes, estimatedCalories) }
+                )
+
+                Text(
+                    text = stringResource(
+                        id = R.string.activity_log_met_hint,
+                        activityItem.metValue,
+                        userWeightKg
+                    ),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = dimens.lg, start = dimens.sm, end = dimens.sm)
+                )
+            }
         }
     }
 }
-
-// ================= CÁC COMPONENT CON =================
 
 @Composable
 private fun ActivityHeader(item: ActivityCatalogItem) {
@@ -174,7 +178,6 @@ private fun DurationInputSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.lg)
         ) {
-            // Nút Giảm
             IconButton(
                 onClick = onDecrease,
                 modifier = Modifier
@@ -201,7 +204,6 @@ private fun DurationInputSection(
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth()
                 )
-                // Dòng gạch dưới mờ
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)

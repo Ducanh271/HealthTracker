@@ -25,6 +25,15 @@ class ActivityRepositoryImpl @Inject constructor(
     override fun searchActivityItems(query: String): Flow<List<ActivityCatalogEntry>> =
         activityDao.searchActivityItems(query).map { entities -> entities.map { it.toDomain() } }
 
+    override fun getRecentActivityItems(limit: Int): Flow<List<ActivityCatalogEntry>> =
+        activityDao.getRecentActivityItems(limit).map { entities -> entities.map { it.toDomain() } }
+
+    override fun getDefaultActivityItems(limit: Int): Flow<List<ActivityCatalogEntry>> =
+        activityDao.getDefaultActivityItems(limit).map { entities -> entities.map { it.toDomain() } }
+
+    override suspend fun getActivityItemByName(name: String): ActivityCatalogEntry? =
+        activityDao.getActivityItemByName(name)?.toDomain()
+
     override suspend fun deleteActivityLogById(id: Int) {
         activityDao.deleteActivityLogById(id)
     }

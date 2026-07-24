@@ -11,21 +11,16 @@ import androidx.compose.material.icons.filled.Pool
 data class ActivityItem(
     val id: Int,
     val name: String,
-    val duration: Int, // Phút
-    val time: String, // VD: "08:30 Sáng"
+    val duration: Int,
+    val time: String,
     val caloriesBurned: Int,
-    val type: ActivityType // Để set màu sắc/icon
+    val type: ActivityType
 )
 
 enum class ActivityType {
     STRENGTH, CARDIO, CYCLING, SWIMMING, WALKING
 }
 
-data class ActivitySuggestion(
-    val name: String,
-    val mets: Float,
-    val type: ActivityType
-)
 data class ActivityCatalogItem(
     val id: Int,
     val name: String,

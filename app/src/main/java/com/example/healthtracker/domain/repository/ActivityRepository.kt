@@ -9,6 +9,9 @@ interface ActivityRepository {
     fun getActivityLogsByDate(date: String): Flow<List<ActivityLog>>
     fun getActivityLogsByDates(dates: List<String>): Flow<List<ActivityLog>>
     fun searchActivityItems(query: String): Flow<List<ActivityCatalogEntry>>
+    fun getRecentActivityItems(limit: Int): Flow<List<ActivityCatalogEntry>>
+    fun getDefaultActivityItems(limit: Int): Flow<List<ActivityCatalogEntry>>
+    suspend fun getActivityItemByName(name: String): ActivityCatalogEntry?
     suspend fun deleteActivityLogById(id: Int)
     suspend fun updateActivityLog(id: Int, duration: Int, calories: Int)
 }

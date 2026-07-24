@@ -143,6 +143,9 @@
     <string name="activity_see_all">See all</string>
     <string name="activity_empty_state">Log more activities to reach your goal!</string>
     <string name="activity_unit_kcal">kcal</string>
+    <string name="activity_met_value">%1$.1f METs</string>
+    <string name="activity_delete_title">Delete activity</string>
+    <string name="activity_delete_message">Are you sure you want to delete this activity?</string>
 
     <!-- Search Activity Bottom Sheet -->
     <string name="activity_search_title">Add Activity</string>
@@ -163,7 +166,7 @@
     <string name="activity_log_duration_label">Duration (minutes)</string>
     <string name="activity_log_estimated_cals">Estimated calories</string>
     <string name="activity_log_confirm">Confirm</string>
-    <string name="activity_log_met_hint">* Calculated based on MET index (%1$.1f) for an average weight of 70kg. Actual results may vary.</string>
+    <string name="activity_log_met_hint">* Calculated from the MET index (%1$.1f) and your weight of %2$.0f kg. Actual results may vary.</string>
 
     <!-- General Actions -->
     <string name="action_back">Back</string>

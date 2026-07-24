@@ -29,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.ActivityCatalogItem
 import com.example.healthtracker.domain.model.ActivityItem
-import com.example.healthtracker.domain.model.ActivitySuggestion
 import com.example.healthtracker.domain.model.ActivityType
 import com.example.healthtracker.ui.theme.LocalDimens
 
@@ -88,7 +88,6 @@ fun ActivitySummaryCard(totalBurned: Int, progressPercent: Int) {
                 }
             }
 
-            // Vòng tròn Progress
             Box(contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(
                     progress = { progress },
@@ -111,8 +110,8 @@ fun ActivitySummaryCard(totalBurned: Int, progressPercent: Int) {
 
 @Composable
 fun QuickSuggestionsSection(
-    suggestions: List<ActivitySuggestion>,
-    onClick: (ActivitySuggestion) -> Unit
+    suggestions: List<ActivityCatalogItem>,
+    onClick: (ActivityCatalogItem) -> Unit
 ) {
     val dimens = LocalDimens.current
 
@@ -131,7 +130,7 @@ fun QuickSuggestionsSection(
             contentPadding = PaddingValues(end = dimens.lg)
         ) {
             items(suggestions) { suggestion ->
-                val (icon, color) = getActivityConfig(suggestion.type)
+                val color = MaterialTheme.colorScheme.primary
 
                 Row(
                     modifier = Modifier
@@ -149,12 +148,16 @@ fun QuickSuggestionsSection(
                             .background(color.copy(alpha = 0.1f)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(imageVector = icon, contentDescription = null, tint = color)
+                        Icon(imageVector = suggestion.icon, contentDescription = null, tint = color)
                     }
                     Spacer(modifier = Modifier.width(dimens.md))
                     Column {
                         Text(text = suggestion.name, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.onSurface)
-                        Text(text = "${suggestion.mets} METs", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            text = stringResource(id = R.string.activity_met_value, suggestion.metValue),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             }

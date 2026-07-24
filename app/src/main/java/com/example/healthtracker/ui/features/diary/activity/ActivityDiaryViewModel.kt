@@ -3,11 +3,15 @@ package com.example.healthtracker.ui.features.diary.activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.domain.model.ActivityCatalogItem
+import com.example.healthtracker.domain.model.ActivityItem
+import com.example.healthtracker.domain.model.toCatalogItem
 import com.example.healthtracker.domain.repository.UserRepository
 import com.example.healthtracker.domain.usecase.activity.AddActivityLogUseCase
 import com.example.healthtracker.domain.usecase.activity.CalculateActivityCaloriesUseCase
 import com.example.healthtracker.domain.usecase.activity.DeleteActivityLogUseCase
+import com.example.healthtracker.domain.usecase.activity.GetActivityCatalogItemUseCase
 import com.example.healthtracker.domain.usecase.activity.GetActivityDiaryUseCase
+import com.example.healthtracker.domain.usecase.activity.GetActivitySuggestionsUseCase
 import com.example.healthtracker.domain.usecase.activity.SearchActivityItemsUseCase
 import com.example.healthtracker.domain.usecase.activity.UpdateActivityLogUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +24,6 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
-
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class ActivityDiaryViewModel @Inject constructor(
@@ -30,6 +33,8 @@ class ActivityDiaryViewModel @Inject constructor(
     private val calculateCaloriesUseCase: CalculateActivityCaloriesUseCase,
     private val deleteActivityLogUseCase: DeleteActivityLogUseCase,
     private val updateActivityLogUseCase: UpdateActivityLogUseCase,
+    private val getActivitySuggestionsUseCase: GetActivitySuggestionsUseCase,
+    private val getActivityCatalogItemUseCase: GetActivityCatalogItemUseCase,
     private val userRepository: UserRepository
     ) : ViewModel() {
 
@@ -54,6 +59,12 @@ class ActivityDiaryViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ActivityDiaryState())
 
+    val suggestions: StateFlow<List<ActivityCatalogItem>> = getActivitySuggestionsUseCase()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private val _logTarget = MutableStateFlow<ActivityLogTarget?>(null)
+    val logTarget = _logTarget.asStateFlow()
+
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
@@ -76,26 +87,47 @@ class ActivityDiaryViewModel @Inject constructor(
         val weight = state.value.userWeight
         return calculateCaloriesUseCase(metValue, weight, durationMinutes)
     }
-    fun addActivityLog(name: String, durationMinutes: Int, caloriesBurned: Int) {
+    fun startLogging(catalogItem: ActivityCatalogItem) {
+        _logTarget.value = ActivityLogTarget(catalogItem = catalogItem)
+    }
+
+    fun startEditing(activity: ActivityItem) {
         viewModelScope.launch {
-            val dateStr = _selectedDate.value.format(DateTimeFormatter.ISO_LOCAL_DATE)
-            addActivityLogUseCase(
-                date = dateStr,
-                name = name,
-                duration = durationMinutes,
-                calories = caloriesBurned
+            val catalogItem = getActivityCatalogItemUseCase(activity.name) ?: activity.toCatalogItem()
+
+            _logTarget.value = ActivityLogTarget(
+                catalogItem = catalogItem,
+                initialDuration = activity.duration,
+                existingLogId = activity.id
             )
         }
     }
-    fun deleteActivityLog(activityId: Int) {
+
+    fun dismissLogging() {
+        _logTarget.value = null
+    }
+
+    fun confirmLogging(durationMinutes: Int, caloriesBurned: Int) {
+        val target = _logTarget.value ?: return
+
         viewModelScope.launch {
-            deleteActivityLogUseCase(activityId)
+            if (target.existingLogId != null) {
+                updateActivityLogUseCase(target.existingLogId, durationMinutes, caloriesBurned)
+            } else {
+                addActivityLogUseCase(
+                    date = _selectedDate.value.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    name = target.catalogItem.name,
+                    duration = durationMinutes,
+                    calories = caloriesBurned
+                )
+            }
+            _logTarget.value = null
         }
     }
 
-    fun updateActivityLog(id: Int, durationMinutes: Int, caloriesBurned: Int) {
+    fun deleteActivityLog(activityId: Int) {
         viewModelScope.launch {
-            updateActivityLogUseCase(id, durationMinutes, caloriesBurned)
+            deleteActivityLogUseCase(activityId)
         }
     }
 
