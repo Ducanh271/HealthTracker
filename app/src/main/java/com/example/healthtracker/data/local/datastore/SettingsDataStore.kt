@@ -39,6 +39,7 @@ class SettingsDataStore @Inject constructor(
         val USER_ACTIVITY_LEVEL = intPreferencesKey("user_activity_level")
         val USER_GOAL = stringPreferencesKey("user_goal")
         val USER_TDEE = intPreferencesKey("user_tdee")
+        val NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
 
     }
 
@@ -48,6 +49,8 @@ class SettingsDataStore @Inject constructor(
     val appLanguage: Flow<String> = context.dataStore.data.map { it[APP_LANGUAGE] ?: "VI" }
     val fontSize: Flow<String> = context.dataStore.data.map { it[FONT_SIZE] ?: "MEDIUM" }
     val appMode: Flow<String> = context.dataStore.data.map { it[APP_MODE] ?: "SYSTEM" }
+    val notificationsEnabled: Flow<Boolean> =
+        context.dataStore.data.map { it[NOTIFICATIONS_ENABLED] ?: true }
     val userEntity: Flow<UserEntity> = context.dataStore.data.map { prefs ->
         UserEntity(
             name = prefs[USER_NAME] ?: "",
@@ -79,6 +82,10 @@ class SettingsDataStore @Inject constructor(
 
     suspend fun saveFontSize(size: String) {
         context.dataStore.edit { it[FONT_SIZE] = size }
+    }
+
+    suspend fun saveNotificationsEnabled(enabled: Boolean) {
+        context.dataStore.edit { it[NOTIFICATIONS_ENABLED] = enabled }
     }
 
     suspend fun saveUserProfile(

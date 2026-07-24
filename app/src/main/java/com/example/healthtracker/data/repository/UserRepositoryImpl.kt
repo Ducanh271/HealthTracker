@@ -22,6 +22,7 @@ class UserRepositoryImpl @Inject constructor(
     override val fontSize: Flow<String> = settingsDataStore.fontSize
     override val appMode: Flow<String> = settingsDataStore.appMode
     override val isOnboardingCompleted: Flow<Boolean> = settingsDataStore.isOnboardingCompleted
+    override val notificationsEnabled: Flow<Boolean> = settingsDataStore.notificationsEnabled
 
     override suspend fun saveUserProfile(
         name: String, age: Int, dob: String, gender: Gender,
@@ -36,4 +37,5 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun saveAppLanguage(lang: String) { settingsDataStore.saveAppLanguage(lang) }
     override suspend fun saveFontSize(size: String) { settingsDataStore.saveFontSize(size) }
     override suspend fun saveAppMode(mode: String) { settingsDataStore.saveAppMode(mode) }
+    override suspend fun saveNotificationsEnabled(enabled: Boolean) { settingsDataStore.saveNotificationsEnabled(enabled) }
 }

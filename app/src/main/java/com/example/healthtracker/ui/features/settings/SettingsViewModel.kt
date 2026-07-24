@@ -5,10 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.domain.model.BmiCategory
 import com.example.healthtracker.domain.usecase.dashboard.CalculateBmiUseCase
 import com.example.healthtracker.domain.usecase.settings.GetAppSettingsUseCase
+import com.example.healthtracker.domain.usecase.settings.GetNotificationsEnabledUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppModeUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateAppThemeUseCase
 import com.example.healthtracker.domain.usecase.settings.UpdateFontSizeUseCase
+import com.example.healthtracker.domain.usecase.settings.UpdateNotificationsEnabledUseCase
+import com.example.healthtracker.notification.ReminderScheduler
 import com.example.healthtracker.ui.theme.AppFontSize
 import com.example.healthtracker.ui.theme.AppThemeType
 import com.example.healthtracker.ui.theme.ThemeMode
@@ -26,7 +29,8 @@ data class SettingsState(
     val appLanguage: String = "vi",
     val userName: String = "",
     val bmiValue: Float = 0f,
-    val bmiCategory: BmiCategory = BmiCategory.UNDEFINED
+    val bmiCategory: BmiCategory = BmiCategory.UNDEFINED,
+    val notificationsEnabled: Boolean = true
 )
 
 @HiltViewModel
@@ -36,7 +40,10 @@ class SettingsViewModel @Inject constructor(
     private val updateAppModeUseCase: UpdateAppModeUseCase,
     private val calculateBmiUseCase: CalculateBmiUseCase,
     private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
-    private val updateFontSizeUseCase: UpdateFontSizeUseCase
+    private val updateFontSizeUseCase: UpdateFontSizeUseCase,
+    private val getNotificationsEnabledUseCase: GetNotificationsEnabledUseCase,
+    private val updateNotificationsEnabledUseCase: UpdateNotificationsEnabledUseCase,
+    private val reminderScheduler: ReminderScheduler
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -44,6 +51,15 @@ class SettingsViewModel @Inject constructor(
 
     init {
         loadSettingsData()
+        loadNotificationsSetting()
+    }
+
+    private fun loadNotificationsSetting() {
+        viewModelScope.launch {
+            getNotificationsEnabledUseCase().collect { enabled ->
+                _state.value = _state.value.copy(notificationsEnabled = enabled)
+            }
+        }
     }
 
     private fun loadSettingsData() {
@@ -97,6 +113,19 @@ class SettingsViewModel @Inject constructor(
     fun updateFontSize(newSize: AppFontSize) {
         viewModelScope.launch {
             updateFontSizeUseCase(newSize.name)
+        }
+    }
+
+    fun updateNotificationsEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            updateNotificationsEnabledUseCase(enabled)
+            reminderScheduler.refreshDailyReminders()
+        }
+    }
+
+    fun sendTestNotification() {
+        viewModelScope.launch {
+            reminderScheduler.scheduleTestReminder()
         }
     }
 

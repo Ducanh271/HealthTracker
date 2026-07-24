@@ -1,5 +1,6 @@
 package com.example.healthtracker.ui.features.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,8 +15,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,6 +43,8 @@ fun SettingsScreen(
 ) {
     val dimens = LocalDimens.current
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val testNotificationSentMessage = stringResource(id = R.string.settings_test_notification_sent)
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -86,8 +91,18 @@ fun SettingsScreen(
 
             SettingsMenuSection(
                 currentLanguage = state.appLanguage,
+                notificationsEnabled = state.notificationsEnabled,
                 onLanguageChange = { newLangCode ->
                     viewModel.updateLanguage(newLangCode)
+                },
+                onNotificationsEnabledChange = { viewModel.updateNotificationsEnabled(it) },
+                onTestNotificationClick = {
+                    viewModel.sendTestNotification()
+                    Toast.makeText(
+                        context,
+                        testNotificationSentMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
 
@@ -206,7 +221,10 @@ private fun ProfileSection(
 @Composable
 private fun SettingsMenuSection(
     currentLanguage: String,
-    onLanguageChange: (String) -> Unit
+    notificationsEnabled: Boolean,
+    onLanguageChange: (String) -> Unit,
+    onNotificationsEnabledChange: (Boolean) -> Unit,
+    onTestNotificationClick: () -> Unit
 ) {
     val dimens = LocalDimens.current
 
@@ -225,8 +243,17 @@ private fun SettingsMenuSection(
         SettingsSwitchItem(
             icon = Icons.Default.Notifications,
             title = stringResource(id = R.string.settings_notifications),
-            checked = true,
-            onCheckedChange = {}
+            subtitle = stringResource(id = R.string.settings_notifications_desc),
+            checked = notificationsEnabled,
+            onCheckedChange = onNotificationsEnabledChange
+        )
+
+        SettingsCardItem(
+            icon = Icons.Default.NotificationsActive,
+            title = stringResource(id = R.string.settings_test_notification),
+            subtitle = stringResource(id = R.string.settings_test_notification_desc),
+            enabled = notificationsEnabled,
+            onClick = onTestNotificationClick
         )
     }
 }
@@ -388,13 +415,17 @@ private fun SettingsCardItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     title: String,
     subtitle: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true
 ) {
     val dimens = LocalDimens.current
+    val contentAlpha = if (enabled) 1f else 0.4f
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() },
+            .alpha(contentAlpha)
+            .clickable(enabled = enabled) { onClick() },
         shape = RoundedCornerShape(dimens.cornerMedium),
         color = MaterialTheme.colorScheme.surfaceContainerLow
     ) {
@@ -429,7 +460,8 @@ private fun SettingsSwitchItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     title: String,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    subtitle: String? = null
 ) {
     val dimens = LocalDimens.current
     Surface(
@@ -453,7 +485,12 @@ private fun SettingsSwitchItem(
                 ) {
                     Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 }
-                Text(text = title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Column {
+                    Text(text = title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    if (subtitle != null) {
+                        Text(text = subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
             }
             Switch(checked = checked, onCheckedChange = onCheckedChange)
         }

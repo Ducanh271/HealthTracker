@@ -220,4 +220,22 @@
     <string name="meal_serving_portion">%1$d phần</string>
     <string name="error_add_food_failed">Không thể thêm món ăn, vui lòng thử lại.</string>
     <string name="activity_level_progress">Cấp độ %1$d/5</string>
+
+    <!-- Meal reminders -->
+    <string name="settings_test_notification">Thông báo thử</string>
+    <string name="settings_test_notification_desc">Gửi một thông báo nhắc mẫu sau 10 giây</string>
+    <string name="settings_test_notification_sent">Thông báo thử sẽ hiện sau 10 giây</string>
+    <string name="reminder_channel_name">Nhắc ghi nhật ký bữa ăn</string>
+    <string name="reminder_channel_desc">Nhắc nhở hằng ngày để ghi lại bữa ăn của bạn</string>
+    <string name="reminder_breakfast_title">Đến giờ ăn sáng</string>
+    <string name="reminder_breakfast_text">Ghi lại bữa sáng để theo dõi calo hôm nay nhé.</string>
+    <string name="reminder_lunch_title">Đến giờ ăn trưa</string>
+    <string name="reminder_lunch_text">Đừng quên ghi lại bữa trưa của bạn.</string>
+    <string name="reminder_dinner_title">Đến giờ ăn tối</string>
+    <string name="reminder_dinner_text">Ghi lại bữa tối để hoàn tất nhật ký hôm nay.</string>
+    <string name="reminder_progress_today">Hôm nay: %1$d / %2$d kcal</string>
+    <string name="reminder_remaining">Còn lại %1$d kcal</string>
+    <string name="reminder_over">Vượt mục tiêu %1$d kcal</string>
+    <string name="reminder_action_open">Mở nhật ký</string>
+    <string name="settings_notifications_desc">Nhắc tôi lúc 7h, 12h và 19h</string>
 </resources>

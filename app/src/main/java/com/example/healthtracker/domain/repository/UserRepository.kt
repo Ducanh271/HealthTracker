@@ -11,6 +11,7 @@ interface UserRepository {
     val appLanguage: Flow<String>
     val fontSize: Flow<String>
     val isOnboardingCompleted: Flow<Boolean>
+    val notificationsEnabled: Flow<Boolean>
     suspend fun saveUserProfile(
         name: String, age: Int, dob: String, gender: Gender,
         weight: Float, height: Float, activityLevel: Int,
@@ -20,6 +21,7 @@ interface UserRepository {
     suspend fun saveAppTheme(theme: String)
     suspend fun saveAppLanguage(lang: String)
     suspend fun saveFontSize(size: String)
+    suspend fun saveNotificationsEnabled(enabled: Boolean)
     val appMode: Flow<String>
     suspend fun saveAppMode(mode: String)
 }
