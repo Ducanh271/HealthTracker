@@ -28,8 +28,12 @@ class GetDashboardMetricsUseCase @Inject constructor(
                 .groupBy { it.date }
                 .mapValues { entry -> entry.value.sumOf { it.totalCalories } }
 
+            val burnedByDate = activityLogs
+                .groupBy { it.date }
+                .mapValues { entry -> entry.value.sumOf { it.caloriesBurned } }
+
             val todayConsumed = consumedByDate[todayStr] ?: 0
-            val todayBurned = activityLogs.filter { it.date == todayStr }.sumOf { it.caloriesBurned }
+            val todayBurned = burnedByDate[todayStr] ?: 0
             val targetKcal = profile.tdee
 
             var totalConsumedWeek = 0
@@ -38,7 +42,7 @@ class GetDashboardMetricsUseCase @Inject constructor(
 
             for (date in last7Days) {
                 val dailyConsumed = consumedByDate[date] ?: 0
-                val dailyBurned = activityLogs.filter { it.date == date }.sumOf { it.caloriesBurned }
+                val dailyBurned = burnedByDate[date] ?: 0
 
                 totalConsumedWeek += dailyConsumed
                 totalBurnedWeek += dailyBurned

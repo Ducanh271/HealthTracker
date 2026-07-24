@@ -37,7 +37,7 @@ fun ThemeSelectionSection(
             modifier = Modifier.padding(horizontal = dimens.xs)
         )
 
-        val themes = AppThemeType.values().toList()
+        val themes = AppThemeType.entries
 
         Column(verticalArrangement = Arrangement.spacedBy(dimens.md)) {
             themes.chunked(2).forEach { rowThemes ->
