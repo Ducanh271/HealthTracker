@@ -148,7 +148,7 @@ fun QuickSuggestionsSection(
                             .background(color.copy(alpha = 0.1f)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(imageVector = suggestion.icon, contentDescription = null, tint = color)
+                        Icon(imageVector = suggestion.category.icon(), contentDescription = null, tint = color)
                     }
                     Spacer(modifier = Modifier.width(dimens.md))
                     Column {
@@ -189,7 +189,7 @@ fun ActivityListSection(
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            TextButton(onClick = { /* TODO */ }, contentPadding = PaddingValues(0.dp)) {
+            TextButton(onClick = { }, contentPadding = PaddingValues(0.dp)) {
                 Text(
                     text = stringResource(id = R.string.activity_see_all).uppercase(),
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),

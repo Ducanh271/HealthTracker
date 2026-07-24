@@ -28,6 +28,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.ActivityCatalogItem
 import com.example.healthtracker.ui.components.LocalizedContent
+import com.example.healthtracker.ui.features.diary.activity.activityComponents.icon
 import com.example.healthtracker.ui.theme.LocalDimens
 import kotlin.math.roundToInt
 
@@ -128,7 +129,7 @@ private fun ActivityHeader(item: ActivityCatalogItem) {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = item.icon,
+                imageVector = item.category.icon(),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.size(32.dp)

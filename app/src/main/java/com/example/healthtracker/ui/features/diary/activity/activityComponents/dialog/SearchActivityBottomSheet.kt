@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import com.example.healthtracker.ui.features.diary.activity.activityComponents.icon
+import com.example.healthtracker.ui.features.diary.activity.activityComponents.labelRes
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
@@ -191,7 +193,7 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = item.icon,
+                imageVector = item.category.icon(),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
@@ -206,7 +208,7 @@ private fun ActivityCatalogItemCard(item: ActivityCatalogItem, onClick: () -> Un
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = item.description,
+                text = stringResource(id = item.category.labelRes()),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
