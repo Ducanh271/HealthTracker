@@ -247,4 +247,16 @@
     <string name="reminder_action_open">Open diary</string>
     <string name="settings_notifications_desc">Remind me at 7 AM, 12 PM and 7 PM</string>
 
+    <!-- Calorie widget -->
+    <string name="widget_name">Calorie progress</string>
+    <string name="widget_description">Shows today\'s calorie progress</string>
+    <string name="widget_consumed">Eaten</string>
+    <string name="widget_burned">Burned</string>
+    <string name="widget_remaining">Remaining</string>
+    <string name="widget_over">Over</string>
+    <string name="widget_kcal">%1$d kcal</string>
+    <string name="widget_progress">%1$d / %2$d kcal</string>
+    <string name="widget_target">Target</string>
+    <string name="widget_percent">%1$d%%</string>
+
 </resources>

@@ -26,6 +26,7 @@ import com.example.healthtracker.ui.navigation.AppNavGraph
 import com.example.healthtracker.ui.navigation.Screen
 import com.example.healthtracker.ui.theme.AppThemeType
 import com.example.healthtracker.ui.theme.HealthTrackerTheme
+import com.example.healthtracker.widget.WidgetUpdater
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -38,6 +39,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var reminderScheduler: ReminderScheduler
+
+    @Inject
+    lateinit var widgetUpdater: WidgetUpdater
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -117,6 +121,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        widgetUpdater.refresh()
     }
 
     private fun requestNotificationPermissionIfNeeded() {
